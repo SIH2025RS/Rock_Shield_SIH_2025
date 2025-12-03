@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+.dark body {
+  @apply bg-slate-950 text-slate-100;
+}
+
+/* Typography */
+h1 {
+  @apply text-3xl font-bold tracking-tight;
+}
+
+h2 {
+  @apply text-2xl font-semibold tracking-tight;
+}
+
+h3 {
+  @apply text-xl font-semibold;
+}
+
+h4 {
+  @apply text-lg font-medium;
+}
+
+/* Links */
+a {
+  @apply text-blue-600 hover:text-blue-700 underline-offset-2 transition-colors dark:text-blue-400 dark:hover:text-blue-300;
+}
+
+/* Buttons - Enhanced */
+button {
+  @apply rounded-lg px-4 py-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+button:not(:disabled):hover {
+  @apply shadow-md;
+}
+
+button:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+/* Primary Button */
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
+}
+
+/* Danger Button */
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+/* Form Inputs - Enhanced */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+  @apply rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  @apply cursor-not-allowed bg-slate-100 dark:bg-slate-900;
+}
+
+/* Checkbox and Radio */
+input[type="checkbox"],
+input[type="radio"] {
+  @apply h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-600 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-slate-500;
+}
+
+/* Mapbox customization */
+.mapboxgl-popup-content {
+  @apply rounded-lg shadow-xl;
+  padding: 0 !important;
+  font-family: inherit;
+}
+
+.mapboxgl-popup-close-button {
+  @apply text-slate-400 hover:text-slate-600;
+  font-size: 20px;
+  padding: 4px 8px;
+}
+
+.mapboxgl-ctrl-group {
+  @apply rounded-lg shadow-lg;
+}
+
+.mapboxgl-ctrl-group button {
+  @apply transition-colors;
+}
+
+.mine-marker {
+  animation: markerPulse 2s ease-in-out infinite;
+}
+
+@keyframes markerPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5), 0 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Mapbox customization */
+.mapboxgl-popup-content {
+  @apply rounded-lg shadow-xl;
+  padding: 0 !important;
+  font-family: inherit;
+}
+
+.mapboxgl-popup-close-button {
+  @apply text-slate-400 hover:text-slate-600;
+  font-size: 20px;
+  padding: 4px 8px;
+}
+
+.mapboxgl-ctrl-group {
+  @apply rounded-lg shadow-lg;
+}
+
+.mapboxgl-ctrl-group button {
+  @apply transition-colors;
+}
+
+.mine-marker {
+  animation: markerPulse 2s ease-in-out infinite;
+}
+
+@keyframes markerPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5), 0 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+}
