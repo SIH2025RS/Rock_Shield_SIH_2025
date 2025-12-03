@@ -1,6 +1,6 @@
-const demService = require('../services/dem.service');
-const weatherService = require('../services/weather.service');
-const iotService = require('../services/iot.service');
+const demService = require('../services/demservice');
+const weatherService = require('../services/weatherservice');
+const iotService = require('../services/iotservice');
 
 exports.getCombined = async (req, res) => {
   const lat = parseFloat(req.query.lat);

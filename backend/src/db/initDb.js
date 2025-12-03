@@ -33,6 +33,17 @@ async function init() {
     fetched_at TIMESTAMPTZ DEFAULT now()
   );
   CREATE INDEX IF NOT EXISTS idx_weather_lat_lon ON weather_data(lat, lon);
+
+  CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    clerk_user_id VARCHAR(255) UNIQUE NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    full_name VARCHAR(150),
+    phone VARCHAR(50),
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+  );
+  CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
   `;
 
   try {
@@ -47,3 +58,4 @@ async function init() {
 }
 
 init();
+

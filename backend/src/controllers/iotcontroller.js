@@ -1,4 +1,4 @@
-const iotService = require('../services/iot.service');
+const iotService = require('../services/iotservice');
 
 exports.postData = async (req, res) => {
   const { sensor_id, lat, lon, payload, measured_at } = req.body || {};

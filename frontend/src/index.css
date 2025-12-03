@@ -6,6 +6,17 @@
   color-scheme: light;
 }
 
+/* Global font-size increase */
+html {
+  font-size: 17px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 html,
 body,
 #root {
@@ -216,10 +227,12 @@ input[type="radio"] {
   }
 }
 
-/* Mapbox customization */
-.mapboxgl-popup-content {
-  @apply rounded-lg shadow-xl;
-  padding: 0 !important;
+/* RockShield animation */
+.rockshield-orbit {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  animation: rockspin 14s linear infinite;
   font-family: inherit;
 }
 

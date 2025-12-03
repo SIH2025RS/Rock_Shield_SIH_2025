@@ -11,6 +11,30 @@ export async function apiGet(path) {
   return res.json()
 }
 
+async function apiRequest(path, { method = 'GET', token, body } = {}) {
+  const headers = { 'Content-Type': 'application/json' }
+  if (token) headers.Authorization = `Bearer ${token}`
+  const res = await fetch(join(API_BASE_URL, path), {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+  })
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+  return res.json()
+}
+
+export function apiGetAuth(path, token) {
+  return apiRequest(path, { method: 'GET', token })
+}
+
+export function apiPostAuth(path, token, body) {
+  return apiRequest(path, { method: 'POST', token, body })
+}
+
+export function apiPutAuth(path, token, body) {
+  return apiRequest(path, { method: 'PUT', token, body })
+}
+
 export async function health() {
   return apiGet('/health')
 }

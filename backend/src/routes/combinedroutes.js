@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controllers/combined.controller');
+const controller = require('../controllers/combinedcontroller');
 
 router.get('/', controller.getCombined);
 

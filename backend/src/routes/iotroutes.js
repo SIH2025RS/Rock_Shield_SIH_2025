@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controllers/iot.controller');
+const controller = require('../controllers/iotcontroller');
 
 router.post('/', controller.postData);
 router.get('/', controller.getData);

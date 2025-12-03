@@ -1,4 +1,4 @@
-const weatherService = require('../services/weather.service');
+const weatherService = require('../services/weatherservice');
 
 exports.getWeather = async (req, res) => {
   const lat = parseFloat(req.query.lat);

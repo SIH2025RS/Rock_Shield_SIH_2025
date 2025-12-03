@@ -1,4 +1,4 @@
-const demService = require('../services/dem.service');
+const demService = require('../services/demservice');
 
 exports.getDem = async (req, res) => {
   const lat = parseFloat(req.query.lat);
