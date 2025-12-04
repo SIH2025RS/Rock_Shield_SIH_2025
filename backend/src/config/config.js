@@ -17,8 +17,9 @@ const config = {
     baseUrl: process.env.AI_BASE_URL || '',
   },
   dem: {
-    baseUrl: process.env.DEM_API_BASE_URL || 'https://api.open-elevation.com/api/v1/lookup',
+    baseUrl: process.env.DEM_API_BASE_URL || 'https://portal.opentopography.org/API/globaldem',
     apiKey: process.env.DEM_API_KEY || '',
+    demType: process.env.DEM_DATASET || 'SRTMGL1',
   },
   weather: {
     baseUrl: process.env.WEATHER_API_BASE_URL || 'https://api.open-meteo.com/v1/forecast',

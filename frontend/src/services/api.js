@@ -35,6 +35,18 @@ export function apiPutAuth(path, token, body) {
   return apiRequest(path, { method: 'PUT', token, body })
 }
 
+export async function apiUploadAuth(path, token, formData) {
+  const headers = {}
+  if (token) headers.Authorization = `Bearer ${token}`
+  const res = await fetch(join(API_BASE_URL, path), {
+    method: 'POST',
+    headers,
+    body: formData,
+  })
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+  return res.json()
+}
+
 export async function health() {
   return apiGet('/health')
 }

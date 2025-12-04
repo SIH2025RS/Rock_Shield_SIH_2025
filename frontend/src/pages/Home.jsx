@@ -101,6 +101,50 @@ export default function Home() {
         </div>
       </section>
 
+      {isSignedIn && (
+        <section className="py-8">
+          <h2 className="mb-4 text-slate-900 dark:text-white">Quick access</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Link to="/operator/map" className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow transition">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"><MapPin size={20} /></span>
+                <div>
+                  <div className="text-slate-900 dark:text-white font-medium">Map</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">3D terrain, sensors, alerts</div>
+                </div>
+              </div>
+            </Link>
+            <Link to="/operator/alerts" className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow transition">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-amber-600/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"><Activity size={20} /></span>
+                <div>
+                  <div className="text-slate-900 dark:text-white font-medium">Alerts</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Recent risks and actions</div>
+                </div>
+              </div>
+            </Link>
+            <Link to="/operator/incidents" className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow transition">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-rose-600/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400"><Shield size={20} /></span>
+                <div>
+                  <div className="text-slate-900 dark:text-white font-medium">Incidents</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Report, track, acknowledge</div>
+                </div>
+              </div>
+            </Link>
+            <Link to="/operator/reports" className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow transition">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-purple-600/10 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400"><Cloud size={20} /></span>
+                <div>
+                  <div className="text-slate-900 dark:text-white font-medium">Reports</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Share notes and updates</div>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
+      )}
+
       <section className="py-12">
         <h2 className="mb-8 text-center text-slate-900 dark:text-white">Why RockShield</h2>
         <div className="grid gap-6 md:grid-cols-3">
