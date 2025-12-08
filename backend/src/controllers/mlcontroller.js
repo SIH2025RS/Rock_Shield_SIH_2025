@@ -83,8 +83,10 @@ exports.predict = async (req, res) => {
     try {
       demData = await demService.fetchAndStoreDemEnhanced(lat, lon);
       console.log(`✓ DEM data fetched with terrain derivatives`);
+      console.log(`  DEM fields: elevation=${demData?.dem_elevation}, slope=${demData?.dem_slope_angle}, curvature=${demData?.dem_curvature}, aspect=${demData?.dem_aspect}, tri=${demData?.dem_terrain_ruggedness}, drainage=${demData?.dem_drainage_distance}, twi=${demData?.TWI_dynamic}`);
     } catch (err) {
       console.error('DEM fetch failed:', err.message);
+      console.error('DEM error stack:', err.stack);
     }
 
     // Step 4: Fetch enhanced weather data (with rainfall aggregations)
@@ -92,8 +94,10 @@ exports.predict = async (req, res) => {
     try {
       weatherData = await weatherService.fetchAndStoreWeatherEnhanced(lat, lon);
       console.log(`✓ Weather data fetched with rainfall aggregations`);
+      console.log(`  Weather fields: temp=${weatherData?.weather_temperature}, humidity=${weatherData?.weather_humidity}, rain24=${weatherData?.rain_A24}, rain72=${weatherData?.rain_A72}, rain168=${weatherData?.rain_A168}`);
     } catch (err) {
       console.error('Weather fetch failed:', err.message);
+      console.error('Weather error stack:', err.stack);
     }
 
     // Step 5: Build feature dictionary

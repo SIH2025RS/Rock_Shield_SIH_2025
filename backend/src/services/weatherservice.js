@@ -110,6 +110,10 @@ async function fetchAndStoreWeatherEnhanced(lat, lon) {
     const rain_A72 = aggregateRainfall(hourlyData.precipitation, 72);   // Last 72 hours (3 days)
     const rain_A168 = aggregateRainfall(hourlyData.precipitation, 168); // Last 168 hours (7 days)
 
+    console.log(`[Weather] Calculated aggregations at (${lat}, ${lon}):`);
+    console.log(`  temp=${weather_temperature}, humidity=${weather_humidity}, windspeed=${windspeed}`);
+    console.log(`  rain_24h=${rain_A24}, rain_72h=${rain_A72}, rain_168h=${rain_A168}`);
+
     // Note: TWI_dynamic is calculated in DEM service as it requires terrain data
 
     // Store in database
@@ -125,6 +129,8 @@ async function fetchAndStoreWeatherEnhanced(lat, lon) {
       lat, lon, weather_temperature, weather_humidity, windspeed, weathercode,
       rain_A24, rain_A72, rain_A168
     ]);
+    
+    console.log(`[Weather] Inserted row into DB:`, rows[0]);
 
     return {
       weather_temperature,

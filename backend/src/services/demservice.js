@@ -348,6 +348,8 @@ async function fetchAndStoreDemEnhanced(lat, lon) {
       TWI_dynamic, 'opentopo'
     ]);
 
+    console.log(`[DEM] Inserted row into DB:`, rows[0]);
+    
     return {
       dem_elevation,
       dem_slope_angle,

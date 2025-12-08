@@ -184,23 +184,18 @@ def _create_lstm_window(payload: PredictRequest, feature_list: List[str], window
 
 
 def _predict_xgboost(payload: PredictRequest) -> Dict[str, Any]:
-    """Run XGBoost prediction."""
+    """Run XGBoost prediction (no scaling - use raw features)."""
     try:
         features = _extract_features(payload, _xgb_features)
         X = _create_feature_vector(features, _xgb_features)
         
-        # Scale features
-        if _scaler is not None:
-            X_scaled = _scaler.transform(X)
-        else:
-            X_scaled = X
-        
+        # XGBoost uses raw features (no scaling)
         # Predict
         if hasattr(_xgb, 'predict_proba'):
-            prob = _xgb.predict_proba(X_scaled)
+            prob = _xgb.predict_proba(X)
             score = float(prob[0, 1]) if prob.ndim == 2 and prob.shape[1] > 1 else float(prob[0])
         else:
-            y = _xgb.predict(X_scaled)
+            y = _xgb.predict(X)
             score = float(1 / (1 + np.exp(-float(y[0]))))  # Sigmoid
         
         score = max(0.0, min(1.0, score))
@@ -216,13 +211,23 @@ def _predict_xgboost(payload: PredictRequest) -> Dict[str, Any]:
 
 
 def _predict_lstm(payload: PredictRequest) -> Dict[str, Any]:
-    """Run LSTM prediction."""
+    """Run LSTM prediction (with scaling)."""
     try:
         window_size = ENSEMBLE_CONFIG.get('window_size', 8) if ENSEMBLE_CONFIG else 8
         X_window = _create_lstm_window(payload, _lstm_features, window_size)
         
+        # Scale LSTM window if scaler available
+        if _scaler is not None:
+            # Reshape for scaling: (1, window_size, features) -> (window_size, features)
+            X_window_2d = X_window.reshape(-1, X_window.shape[-1])
+            X_window_scaled_2d = _scaler.transform(X_window_2d)
+            # Reshape back: (window_size, features) -> (1, window_size, features)
+            X_window_scaled = X_window_scaled_2d.reshape(1, window_size, -1)
+        else:
+            X_window_scaled = X_window
+        
         # Predict
-        prediction = _lstm.predict(X_window, verbose=0)
+        prediction = _lstm.predict(X_window_scaled, verbose=0)
         score = float(prediction[0, 0]) if prediction.ndim == 2 else float(prediction[0])
         score = max(0.0, min(1.0, score))
         
