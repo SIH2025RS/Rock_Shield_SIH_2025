@@ -68,11 +68,11 @@ export default function Profile() {
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   return (
-    <main className="mx-auto max-w-6xl px-4">
-      <section className="py-8 md:py-10">
-        <h1 className="mb-2 text-4xl">Profile</h1>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      <section className="mx-auto max-w-6xl px-4 py-10">
+        <h1 className="mb-2 text-3xl font-bold text-slate-900 dark:text-white">Profile</h1>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center gap-4">
               <div className="h-16 w-16 overflow-hidden rounded-full border bg-slate-100">
                 {profile?.profileImage ? (
@@ -98,7 +98,7 @@ export default function Profile() {
             </div>
           </div>
 
-          <form onSubmit={onSave} className="rounded-xl border bg-white p-6 shadow-sm">
+          <form onSubmit={onSave} className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-2xl">App Profile</h2>
               {saved && <span className="text-sm text-emerald-600">Saved</span>}
@@ -109,7 +109,7 @@ export default function Profile() {
                 value={form.fullName}
                 onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
                 type="text"
-                className="w-full"
+                className="input w-full"
                 placeholder="Jane Doe"
               />
             </label>
@@ -119,7 +119,7 @@ export default function Profile() {
                 value={form.phone}
                 onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                 type="tel"
-                className="w-full"
+                className="input w-full"
                 placeholder="+1 555 123 4567"
               />
             </label>
