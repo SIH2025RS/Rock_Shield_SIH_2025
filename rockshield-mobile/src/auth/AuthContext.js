@@ -20,9 +20,10 @@ export function AuthProvider({ children }) {
         }
 
         const jwt = await getToken({ template: 'backend' });
-        const me = await apiGetAuth('/api/me', jwt);
+        // Add a cache-busting query param to avoid 304 responses from /api/me
+        const me = await apiGetAuth(`/api/me?ts=${Date.now()}`, jwt);
 
-        if (!cancelled) {
+        if (!cancelled && me) {
           setUser({
             id: me.id ?? null,
             role: me.role ?? null,

@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
-import * as Notifications from 'expo-notifications';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -68,20 +67,6 @@ export default function OperatorAlertsScreen() {
           const nextAlerts = res.alerts || [];
           setAlerts(nextAlerts);
           setAlertsError(null);
-          if (nextAlerts.length) {
-            try {
-              await Notifications.scheduleNotificationAsync({
-                content: {
-                  title: 'Operator alerts',
-                  body: `${nextAlerts.length} alert(s) currently active`,
-                  data: { type: 'operator_alerts' },
-                },
-                trigger: null,
-              });
-            } catch (e) {
-              // ignore notification errors
-            }
-          }
         }
       } catch (e) {
         if (!cancelled) {
