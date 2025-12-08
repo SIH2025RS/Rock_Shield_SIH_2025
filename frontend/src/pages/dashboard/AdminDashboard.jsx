@@ -45,13 +45,13 @@ export default function AdminDashboard() {
   const openIncidents = incidents.filter(i => i.status !== 'acknowledged')
 
   return (
-    <main className="mx-auto max-w-6xl px-4">
-      <section className="py-10">
-        <h1 className="mb-2">System Admin</h1>
-        <p className="text-slate-600">Overview of users, sensors, alerts, and incidents</p>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+        <h1 className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">System Admin</h1>
+        <p className="text-sm text-slate-600 dark:text-slate-400">Overview of users, sensors, alerts, and incidents</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-slate-500 text-sm">Total Users</div>
@@ -62,7 +62,7 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-slate-500 text-sm">Open Incidents</div>
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-slate-500 text-sm">Recent Alerts</div>
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-slate-500 text-sm">Registered Sensors</div>
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-3">Users</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
@@ -121,11 +121,11 @@ export default function AdminDashboard() {
               </table>
             </div>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-3">Recent Incidents</h2>
             <ul className="space-y-2 max-h-64 overflow-auto">
               {incidents.slice(0, 8).map(i => (
-                <li key={i.id} className="rounded border p-3">
+                <li key={i.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
                   <div className="flex items-center justify-between">
                     <div className="font-medium">{i.title}</div>
                     <div className="text-xs text-slate-500">{i.created_at ? new Date(i.created_at).toLocaleString() : '—'}</div>
@@ -136,11 +136,11 @@ export default function AdminDashboard() {
               {incidents.length === 0 && <div className="text-sm text-slate-500">No incidents</div>}
             </ul>
           </div>
-          <div className="md:col-span-2 rounded-xl border bg-white p-6 shadow-sm">
+          <div className="md:col-span-2 rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-3">Recent Alerts</h2>
             <ul className="space-y-2 max-h-72 overflow-auto">
               {alerts.slice(0, 10).map(a => (
-                <li key={a.id} className="rounded border p-3">
+                <li key={a.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
                   <div className="flex items-center justify-between">
                     <div className="font-medium">{a.title}</div>
                     <span className="badge" style={{ backgroundColor: '#f8fafc', color: '#334155', border: '1px solid #cbd5e1' }}>{a.severity}</span>

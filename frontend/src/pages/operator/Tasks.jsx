@@ -50,12 +50,12 @@ export default function OperatorTasks() {
   if (error) return <div className="text-red-600">{error}</div>
 
   return (
-    <div className="section">
-      <div className="section-header">
-        <h2>Task Management</h2>
-        <div className="muted text-xs">Create and track tasks</div>
+    <div className="p-6">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">Task Management</h2>
+        <div className="text-sm text-slate-600 dark:text-slate-400">Create and track tasks for operators and miners</div>
       </div>
-      <div className="card-subtle">
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800 mb-6">
         <form onSubmit={createTask} className="grid grid-cols-1 gap-2">
           <input className="input" placeholder="Title" value={newTask.title} onChange={(e) => setNewTask({ ...newTask, title: e.target.value })} />
           <input className="input" placeholder="Description" value={newTask.description} onChange={(e) => setNewTask({ ...newTask, description: e.target.value })} />
@@ -75,9 +75,9 @@ export default function OperatorTasks() {
           <button className="btn-primary" type="submit">Create</button>
         </form>
       </div>
-      <ul className="list-pane">
+      <ul className="space-y-3 max-h-[600px] overflow-auto">
         {tasks.map((t) => (
-          <li key={t.id} className="list-item">
+          <li key={t.id} className="rounded-xl border p-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <div className="font-medium">{t.title}</div>

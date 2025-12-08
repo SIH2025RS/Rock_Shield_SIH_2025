@@ -54,15 +54,15 @@ export default function OperatorAlerts() {
   if (error) return <div className="text-red-600">{error}</div>
 
   return (
-    <div className="section">
-      <div className="section-header">
-        <h2>Alerts</h2>
-        <div className="muted text-xs">Latest alerts with severities</div>
+    <div className="p-6">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">Risk Alerts</h2>
+        <p className="text-sm text-slate-600 dark:text-slate-400">Monitor and manage active alerts from your sensor network</p>
       </div>
-      <div className="card-subtle">
-        <div className="flex items-center justify-between">
-          <div className="font-medium">Create a new alert</div>
-          <button className="btn-primary" onClick={() => setShowCreate((v) => !v)}>{showCreate ? 'Close' : 'New Alert'}</button>
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800 mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="font-semibold text-slate-900 dark:text-white">Create New Alert</div>
+          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors" onClick={() => setShowCreate((v) => !v)}>{showCreate ? 'Cancel' : 'New Alert'}</button>
         </div>
         {showCreate && (
           <form
@@ -118,9 +118,9 @@ export default function OperatorAlerts() {
           </form>
         )}
       </div>
-      <ul className="list-pane">
+      <ul className="space-y-3 max-h-[600px] overflow-auto">
         {alerts.map((a) => (
-          <li key={a.id} className="list-item">
+          <li key={a.id} className="rounded-xl border p-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">

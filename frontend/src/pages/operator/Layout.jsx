@@ -1,25 +1,27 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import { Shield } from 'lucide-react'
 
 export default function OperatorLayout() {
-  const linkClass = ({ isActive }) =>
-    `btn-tab ${isActive ? 'btn-tab-active' : ''}`
-
   return (
-    <main className="mx-auto max-w-6xl px-4">
-      <section className="py-10">
-        <div className="mb-4">
-          <h1>Operator</h1>
-          <p className="subtext mt-1">Manage live operations: maps, alerts, tasks, sensors, and reports.</p>
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-xl shadow-blue-500/20">
+              <Shield size={28} />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Operator Hub</h1>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                Manage live operations: maps, alerts, tasks, sensors, and reports.
+              </p>
+            </div>
+          </div>
         </div>
-        <nav className="mb-6 flex flex-wrap gap-2 text-sm">
-          <NavLink to="/operator/map" className={linkClass}>Map</NavLink>
-          <NavLink to="/operator/alerts" className={linkClass}>Alerts</NavLink>
-          <NavLink to="/operator/tasks" className={linkClass}>Tasks</NavLink>
-          <NavLink to="/operator/sensors" className={linkClass}>Sensors</NavLink>
-          <NavLink to="/operator/reports" className={linkClass}>Reports</NavLink>
-          <NavLink to="/operator/incidents" className={linkClass}>Incident</NavLink>
-        </nav>
-        <div className="card animate-fadeIn">
+
+        {/* Content */}
+        <div className="animate-fadeIn min-h-[500px]">
           <Outlet />
         </div>
       </section>

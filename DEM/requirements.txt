@@ -1,0 +1,25 @@
+numpy
+pillow
+opencv-python
+matplotlib
+scipy
+rasterio
+richdem
+whitebox
+timm
+# Install one of the torch variants below depending on your system:
+# CPU-only (safe default):
+# torch
+# torchvision
+# torchaudio
+#
+# For faster installs on Windows CPU, you can specify:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+# For CUDA GPU (if available), pick the matching cu version from the PyTorch site.
+
+# Automated Sentinel-2 fetch deps
+planetary-computer
+pystac-client
+odc-stac
+rioxarray
+xarray
