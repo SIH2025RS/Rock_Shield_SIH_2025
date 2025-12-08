@@ -6,6 +6,10 @@ import numpy as np
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import joblib
+from twilio.rest import Client
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -24,6 +28,41 @@ _scaler = None
 _feature_order: List[str] = []
 _xgb_features: List[str] = []
 _lstm_features: List[str] = []
+
+# Twilio Configuration
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', 'your_auth_token')
+TWILIO_FROM_NUMBER = os.environ.get('TWILIO_FROM_NUMBER', '+1234567890')
+TWILIO_TO_NUMBER = os.environ.get('TWILIO_TO_NUMBER', '+0987654321')
+
+def send_sms_alert(risk_score: float, action: str):
+    """Send SMS alert using Twilio to multiple recipients."""
+    try:
+        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        
+        # Parse multiple numbers (comma separated)
+        to_numbers = [num.strip() for num in TWILIO_TO_NUMBER.split(',') if num.strip()]
+        
+        message_body = (
+            f"⚠ HIGH RISK ROCKFALL ALERT ⚠\n"
+            f"Risk Score: {risk_score:.2f}\n"
+            f"Action: {action}\n"
+            f"Please check the dashboard immediately."
+        )
+        
+        for number in to_numbers:
+            try:
+                message = client.messages.create(
+                    body=message_body,
+                    from_=TWILIO_FROM_NUMBER,
+                    to=number
+                )
+                print(f"✓ SMS Alert sent to {number}: {message.sid}")
+            except Exception as inner_e:
+                 print(f"⚠ Failed to send SMS to {number}: {inner_e}")
+                 
+    except Exception as e:
+        print(f"⚠ Failed to initialize Twilio client: {e}")
 
 # Try to load ensemble configuration
 try:
@@ -269,9 +308,13 @@ def _ensemble_predict(payload: PredictRequest) -> Dict[str, Any]:
     elif ensemble_score < warning_threshold:
         klass = 'MEDIUM'
         action = 'Increase monitoring frequency'
+        # Send SMS alert for MEDIUM risk also
+        send_sms_alert(ensemble_score, action)
     else:
         klass = 'HIGH'
         action = 'Immediate inspection required'
+        # Send SMS alert for HIGH risk
+        send_sms_alert(ensemble_score, action)
     
     return {
         'risk_score': ensemble_score,
@@ -330,8 +373,11 @@ def _heuristic_score(payload: PredictRequest) -> Dict[str, Any]:
     klass = 'LOW'
     if risk >= 0.8:
         klass = 'HIGH'
+        # Send SMS alert for HIGH risk
+        send_sms_alert(risk, 'Immediate inspection required')
     elif risk >= 0.6:
         klass = 'MEDIUM'
+        send_sms_alert(risk, 'Immediate inspection required')
 
     rec = 'Immediate inspection required' if klass == 'HIGH' else (
           'Increase monitoring frequency' if klass == 'MEDIUM' else 'Continue routine monitoring')
@@ -372,8 +418,11 @@ def predict(req: PredictRequest):
             klass = 'LOW'
             if score >= 0.8:
                 klass = 'HIGH'
+                # Send SMS alert for HIGH risk
+                send_sms_alert(score, 'Immediate inspection required')
             elif score >= 0.6:
                 klass = 'MEDIUM'
+                send_sms_alert(score, 'Immediate inspection required')
             
             return PredictResponse(
                 risk_score=score,
