@@ -19,6 +19,11 @@ async function apiRequest(path, { method = 'GET', token, body } = {}) {
     body: body ? JSON.stringify(body) : undefined,
   });
 
+  // Treat 304 Not Modified as a non-error (no new body, but not a failure)
+  if (res.status === 304) {
+    return null;
+  }
+
   if (!res.ok) {
     throw new Error(`Request failed: ${res.status}`);
   }
