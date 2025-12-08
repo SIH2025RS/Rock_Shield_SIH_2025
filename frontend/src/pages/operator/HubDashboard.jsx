@@ -93,7 +93,7 @@ export default function HubDashboard() {
         s.emit('unsubscribe-hub-dem', { hubId: Number(selectedHubId) })
         s.off('hub-weather:update', onHubWeather)
         s.off('hub-dem:update', onHubDem)
-      } catch {}
+      } catch { }
     }
   }, [selectedHubId])
 
@@ -147,10 +147,10 @@ export default function HubDashboard() {
         </div>
         <div className="ml-auto flex items-center gap-2 text-sm">
           <span>Hours</span>
-          <input type="number" className="input w-24" min={1} max={720} value={hours} onChange={(e)=> setHours(Math.max(1, Math.min(720, Number(e.target.value)||168)))} />
+          <input type="number" className="input w-24" min={1} max={720} value={hours} onChange={(e) => setHours(Math.max(1, Math.min(720, Number(e.target.value) || 168)))} />
           <span>·</span>
           <span>Radius</span>
-          <input type="number" className="input w-24" min={1} max={50} value={radiusKm} onChange={(e)=> setRadiusKm(Math.max(1, Math.min(50, Number(e.target.value)||5)))} />
+          <input type="number" className="input w-24" min={1} max={50} value={radiusKm} onChange={(e) => setRadiusKm(Math.max(1, Math.min(50, Number(e.target.value) || 5)))} />
           <span>km</span>
         </div>
       </div>
@@ -253,7 +253,7 @@ export default function HubDashboard() {
                 </div>
                 <div className="text-sm text-slate-700 mt-1">{inc.description || ''}</div>
                 <div className="mt-2 grid gap-2 grid-cols-3">
-                  {(Array.isArray(inc.attachments) ? inc.attachments : []).filter(a => (a.mimetype || '').startsWith('image/')).slice(0,9).map((a, idx) => (
+                  {(Array.isArray(inc.attachments) ? inc.attachments : []).filter(a => (a.mimetype || '').startsWith('image/')).slice(0, 9).map((a, idx) => (
                     <img key={idx} className="h-28 w-full object-cover rounded border" src={`${API_BASE_URL}/${a.path}`} alt={a.originalname || 'attachment'} />
                   ))}
                 </div>
@@ -273,8 +273,8 @@ function DemMiniHeatmap({ points }) {
     return <div className="h-64 rounded border bg-slate-50 flex items-center justify-center text-slate-500 text-sm">No DEM data</div>
   }
   // Normalize to grid
-  const lats = [...new Set(points.map(p => p.lat))].sort((a,b)=>a-b)
-  const lons = [...new Set(points.map(p => p.lon))].sort((a,b)=>a-b)
+  const lats = [...new Set(points.map(p => p.lat))].sort((a, b) => a - b)
+  const lons = [...new Set(points.map(p => p.lon))].sort((a, b) => a - b)
   const grid = lats.map(() => new Array(lons.length).fill(null))
   let min = Infinity, max = -Infinity
   for (const p of points) {
@@ -314,8 +314,8 @@ function isWithinRadius(lat1, lon1, lat2, lon2, radiusKm) {
   const R = 6371
   const dLat = toRad(lat2 - lat1)
   const dLon = toRad(lon2 - lon1)
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2)
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   return (R * c) <= radiusKm
 }
 function toRad(d) { return d * Math.PI / 180 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { apiGetAuth, apiPostAuth, apiPutAuth } from '../services/api'
+import { Users as UsersIcon, AlertTriangle, Radio, Activity } from 'lucide-react'
 
 const ROLES = ['system_admin', 'operator', 'miner']
 
@@ -11,6 +12,8 @@ export default function Admin() {
   const [users, setUsers] = useState([])
   const [incidents, setIncidents] = useState([])
   const [ackBusy, setAckBusy] = useState({})
+  const [alerts, setAlerts] = useState([])
+  const [sensors, setSensors] = useState([])
 
   useEffect(() => {
     let mounted = true
@@ -19,9 +22,13 @@ export default function Admin() {
         const token = await getToken({ template: 'backend' })
         const data = await apiGetAuth('/api/admin/users', token)
         const inc = await apiGetAuth('/api/operator/incidents?limit=100', token)
+        const alertsRes = await apiGetAuth('/api/operator/alerts', token)
+        const sensorsRes = await apiGetAuth('/api/operator/sensors?limit=1000', token)
         if (!mounted) return
         setUsers(data.users || [])
         setIncidents(Array.isArray(inc.incidents) ? inc.incidents : [])
+        setAlerts(Array.isArray(alertsRes.alerts) ? alertsRes.alerts : [])
+        setSensors(Array.isArray(sensorsRes.sensors) ? sensorsRes.sensors : [])
         setLoading(false)
       } catch (e) {
         if (!mounted) return
@@ -64,6 +71,53 @@ export default function Admin() {
       <section className="py-10">
         <h1 className="mb-2">Admin</h1>
         <p className="text-slate-600">Manage users, roles, and review incidents</p>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="rounded-xl border bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-slate-500 text-sm">Total Users</div>
+                <div className="text-3xl font-bold text-slate-900">{users.length}</div>
+              </div>
+              <div className="rounded-full p-3 bg-slate-100">
+                <UsersIcon className="w-6 h-6 text-slate-700" />
+              </div>
+            </div>
+          </div>
+          <div className="rounded-xl border bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-slate-500 text-sm">Open Incidents</div>
+                <div className="text-3xl font-bold text-amber-600">{incidents.filter(i => i.status !== 'acknowledged').length}</div>
+              </div>
+              <div className="rounded-full p-3 bg-amber-50">
+                <AlertTriangle className="w-6 h-6 text-amber-600" />
+              </div>
+            </div>
+          </div>
+          <div className="rounded-xl border bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-slate-500 text-sm">Recent Alerts</div>
+                <div className="text-3xl font-bold text-red-600">{alerts.length}</div>
+              </div>
+              <div className="rounded-full p-3 bg-red-50">
+                <Activity className="w-6 h-6 text-red-600" />
+              </div>
+            </div>
+          </div>
+          <div className="rounded-xl border bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-slate-500 text-sm">Registered Sensors</div>
+                <div className="text-3xl font-bold text-blue-600">{sensors.length}</div>
+              </div>
+              <div className="rounded-full p-3 bg-blue-50">
+                <Radio className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="mt-6 rounded-xl border bg-white p-6 shadow-sm">
           <div className="overflow-x-auto">

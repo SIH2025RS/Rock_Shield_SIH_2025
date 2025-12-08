@@ -17,6 +17,7 @@ const adminRoutes = require('./routes/adminroutes');
 const operatorRoutes = require('./routes/operatorroutes');
 const minerRoutes = require('./routes/minerroutes');
 const usersRoutes = require('./routes/usersroutes');
+const mlRoutes = require('./routes/mlroutes');
 
 const app = express();
 app.use(cors());
@@ -39,6 +40,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/operator', operatorRoutes);
 app.use('/api/miner', minerRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api', mlRoutes);
 
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });

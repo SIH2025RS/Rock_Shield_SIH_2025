@@ -32,6 +32,7 @@ export default function OperatorMap() {
   const [hubDem, setHubDem] = useState({})
   const [activeWeatherIds, setActiveWeatherIds] = useState([])
   const [activeDemIds, setActiveDemIds] = useState([])
+  const [mlPredictions, setMlPredictions] = useState([])
 
   const [addSensorMode, setAddSensorMode] = useState(false)
   const [pendingPoint, setPendingPoint] = useState(null)
@@ -41,6 +42,10 @@ export default function OperatorMap() {
   const [newSensorStatus, setNewSensorStatus] = useState('green')
   const [savingSensor, setSavingSensor] = useState(false)
   const [centerOn, setCenterOn] = useState(null)
+
+  function onMlPrediction(payload) {
+    setMlPredictions((prev) => [payload, ...prev].slice(0, 10))
+  }
 
   useEffect(() => {
     let mounted = true
@@ -106,9 +111,11 @@ export default function OperatorMap() {
     }
     socket.on('hub-weather:update', onHubWeather)
     socket.on('hub-dem:update', onHubDem)
+    socket.on('ml:prediction', onMlPrediction)
     return () => {
       socket.off('hub-weather:update', onHubWeather)
       socket.off('hub-dem:update', onHubDem)
+      socket.off('ml:prediction', onMlPrediction)
       socket.disconnect()
       // clear any weather pollers
       try {
@@ -126,6 +133,15 @@ export default function OperatorMap() {
   function onMapAddSensorClick(pt) {
     if (!addSensorMode) return
     setPendingPoint(pt)
+  }
+
+  async function runPrediction() {
+    try {
+      const token = await getToken({ template: 'backend' })
+      const loc = selectedLoc || centerOn
+      if (!loc) return
+      await apiPostAuth('/api/ml/predict', token, { lat: loc.lat, lon: loc.lon })
+    } catch {}
   }
 
   async function savePlantHub(e) {
@@ -291,6 +307,7 @@ export default function OperatorMap() {
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <button className={`btn-tab ${showMapSensors ? 'btn-tab-active' : ''}`} onClick={() => setShowMapSensors(!showMapSensors)}>Sensors</button>
             <button className={`btn-tab ${showMapAlerts ? 'btn-tab-active' : ''}`} onClick={() => setShowMapAlerts(!showMapAlerts)}>Alerts</button>
+            <button className="btn-secondary" onClick={runPrediction}>Run Prediction</button>
             <button className={`btn-tab ${addSensorMode ? 'btn-tab-active' : ''}`} onClick={() => { setAddSensorMode(!addSensorMode); setPendingPoint(null) }}>{addSensorMode ? 'Adding Sensor…' : 'Add Sensor'}</button>
             <div className="input-inline ml-auto">
               <input type="number" className="input w-28" min={1} placeholder="Hours" value={mapHours} onChange={(e) => setMapHours(Number(e.target.value) || 24)} />
@@ -428,6 +445,64 @@ export default function OperatorMap() {
                 </li>
               ))}
             </ul>
+        </div>
+        <div className="card-subtle md:col-span-1">
+          <h3 className="font-medium mb-2">Latest ML Predictions</h3>
+          <ul className="list-pane max-h-80 overflow-auto">
+            {mlPredictions.map((p, idx) => (
+              <li key={idx} className="list-item">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <div
+                      className={`font-semibold text-sm ${
+                        (p?.prediction?.klass || p?.risk_level) === 'HIGH'
+                          ? 'text-red-600'
+                          : (p?.prediction?.klass || p?.risk_level) === 'MEDIUM'
+                          ? 'text-amber-600'
+                          : (p?.prediction?.klass || p?.risk_level) === 'LOW'
+                          ? 'text-emerald-600'
+                          : ''
+                      }`}
+                    >
+                      {p?.risk_level || p?.prediction?.klass || '—'}
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Score: {(p?.prediction?.risk_score ?? p?.heatmapIntensity ?? 0).toFixed(2)}
+                    </div>
+                    {p?.prediction?.recommended_action && (
+                      <div className="text-xs text-slate-500 mt-1">
+                        {p.prediction.recommended_action}
+                      </div>
+                    )}
+                    {p?.prediction?.ensemble_details && (
+                      <div className="mt-1 text-[11px] text-slate-500 space-y-0.5">
+                        <div>
+                          XGBoost: {(p.prediction.ensemble_details.xgb_score ?? 0).toFixed(2)} (
+                          {Math.round(((p.prediction.ensemble_details.xgb_weight ?? 0.7) * 100))}%
+                          )
+                        </div>
+                        <div>
+                          LSTM: {(p.prediction.ensemble_details.lstm_score ?? 0).toFixed(2)} (
+                          {Math.round(((p.prediction.ensemble_details.lstm_weight ?? 0.3) * 100))}%
+                          )
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-xs text-slate-600 text-right">
+                    {p?.location ? (
+                      <span>{Number(p.location.lat).toFixed(4)}, {Number(p.location.lon).toFixed(4)}</span>
+                    ) : (
+                      <span>no location</span>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+            {mlPredictions.length === 0 && (
+              <li className="list-item text-sm text-slate-500">No predictions yet</li>
+            )}
+          </ul>
         </div>
       </div>
     </div>

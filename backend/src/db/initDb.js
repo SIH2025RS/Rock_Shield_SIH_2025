@@ -111,6 +111,27 @@ async function init() {
   CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
   CREATE INDEX IF NOT EXISTS idx_tasks_priority ON tasks(priority);
   CREATE INDEX IF NOT EXISTS idx_tasks_due ON tasks(due_date);
+
+  CREATE TABLE IF NOT EXISTS ml_predictions (
+    id SERIAL PRIMARY KEY,
+    sensor_id TEXT,
+    location_id TEXT,
+    lat DOUBLE PRECISION,
+    lon DOUBLE PRECISION,
+    location_lat DOUBLE PRECISION,
+    location_lon DOUBLE PRECISION,
+    risk_score DOUBLE PRECISION,
+    klass VARCHAR(20),
+    recommended_action TEXT,
+    explainability JSONB DEFAULT '{}'::jsonb,
+    ensemble_details JSONB DEFAULT '{}'::jsonb,
+    model_name TEXT,
+    confidence DOUBLE PRECISION,
+    packet JSONB,
+    created_at TIMESTAMPTZ DEFAULT now()
+  );
+  CREATE INDEX IF NOT EXISTS idx_ml_predictions_time ON ml_predictions(created_at DESC);
+  CREATE INDEX IF NOT EXISTS idx_ml_predictions_sensor ON ml_predictions(sensor_id, created_at DESC);
   `;
 
   try {

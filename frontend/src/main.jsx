@@ -25,6 +25,10 @@ const OperatorIncidents = React.lazy(() =>
   import("./pages/operator/Incidents")
 );
 const OperatorHubDashboard = React.lazy(() => import("./pages/operator/HubDashboard"));
+// Role-specific dashboards
+const AdminDashboard = React.lazy(() => import("./pages/dashboard/AdminDashboard"));
+const MineControlDashboard = React.lazy(() => import("./pages/dashboard/MineControlDashboard"));
+const CaveMinerDashboard = React.lazy(() => import("./pages/dashboard/CaveMinerDashboard"));
 
 import { ThemeProvider } from "./context/ThemeContext";
 import { UserProvider } from "./context/UserContext";
@@ -52,6 +56,30 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <OperatorHubDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/admin"
+                  element={
+                    <ProtectedRoute roles={["system_admin"]}>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/control"
+                  element={
+                    <ProtectedRoute roles={["operator", "system_admin"]}>
+                      <MineControlDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/miner"
+                  element={
+                    <ProtectedRoute roles={["miner"]}>
+                      <CaveMinerDashboard />
                     </ProtectedRoute>
                   }
                 />

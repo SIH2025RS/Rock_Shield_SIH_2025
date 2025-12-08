@@ -28,9 +28,9 @@ exports.getLatestWeather = async (req, res) => {
         temperature DOUBLE PRECISION,
         windspeed DOUBLE PRECISION,
         weathercode INTEGER,
-        created_at TIMESTAMPTZ DEFAULT now()
+        fetched_at TIMESTAMPTZ DEFAULT now()
       );
-      CREATE INDEX IF NOT EXISTS idx_weather_data_created ON weather_data(created_at DESC);
+      CREATE INDEX IF NOT EXISTS idx_weather_data_fetched ON weather_data(fetched_at DESC);
       CREATE INDEX IF NOT EXISTS idx_weather_data_location ON weather_data(lat, lon);
     `);
 
@@ -46,19 +46,22 @@ exports.getLatestWeather = async (req, res) => {
     if (isFinite(qlat) && isFinite(qlon)) {
       const delta = 0.1; // ~11km latitude window
       const { rows } = await pool.query(
-        `SELECT lat, lon, temperature, windspeed, weathercode, created_at
+        `SELECT lat, lon, temperature, windspeed, weathercode, fetched_at
          FROM weather_data
-         WHERE lat BETWEEN $1-$3 AND $1+$3 AND lon BETWEEN $2-$3 AND $2+$3
-         ORDER BY created_at DESC
+         WHERE lat BETWEEN ($1::DOUBLE PRECISION - $3::DOUBLE PRECISION) 
+           AND ($1::DOUBLE PRECISION + $3::DOUBLE PRECISION) 
+           AND lon BETWEEN ($2::DOUBLE PRECISION - $3::DOUBLE PRECISION) 
+           AND ($2::DOUBLE PRECISION + $3::DOUBLE PRECISION)
+         ORDER BY fetched_at DESC
          LIMIT 1`,
         [qlat, qlon, delta]
       );
       row = rows[0] || null;
     } else {
       const { rows } = await pool.query(
-        `SELECT lat, lon, temperature, windspeed, weathercode, created_at
+        `SELECT lat, lon, temperature, windspeed, weathercode, fetched_at
          FROM weather_data
-         ORDER BY created_at DESC
+         ORDER BY fetched_at DESC
          LIMIT 1`
       );
       row = rows[0] || null;
@@ -71,7 +74,7 @@ exports.getLatestWeather = async (req, res) => {
       temperature_2m: row.temperature,
       wind_speed_10m: row.windspeed,
       weather_code: row.weathercode,
-      at: row.created_at,
+      at: row.fetched_at,
     };
     const coords = { lat: row.lat, lon: row.lon };
     const current_units = { temperature_2m: '°C', wind_speed_10m: 'km/h' };
