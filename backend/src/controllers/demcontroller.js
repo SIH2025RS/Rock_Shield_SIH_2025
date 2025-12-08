@@ -261,7 +261,7 @@ exports.getDemImage = async (req, res) => {
   const size = Math.max(32, Math.min(512, parseInt(req.query.size, 10) || 200));
   const padDeg = Math.max(
     0.001,
-    Math.min(0.25, parseFloat(req.query.padDeg) || 0.08)
+    Math.min(0.25, parseFloat(req.query.padDeg) || 0.05)
   );
   const demtype = String(req.query.demtype || config.dem.demType || "SRTMGL1");
   const mode = String(req.query.mode || "hillshade");
@@ -368,6 +368,205 @@ exports.getDemImage = async (req, res) => {
           rgba[off + 3] = 220;
         }
       }
+    } else if (mode === "color" || mode === "colormap") {
+      let min = Infinity,
+        max = -Infinity;
+      for (let i = 0; i < elev.length; i++) {
+        const e = elev[i];
+        if (isFinite(e)) {
+          if (e < min) min = e;
+          if (e > max) max = e;
+        }
+      }
+      if (!isFinite(min) || !isFinite(max) || max - min < 1e-6) {
+        min = 0;
+        max = 1;
+      }
+      const ramp = String(req.query.ramp || "terrain").toLowerCase();
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+      function lerp3(c0, c1, t) {
+        return [
+          Math.round(lerp(c0[0], c1[0], t)),
+          Math.round(lerp(c0[1], c1[1], t)),
+          Math.round(lerp(c0[2], c1[2], t)),
+        ];
+      }
+      function terrainRamp(t) {
+        const stops = [
+          [0.0, [0, 0, 128]], // deep blue
+          [0.2, [0, 128, 255]], // cyan-blue
+          [0.4, [0, 180, 0]], // green
+          [0.6, [255, 255, 0]], // yellow
+          [0.8, [255, 165, 0]], // orange
+          [1.0, [255, 0, 0]], // red
+        ];
+        for (let i = 1; i < stops.length; i++) {
+          if (t <= stops[i][0]) {
+            const t0 = stops[i - 1][0],
+              t1 = stops[i][0];
+            const c0 = stops[i - 1][1],
+              c1 = stops[i][1];
+            const tt = (t - t0) / Math.max(1e-6, t1 - t0);
+            return lerp3(c0, c1, tt);
+          }
+        }
+        return stops[stops.length - 1][1];
+      }
+      function viridisRamp(t) {
+        // lightweight approx: dark blue -> teal -> green -> yellow
+        const stops = [
+          [0.0, [68, 1, 84]],
+          [0.33, [59, 82, 139]],
+          [0.66, [33, 145, 140]],
+          [1.0, [253, 231, 37]],
+        ];
+        for (let i = 1; i < stops.length; i++) {
+          if (t <= stops[i][0]) {
+            const t0 = stops[i - 1][0],
+              t1 = stops[i][0];
+            const c0 = stops[i - 1][1],
+              c1 = stops[i][1];
+            const tt = (t - t0) / Math.max(1e-6, t1 - t0);
+            return lerp3(c0, c1, tt);
+          }
+        }
+        return stops[stops.length - 1][1];
+      }
+      const pick = ramp === "viridis" ? viridisRamp : terrainRamp;
+      for (let v = 0; v < H; v++) {
+        for (let u = 0; u < W; u++) {
+          const e = elev[v * W + u];
+          const off = (v * W + u) * 4;
+          if (!isFinite(e)) {
+            rgba[off + 3] = 0;
+            continue;
+          }
+          const t = Math.max(0, Math.min(1, (e - min) / (max - min)));
+          const c = pick(t);
+          rgba[off] = c[0];
+          rgba[off + 1] = c[1];
+          rgba[off + 2] = c[2];
+          rgba[off + 3] = 235;
+        }
+      }
+    } else if (mode === "colorshade" || mode === "elev_shade") {
+      // color ramp + hillshade modulation
+      let min = Infinity,
+        max = -Infinity;
+      for (let i = 0; i < elev.length; i++) {
+        const e = elev[i];
+        if (isFinite(e)) {
+          if (e < min) min = e;
+          if (e > max) max = e;
+        }
+      }
+      if (!isFinite(min) || !isFinite(max) || max - min < 1e-6) {
+        min = 0;
+        max = 1;
+      }
+      const ramp = String(req.query.ramp || "terrain").toLowerCase();
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+      function lerp3(c0, c1, t) {
+        return [
+          Math.round(lerp(c0[0], c1[0], t)),
+          Math.round(lerp(c0[1], c1[1], t)),
+          Math.round(lerp(c0[2], c1[2], t)),
+        ];
+      }
+      function terrainRamp(t) {
+        const stops = [
+          [0.0, [0, 0, 128]],
+          [0.2, [0, 128, 255]],
+          [0.4, [0, 180, 0]],
+          [0.6, [255, 255, 0]],
+          [0.8, [255, 165, 0]],
+          [1.0, [255, 0, 0]],
+        ];
+        for (let i = 1; i < stops.length; i++) {
+          if (t <= stops[i][0]) {
+            const t0 = stops[i - 1][0],
+              t1 = stops[i][0];
+            const c0 = stops[i - 1][1],
+              c1 = stops[i][1];
+            const tt = (t - t0) / Math.max(1e-6, t1 - t0);
+            return lerp3(c0, c1, tt);
+          }
+        }
+        return stops[stops.length - 1][1];
+      }
+      function viridisRamp(t) {
+        const stops = [
+          [0.0, [68, 1, 84]],
+          [0.33, [59, 82, 139]],
+          [0.66, [33, 145, 140]],
+          [1.0, [253, 231, 37]],
+        ];
+        for (let i = 1; i < stops.length; i++) {
+          if (t <= stops[i][0]) {
+            const t0 = stops[i - 1][0],
+              t1 = stops[i][0];
+            const c0 = stops[i - 1][1],
+              c1 = stops[i][1];
+            const tt = (t - t0) / Math.max(1e-6, t1 - t0);
+            return lerp3(c0, c1, tt);
+          }
+        }
+        return stops[stops.length - 1][1];
+      }
+      const pick = ramp === "viridis" ? viridisRamp : terrainRamp;
+      const midLat = ((north + south) / 2) * (Math.PI / 180);
+      const mPerDegLat = 110574;
+      const mPerDegLon = 111320 * Math.cos(midLat);
+      const dLat = Math.abs(north - south) / H;
+      const dLon = Math.abs(east - west) / W;
+      const dxm = dLon * mPerDegLon,
+        dym = dLat * mPerDegLat;
+      const azDeg = parseFloat(req.query.az);
+      const altDeg = parseFloat(req.query.alt);
+      const az = ((isFinite(azDeg) ? azDeg : 315) * Math.PI) / 180;
+      const alt = ((isFinite(altDeg) ? altDeg : 45) * Math.PI) / 180;
+      const exagVal = parseFloat(req.query.exag);
+      const exag = isFinite(exagVal) ? Math.max(0.1, Math.min(10, exagVal)) : 1;
+      const sinAlt = Math.sin(alt),
+        cosAlt = Math.cos(alt);
+      for (let v = 0; v < H; v++) {
+        for (let u = 0; u < W; u++) {
+          const off = (v * W + u) * 4;
+          const e = elev[v * W + u];
+          if (!isFinite(e)) {
+            rgba[off + 3] = 0;
+            continue;
+          }
+          // base color by elevation
+          const tNorm = Math.max(0, Math.min(1, (e - min) / (max - min)));
+          const base = pick(tNorm);
+          // shade
+          const l = elev[v * W + Math.max(0, u - 1)];
+          const r = elev[v * W + Math.min(W - 1, u + 1)];
+          const t = elev[Math.max(0, v - 1) * W + u];
+          const b = elev[Math.min(H - 1, v + 1) * W + u];
+          if (!(isFinite(l) && isFinite(r) && isFinite(t) && isFinite(b))) {
+            rgba[off + 3] = 0;
+            continue;
+          }
+          const dzdx = (exag * (r - l)) / (2 * dxm);
+          const dzdy = (exag * (t - b)) / (2 * dym);
+          const slope = Math.atan(Math.sqrt(dzdx * dzdx + dzdy * dzdy));
+          const aspect = Math.atan2(dzdy, -dzdx);
+          const hs =
+            cosAlt * Math.cos(slope) +
+            sinAlt * Math.sin(slope) * Math.cos(az - aspect);
+          const shade = Math.max(0, Math.min(1, hs));
+          rgba[off] = Math.round(base[0] * shade);
+          rgba[off + 1] = Math.round(base[1] * shade);
+          rgba[off + 2] = Math.round(base[2] * shade);
+          rgba[off + 3] = 235;
+        }
+      }
     } else {
       const midLat = ((north + south) / 2) * (Math.PI / 180);
       const mPerDegLat = 110574;
@@ -376,8 +575,12 @@ exports.getDemImage = async (req, res) => {
       const dLon = Math.abs(east - west) / W;
       const dxm = dLon * mPerDegLon,
         dym = dLat * mPerDegLat;
-      const az = (315 * Math.PI) / 180;
-      const alt = (45 * Math.PI) / 180;
+      const azDeg = parseFloat(req.query.az);
+      const altDeg = parseFloat(req.query.alt);
+      const az = ((isFinite(azDeg) ? azDeg : 315) * Math.PI) / 180;
+      const alt = ((isFinite(altDeg) ? altDeg : 45) * Math.PI) / 180;
+      const exagVal = parseFloat(req.query.exag);
+      const exag = isFinite(exagVal) ? Math.max(0.1, Math.min(10, exagVal)) : 1;
       const sinAlt = Math.sin(alt),
         cosAlt = Math.cos(alt);
       for (let v = 0; v < H; v++) {
@@ -396,8 +599,8 @@ exports.getDemImage = async (req, res) => {
             rgba[off + 3] = 0;
             continue;
           }
-          const dzdx = (r - l) / (2 * dxm);
-          const dzdy = (t - b) / (2 * dym);
+          const dzdx = (exag * (r - l)) / (2 * dxm);
+          const dzdy = (exag * (t - b)) / (2 * dym);
           const slope = Math.atan(Math.sqrt(dzdx * dzdx + dzdy * dzdy));
           const aspect = Math.atan2(dzdy, -dzdx);
           const hs =
