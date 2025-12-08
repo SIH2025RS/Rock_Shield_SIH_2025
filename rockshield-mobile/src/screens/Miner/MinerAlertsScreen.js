@@ -1,7 +1,6 @@
 // @ts-nocheck
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
-import * as Notifications from 'expo-notifications';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -15,24 +14,6 @@ const MOCK_ALERTS = [
 
 export default function MinerAlertsScreen() {
   const { user } = useAuth();
-
-  useEffect(() => {
-    (async () => {
-      if (!MOCK_ALERTS.length) return;
-      try {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: 'Miner alerts',
-            body: `${MOCK_ALERTS.length} alert(s) assigned to your team`,
-            data: { type: 'miner_alerts' },
-          },
-          trigger: null,
-        });
-      } catch (e) {
-        // ignore notification errors
-      }
-    })();
-  }, []);
 
   return (
     <ThemedView style={styles.container}>

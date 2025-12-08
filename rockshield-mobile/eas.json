@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 16.28.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+  "distribution": "internal",
+  "env": {
+    "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_bGFzdGluZy1nb3JpbGxhLTEyLmNsZXJrLmFjY291bnRzLmRldiQ",
+    "EXPO_PUBLIC_API_BASE_URL": "http://10.0.75.104:4000/"
+  }
+},
+    "production": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
