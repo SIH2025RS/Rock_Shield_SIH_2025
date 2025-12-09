@@ -104,17 +104,17 @@ export default function OperatorIncidents() {
                 <div>
                   <label className="text-sm font-medium">{t('incidents_page.form.location_name')}</label>
                   <div className="relative mt-1">
-                    <input className="input w-full pl-8" placeholder="Bench, pit, landmark" value={incident.location_name} onChange={(e) => setIncident({ ...incident, location_name: e.target.value })} />
+                    <input className="input w-full pl-8" placeholder={t('placeholders.location_name')} value={incident.location_name} onChange={(e) => setIncident({ ...incident, location_name: e.target.value })} />
                     <MapPin size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400" />
                   </div>
                 </div>
                 <div>
                   <label className="text-sm font-medium">{t('incidents_page.form.lat')}</label>
-                  <input className="input mt-1 w-full" placeholder="e.g. 20.5937" value={incident.location_lat} onChange={(e) => setIncident({ ...incident, location_lat: e.target.value })} />
+                  <input className="input mt-1 w-full" placeholder={t('placeholders.latitude')} value={incident.location_lat} onChange={(e) => setIncident({ ...incident, location_lat: e.target.value })} />
                 </div>
                 <div>
                   <label className="text-sm font-medium">{t('incidents_page.form.lon')}</label>
-                  <input className="input mt-1 w-full" placeholder="e.g. 78.9629" value={incident.location_lon} onChange={(e) => setIncident({ ...incident, location_lon: e.target.value })} />
+                  <input className="input mt-1 w-full" placeholder={t('placeholders.longitude')} value={incident.location_lon} onChange={(e) => setIncident({ ...incident, location_lon: e.target.value })} />
                 </div>
               </div>
               <div className="mt-3">

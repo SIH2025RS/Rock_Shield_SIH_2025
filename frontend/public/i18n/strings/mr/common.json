@@ -109,5 +109,9 @@
         "completed": "पूर्ण",
         "cancelled": "रद्द"
     },
+    "untitled": "शीर्षकहीन",
+    "placeholders": {
+        "location_name": "बेंच, खड्डा, खूण"
+    },
     "guest": "अतिथी"
 }

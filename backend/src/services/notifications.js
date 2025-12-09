@@ -1,4 +1,4 @@
-const { alertTemplate } = require("./i18nserver");
+// Notification service for sending SMS, voice, and email alerts
 
 function getTwilioClient() {
   try {
@@ -91,8 +91,8 @@ async function sendAlertEscalation({
   const emails = Array.isArray(toList.email) ? toList.email : [];
   const voiceNumbers = Array.isArray(toList.voice) ? toList.voice : [];
 
-  const smsText = message || alertTemplate(language, severity, "sms");
-  const voiceText = message || alertTemplate(language, severity, "voice");
+  const smsText = message || `[${String(severity).toUpperCase()}] RockShield Alert: Immediate attention required${location ? ` at ${location}` : ''}.`;
+  const voiceText = message || `This is a ${severity} alert from RockShield. Immediate attention required${location ? ` at ${location}` : ''}.`;
   const subject = `[${String(severity).toUpperCase()}] RockShield Alert`;
 
   const results = { sms: [], voice: [], email: [] };

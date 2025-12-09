@@ -136,7 +136,7 @@ export default function OperatorReports() {
           {reports.map((r) => (
             <li key={r.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
               <div className="flex items-center justify-between">
-                <div className="font-medium">{r.title || 'Untitled'}</div>
+                <div className="font-medium">{r.title || t('common:untitled')}</div>
                 <div className="text-xs text-slate-500">{new Date(r.measured_at).toLocaleString()}</div>
               </div>
               <div className="mt-1 text-xs"><span className="badge">{r.category || 'general'}</span></div>

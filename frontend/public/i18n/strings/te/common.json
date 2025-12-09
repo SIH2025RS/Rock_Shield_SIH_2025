@@ -109,5 +109,9 @@
         "completed": "పూర్తయింది",
         "cancelled": "రద్దు చేయబడింది"
     },
+    "untitled": "శీర్షిక లేదు",
+    "placeholders": {
+        "location_name": "బెంచ్, గొయ్యి, మైలురాయి"
+    },
     "guest": "అతిథి"
 }
