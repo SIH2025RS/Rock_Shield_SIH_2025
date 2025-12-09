@@ -20,7 +20,6 @@
         "made_with": "Made with",
         "by_team": "by the RockShield Team"
     },
-    "status": "Status",
     "active": "Active",
     "inactive": "Inactive",
     "logout": "Logout",
@@ -97,7 +96,18 @@
     "i18n": {
         "language": "Language",
         "english": "English",
-        "hindi": "Hindi"
+        "hindi": "Hindi",
+        "marathi": "Marathi",
+        "bengali": "Bengali",
+        "telugu": "Telugu",
+        "kannada": "Kannada",
+        "tamil": "Tamil"
+    },
+    "status": {
+        "pending": "Pending",
+        "in_progress": "In Progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
     },
     "guest": "Guest"
 }

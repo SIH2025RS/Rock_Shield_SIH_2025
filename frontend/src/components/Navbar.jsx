@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   SignedIn,
@@ -11,6 +12,7 @@ import { useTheme } from "../context/ThemeContext";
 import {
   Sun,
   Moon,
+  ChevronDown,
   Map,
   AlertTriangle,
   CheckSquare,
@@ -152,8 +154,19 @@ export default function Navbar() {
 }
 
 function LangSelector({ i18n, t, getToken, isSignedIn }) {
-  async function onChange(e) {
-    const lng = e.target.value;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+    { code: 'mr', name: 'मराठी', flag: '🇮🇳' },
+    { code: 'bn', name: 'বাংলা', flag: '🇮🇳' },
+    { code: 'te', name: 'తెలుగు', flag: '🇮🇳' },
+    { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
+    { code: 'ta', name: 'தமிழ்', flag: '🇮🇳' },
+  ];
+
+  async function changeLang(lng) {
     try {
       if (isSignedIn) {
         const token = await getToken({ template: "backend" });
@@ -161,16 +174,41 @@ function LangSelector({ i18n, t, getToken, isSignedIn }) {
       }
     } catch { }
     i18n.changeLanguage(lng);
+    setIsOpen(false);
   }
+
+  const currentLang = languages.find(l => l.code === (i18n.language?.split("-")[0] || "en"));
+
   return (
-    <select
-      aria-label={t("i18n.language")}
-      onChange={onChange}
-      defaultValue={i18n.language?.split("-")[0] || "en"}
-      className="px-2 py-1 rounded border border-slate-300 text-sm bg-white dark:bg-slate-800 dark:text-slate-200"
-    >
-      <option value="en">{t("i18n.english")}</option>
-      <option value="hi">{t("i18n.hindi")}</option>
-    </select>
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-sm"
+        aria-label={t("i18n.language")}
+      >
+        <span className="text-lg">{currentLang?.flag}</span>
+        <span className="hidden sm:inline">{currentLang?.name}</span>
+        <ChevronDown size={14} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <>
+          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-20 overflow-hidden">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => changeLang(lang.code)}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left ${currentLang?.code === lang.code ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : ''
+                  }`}
+              >
+                <span className="text-xl">{lang.flag}</span>
+                <span className="text-sm">{lang.name}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   );
 }
