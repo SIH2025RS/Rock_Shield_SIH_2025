@@ -1,51 +1,66 @@
 {
-    "insight": {
-        "headline": {
-            "critical": "गंभीर जोखिम का पता चला",
-            "high": "उच्च जोखिम चेतावनी",
-            "medium": "मध्यम जोखिम चेतावनी",
-            "low": "स्थिर स्थितियां"
-        },
-        "confidence": "{{val}}% विश्वास",
-        "reasons_title": "ऐसा क्यों हो रहा है?"
+  "title": "हब डैशबोर्ड",
+  "subtitle_select_hub": "डेटा देखने के लिए एक हब चुनें",
+  "insight": {
+    "headline": {
+      "critical": "गंभीर जोखिम का पता चला",
+      "high": "उच्च जोखिम चेतावनी",
+      "medium": "मध्यम जोखिम चेतावनी",
+      "low": "स्थिर स्थितियां"
     },
-    "mine_control": {
-        "title": "खदान नियंत्रण",
-        "subtitle": "सेंसर, चेतावनियों और घटनाओं के लिए लाइव संचालन अवलोकन।",
-        "active_sensors": "सक्रिय सेंसर",
-        "alerts_24h": "चेतावनियां (24 घंटे)",
-        "incidents_7d": "घटनाएं (7 दिन)",
-        "critical_alerts": "गंभीर चेतावनियां",
-        "recent_alerts": "हाल की चेतावनियां",
-        "registered_sensors": "पंजीकृत सेंसर",
-        "no_alerts_24h": "पिछले 24 घंटों में कोई चेतावनी नहीं",
-        "no_sensors": "कोई पंजीकृत सेंसर नहीं"
-    },
-    "cave_miner": {
-        "title": "गुफा खनिक",
-        "subtitle": "आपके कार्य और अग्रेषित चेतावनियां",
-        "my_tasks": "मेरे कार्य",
-        "forwarded_alerts": "अग्रेषित चेतावनियां",
-        "acknowledged": "स्वीकार किया गया",
-        "no_tasks": "कोई कार्य नहीं सौंपा गया",
-        "no_alerts": "कोई चेतावनी नहीं"
-    },
-    "cards": {
-        "current_temperature": "वर्तमान तापमान",
-        "wind": "हवा",
-        "humidity": "आर्द्रता",
-        "nearby_alerts": "आस-पास की चेतावनियां"
-    },
-    "sections": {
-        "temperature_live": "लाइव तापमान",
-        "wind_humidity_live": "हवा और आर्द्रता",
-        "ml_risk_live": "ML जोखिम मूल्यांकन"
-    },
-    "labels": {
-        "hours": "घंटे",
-        "radius": "त्रिज्या (किमी)"
-    },
-    "map": {
-        "no_dem": "कोई DEM डेटा नहीं"
-    }
+    "confidence": "{{val}}% विश्वास",
+    "reasons_title": "ऐसा क्यों हो रहा है?"
+  },
+  "mine_control": {
+    "title": "खदान नियंत्रण",
+    "subtitle": "सेंसर, चेतावनियों और घटनाओं के लिए लाइव संचालन अवलोकन।",
+    "active_sensors": "सक्रिय सेंसर",
+    "alerts_24h": "चेतावनियां (24 घंटे)",
+    "incidents_7d": "घटनाएं (7 दिन)",
+    "critical_alerts": "गंभीर चेतावनियां",
+    "recent_alerts": "हाल की चेतावनियां",
+    "registered_sensors": "पंजीकृत सेंसर",
+    "no_alerts_24h": "पिछले 24 घंटों में कोई चेतावनी नहीं",
+    "no_sensors": "कोई पंजीकृत सेंसर नहीं"
+  },
+  "cave_miner": {
+    "title": "गुफा खनिक",
+    "subtitle": "आपके कार्य और अग्रेषित चेतावनियां",
+    "my_tasks": "मेरे कार्य",
+    "forwarded_alerts": "अग्रेषित चेतावनियां",
+    "acknowledged": "स्वीकार किया गया",
+    "no_tasks": "कोई कार्य नहीं सौंपा गया",
+    "no_alerts": "कोई चेतावनी नहीं"
+  },
+  "cards": {
+    "current_temperature": "वर्तमान तापमान",
+    "wind": "हवा",
+    "humidity": "आर्द्रता",
+    "nearby_alerts": "आस-पास की चेतावनियां"
+  },
+  "sections": {
+    "temperature_live": "लाइव तापमान",
+    "wind_humidity_live": "हवा और आर्द्रता",
+    "ml_risk_live": "ML जोखिम मूल्यांकन",
+    "dem": "ऊंचाई मानचित्र",
+    "current_conditions": "वर्तमान स्थितियां"
+  },
+  "labels": {
+    "hours": "घंटे",
+    "radius": "त्रिज्या",
+    "hub": "हब"
+  },
+  "status": {
+    "real_time": "रीयल-टाइम",
+    "waiting_for_data": "डेटा की प्रतीक्षा जारी है",
+    "waiting_for_temperature": "तापमान डेटा की प्रतीक्षा जारी है...",
+    "waiting_for_weather": "मौसम डेटा की प्रतीक्षा जारी है...",
+    "waiting_for_ml": "ML भविष्यवाणियों की प्रतीक्षा जारी है...",
+    "within_radius": "{{km}} किमी के भीतर",
+    "no_dem_data": "कोई DEM डेटा उपलब्ध नहीं",
+    "elevation_range": "ऊंचाई रेंज"
+  },
+  "map": {
+    "no_dem": "कोई DEM डेटा नहीं"
+  }
 }
