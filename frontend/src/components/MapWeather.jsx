@@ -241,10 +241,11 @@ export default function MapWeather({
     if (!m || !mapLoaded) return
     try {
       if (!m.getSource('ot-hillshade')) {
+        const demTileBase = (API_BASE_URL || '').replace(/\/$/, '')
         m.addSource('ot-hillshade', {
           type: 'raster',
           tiles: [
-            `${API_BASE_URL}/api/dem/tiles/{z}/{x}/{y}.png?mode=hillshade`
+            `${demTileBase}/api/dem/tiles/{z}/{x}/{y}.png?mode=hillshade`
           ],
           tileSize: 256,
           maxzoom: 14,
