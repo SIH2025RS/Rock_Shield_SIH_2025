@@ -20,7 +20,6 @@
         "made_with": "ಜೊತೆಗೆ ತಯಾರಿಸಲಾಗಿದೆ",
         "by_team": "RockShield ತಂಡದಿಂದ"
     },
-    "status": "ಸ್ಥಿತಿ",
     "active": "ಸಕ್ರಿಯ",
     "inactive": "ನಿಷ್ಕ್ರಿಯ",
     "logout": "ಲಾಗ್ ಔಟ್",
@@ -97,7 +96,18 @@
     "i18n": {
         "language": "ಭಾಷೆ",
         "english": "ಇಂಗ್ಲಿಷ್",
-        "hindi": "ಹಿಂದಿ"
+        "hindi": "ಹಿಂದಿ",
+        "marathi": "ಮರಾಠಿ",
+        "bengali": "ಬಂಗಾಳಿ",
+        "telugu": "ತೆಲುಗು",
+        "kannada": "ಕನ್ನಡ",
+        "tamil": "ತಮಿಳು"
+    },
+    "status": {
+        "pending": "ಬಾಕಿ ಉಳಿದಿದೆ",
+        "in_progress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+        "completed": "ಪೂರ್ಣಗೊಂಡಿದೆ",
+        "cancelled": "ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ"
     },
     "guest": "ಅತಿಥಿ"
 }

@@ -20,7 +20,6 @@
         "made_with": "తో తయారు చేయబడింది",
         "by_team": "RockShield టీం ద్వారా"
     },
-    "status": "స్థితి",
     "active": "సక్రియం",
     "inactive": "నిష్క్రియం",
     "logout": "లాగ్ అవుట్",
@@ -97,7 +96,18 @@
     "i18n": {
         "language": "భాష",
         "english": "ఆంగ్లం",
-        "hindi": "హిందీ"
+        "hindi": "హిందీ",
+        "marathi": "మరాఠీ",
+        "bengali": "బెంగాలీ",
+        "telugu": "తెలుగు",
+        "kannada": "కన్నడ",
+        "tamil": "తమిళం"
+    },
+    "status": {
+        "pending": "పెండింగ్",
+        "in_progress": "ప్రగతిలో",
+        "completed": "పూర్తయింది",
+        "cancelled": "రద్దు చేయబడింది"
     },
     "guest": "అతిథి"
 }
