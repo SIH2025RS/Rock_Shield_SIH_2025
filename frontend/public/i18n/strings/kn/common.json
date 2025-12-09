@@ -1,0 +1,117 @@
+{
+    "welcome": "ಸ್ವಾಗತ",
+    "loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+    "submit": "ಸಲ್ಲಿಸಿ",
+    "cancel": "ರದ್ದುಮಾಡಿ",
+    "save": "ಉಳಿಸಿ",
+    "delete": "ಅಳಿಸಿ",
+    "edit": "ಸಂಪಾದಿಸಿ",
+    "search": "ಹುಡುಕಿ",
+    "actions": {
+        "label": "ಕ್ರಿಯೆಗಳು",
+        "escalate": "ಹೆಚ್ಚಿಸಿ",
+        "acknowledge": "ಒಪ್ಪಿಕೊಳ್ಳಿ",
+        "listen": "ಕೇಳಿ"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "ಉತ್ಸಾಹದಿಂದ ವಿನ್ಯಾಸಗೊಳಿಸಿದ ಸುಧಾರಿತ ಸುರಕ್ಷತಾ ಪರಿಹಾರಗಳು.",
+        "developer": "ಡೆವಲಪರ್",
+        "made_with": "ಜೊತೆಗೆ ತಯಾರಿಸಲಾಗಿದೆ",
+        "by_team": "RockShield ತಂಡದಿಂದ"
+    },
+    "active": "ಸಕ್ರಿಯ",
+    "inactive": "ನಿಷ್ಕ್ರಿಯ",
+    "logout": "ಲಾಗ್ ಔಟ್",
+    "profile": "ಪ್ರೊಫೈಲ್",
+    "close": "ಮುಚ್ಚಿ",
+    "risk": "ಅಪಾಯ",
+    "probability": "ಸಂಭವನೀಯತೆ",
+    "rendering": "ರೆಂಡರ್ ಆಗುತ್ತಿದೆ...",
+    "overall_risk": "ಒಟ್ಟಾರೆ ಅಪಾಯ",
+    "current_rainfall": "ಪ್ರಸ್ತುತ ಮಳೆ",
+    "north_wall": "ಉತ್ತರ ಗೋಡೆ",
+    "east_slope": "ಪೂರ್ವ ಇಳಿಜಾರು",
+    "south_pit": "ದಕ್ಷಿಣ ಹಳ್ಳ",
+    "map": {
+        "sensor": "ಸಂವೇದಕ",
+        "alert": "ಎಚ್ಚರಿಕೆ",
+        "severity": "ತೀವ್ರತೆ",
+        "elevation": "ಎತ್ತರ",
+        "type": "ಪ್ರಕಾರ",
+        "status": "ಸ್ಥಿತಿ",
+        "ml": "ML",
+        "error_token_missing": "Mapbox ಟೋಕನ್ ಕಾಣೆಯಾಗಿದೆ. VITE_MAPBOX_TOKEN ಹೊಂದಿಸಿ.",
+        "error_init": "ನಕ್ಷೆ ಪ್ರಾರಂಭ ದೋಷ",
+        "data_provider": "Open-Meteo ಒದಗಿಸಿದ ಡೇಟಾ",
+        "search_prompt": "ಹವಾಮಾನ ವಿವರಗಳನ್ನು ನೋಡಲು ನಕ್ಷೆಯಲ್ಲಿ ಸ್ಥಳವನ್ನು ಹುಡುಕಿ ಮತ್ತು ಆಯ್ಕೆಮಾಡಿ.",
+        "map_error_title": "ನಕ್ಷೆ ಸಂರಚನೆ ದೋಷ",
+        "map_error_desc": "Mapbox ಟೋಕನ್ ಸಂರಚಿಸಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ .env ಫೈಲ್‌ಗೆ VITE_MAPBOX_TOKEN ಸೇರಿಸಿ.",
+        "get_token": "ಇಲ್ಲಿ ಉಚಿತ ಟೋಕನ್ ಪಡೆಯಿರಿ",
+        "search_placeholder": "ಸ್ಥಳವನ್ನು ಹುಡುಕಿ...",
+        "clear_search": "ಹುಡುಕಾಟವನ್ನು ತೆರವುಗೊಳಿಸಿ",
+        "searching": "ಹುಡುಕುತ್ತಿದೆ…",
+        "no_suggestions": "ಸಲಹೆಗಳಿಲ್ಲ",
+        "geotiff_view": "GeoTIFF (ನೋಟ)",
+        "geotiff_view_title": "ಪ್ರಸ್ತುತ ನಕ್ಷೆ ನೋಟಕ್ಕಾಗಿ GeoTIFF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+        "geotiff_center": "GeoTIFF (ಕೇಂದ್ರ)",
+        "geotiff_center_title": "ಆಯ್ದ ನಿರ್ದೇಶಾಂಕಗಳ ಸುತ್ತ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+        "weather_location": "ಹವಾಮಾನ ಮತ್ತು ಸ್ಥಳ",
+        "coordinates": "ನಿರ್ದೇಶಾಂಕಗಳು",
+        "latitude": "ಅಕ್ಷಾಂಶ",
+        "longitude": "ರೇಖಾಂಶ",
+        "wind": "ಗಾಳಿ",
+        "humidity": "ತೇವಾಂಶ"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "ಮುಖಪುಟ",
+        "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+        "admin": "ನಿರ್ವಾಹಕ",
+        "map": "ನಕ್ಷೆ",
+        "alerts": "ಎಚ್ಚರಿಕೆಗಳು",
+        "tasks": "ಕಾರ್ಯಗಳು",
+        "sensors": "ಸಂವೇದಕಗಳು",
+        "droneImagery": "ಡ್ರೋನ್ ಚಿತ್ರಣ",
+        "reports": "ವರದಿಗಳು",
+        "incidents": "ಘಟನೆಗಳು",
+        "miner": "ಗಣಿಗಾರ ಇಂಟರ್ಫೇಸ್",
+        "login": "ಲಾಗಿನ್",
+        "getStarted": "ಪ್ರಾರಂಭಿಸಿ"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "ನೀವು ಹುಡುಕುತ್ತಿರುವ ಪುಟ ಕಂಡುಬಂದಿಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಿಸಲಾಗಿರಬಹುದು.",
+        "go_home": "ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ"
+    },
+    "severity": {
+        "critical": "ನಿರ್ಣಾಯಕ",
+        "high": "ಹೆಚ್ಚು",
+        "medium": "ಮಧ್ಯಮ",
+        "low": "ಕಡಿಮೆ",
+        "safe": "ಸುರಕ್ಷಿತ"
+    },
+    "i18n": {
+        "language": "ಭಾಷೆ",
+        "english": "ಇಂಗ್ಲಿಷ್",
+        "hindi": "ಹಿಂದಿ",
+        "marathi": "ಮರಾಠಿ",
+        "bengali": "ಬಂಗಾಳಿ",
+        "telugu": "ತೆಲುಗು",
+        "kannada": "ಕನ್ನಡ",
+        "tamil": "ತಮಿಳು"
+    },
+    "status": {
+        "pending": "ಬಾಕಿ ಉಳಿದಿದೆ",
+        "in_progress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+        "completed": "ಪೂರ್ಣಗೊಂಡಿದೆ",
+        "cancelled": "ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ"
+    },
+    "untitled": "ಶೀರ್ಷಿಕೆ ಇಲ್ಲ",
+    "placeholders": {
+        "location_name": "ಬೆಂಚ್, ಗುಂಡಿ, ಹೆಗ್ಗುರುತು"
+    },
+    "guest": "ಅತಿಥಿ"
+}

@@ -1,0 +1,117 @@
+{
+    "welcome": "स्वागत है",
+    "loading": "लोड हो रहा है...",
+    "submit": "जमा करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "search": "खोजें",
+    "actions": {
+        "label": "क्रियाएं",
+        "escalate": "बढ़ाएं",
+        "acknowledge": "स्वीकार करें",
+        "listen": "सुनें"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "जुनून के साथ इंजीनियर किए गए उन्नत सुरक्षा समाधान।",
+        "developer": "डेवलपर",
+        "made_with": "के साथ बनाया गया",
+        "by_team": "RockShield टीम द्वारा"
+    },
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "logout": "लॉग आउट",
+    "profile": "प्रोफ़ाइल",
+    "close": "बंद करें",
+    "risk": "जोखिम",
+    "probability": "संभावना",
+    "rendering": "रेंडर हो रहा है...",
+    "overall_risk": "समग्र जोखिम",
+    "current_rainfall": "वर्तमान वर्षा",
+    "north_wall": "उत्तरी दीवार",
+    "east_slope": "पूर्वी ढलान",
+    "south_pit": "दक्षिणी गड्ढा",
+    "map": {
+        "sensor": "सेंसर",
+        "alert": "चेतावनी",
+        "severity": "गंभीरता",
+        "elevation": "ऊंचाई",
+        "type": "प्रकार",
+        "status": "स्थिति",
+        "ml": "ML",
+        "error_token_missing": "Mapbox टोकन गुम है। VITE_MAPBOX_TOKEN सेट करें।",
+        "error_init": "मानचित्र प्रारंभीकरण त्रुटि",
+        "data_provider": "Open-Meteo द्वारा प्रदान किया गया डेटा",
+        "search_prompt": "मौसम विवरण देखने के लिए मानचित्र पर एक स्थान खोजें और चुनें।",
+        "map_error_title": "मानचित्र कॉन्फ़िगरेशन त्रुटि",
+        "map_error_desc": "Mapbox टोकन कॉन्फ़िगर नहीं है। कृपया अपनी .env फ़ाइल में VITE_MAPBOX_TOKEN जोड़ें।",
+        "get_token": "पर मुफ्त टोकन प्राप्त करें",
+        "search_placeholder": "स्थान खोजें...",
+        "clear_search": "खोज साफ़ करें",
+        "searching": "खोज रहे हैं…",
+        "no_suggestions": "कोई सुझाव नहीं",
+        "geotiff_view": "GeoTIFF (दृश्य)",
+        "geotiff_view_title": "वर्तमान मानचित्र दृश्य के लिए GeoTIFF डाउनलोड करें",
+        "geotiff_center": "GeoTIFF (केंद्र)",
+        "geotiff_center_title": "चयनित निर्देशांक के आसपास डाउनलोड करें",
+        "weather_location": "मौसम और स्थान",
+        "coordinates": "निर्देशांक",
+        "latitude": "अक्षांश",
+        "longitude": "देशांतर",
+        "wind": "हवा",
+        "humidity": "आर्द्रता"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "होम",
+        "dashboard": "डैशबोर्ड",
+        "admin": "प्रशासक",
+        "map": "मानचित्र",
+        "alerts": "चेतावनियां",
+        "tasks": "कार्य",
+        "sensors": "सेंसर",
+        "droneImagery": "ड्रोन इमेजरी",
+        "reports": "रिपोर्ट",
+        "incidents": "घटनाएं",
+        "miner": "खनिक इंटरफ़ेस",
+        "login": "लॉगिन",
+        "getStarted": "शुरू करें"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "आप जिस पृष्ठ की तलाश कर रहे हैं वह नहीं मिला या स्थानांतरित हो सकता है।",
+        "go_home": "होम पर जाएं"
+    },
+    "severity": {
+        "critical": "गंभीर",
+        "high": "उच्च",
+        "medium": "मध्यम",
+        "low": "कम",
+        "safe": "सुरक्षित"
+    },
+    "i18n": {
+        "language": "भाषा",
+        "english": "अंग्रेज़ी",
+        "hindi": "हिंदी",
+        "marathi": "मराठी",
+        "bengali": "बंगाली",
+        "telugu": "तेलुगु",
+        "kannada": "कन्नड़",
+        "tamil": "तमिल"
+    },
+    "status": {
+        "pending": "लंबित",
+        "in_progress": "प्रगति में",
+        "completed": "पूर्ण",
+        "cancelled": "रद्द"
+    },
+    "untitled": "शीर्षकहीन",
+    "placeholders": {
+        "location_name": "बेंच, गड्ढा, स्थल चिह्न"
+    },
+    "guest": "अतिथि"
+}

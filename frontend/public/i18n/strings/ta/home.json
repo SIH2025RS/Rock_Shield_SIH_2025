@@ -1,0 +1,30 @@
+{
+    "title": "செயல்பாட்டு பகுப்பாய்வு",
+    "subtitle": "நிகழ்நேர தரவு விளக்கம் மற்றும் நுண்ணறிவுகள்",
+    "risk_trend": "ஆபத்து போக்கு (24 மணி)",
+    "dem_status": "DEM நிலை",
+    "dem_preview_alt": "DEM முன்னோட்டம்",
+    "generating_preview": "DEM முன்னோட்டம் உருவாக்குகிறது...",
+    "preview_pending": "DEM முன்னோட்டம் நிலுவையில் உள்ளது",
+    "weather_pattern": "வானிலை முறை (24 மணி)",
+    "temperature": "வெப்பநிலை (°C)",
+    "humidity": "ஈரப்பதம் (%)",
+    "zone_risk_comparison": "மண்டல ஆபத்து ஒப்பீடு",
+    "recent_alerts": "சமீபத்திய எச்சரிக்கைகள்",
+    "no_recent_alerts": "சமீபத்திய எச்சரிக்கைகள் இல்லை",
+    "dem_viewer_title": "DEM காட்சியாளர் - காட்சிப்பகுதி மற்றும் அளவுருக்களை சரிசெய்யவும்",
+    "dem_full_screen_alt": "DEM முழு திரை",
+    "dem_controls": {
+        "latitude": "அட்சரேகை",
+        "longitude": "தீர்க்கரேகை",
+        "zoom": "பெரிதாக்கு (பேட் டிகிரி)",
+        "color_ramp": "வண்ண வளைவு",
+        "azimuth": "அசிமுத் (ஒளி கோணம்)",
+        "altitude": "உயரம் (ஒளி உயரம்)",
+        "vertical_exaggeration": "செங்குத்து மிகைப்படுத்தல்"
+    },
+    "dem_options": {
+        "terrain": "நிலப்பரப்பு (நீலம்-சிவப்பு)",
+        "viridis": "விரிடிஸ் (இருண்ட-மஞ்சள்)"
+    }
+}

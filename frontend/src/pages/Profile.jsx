@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/clerk-react'
 import { apiGetAuth, apiPutAuth } from '../services/api'
+import { useTranslation } from 'react-i18next'
 
 export default function Profile() {
+  const { t } = useTranslation(['auth', 'common'])
   const { getToken } = useAuth()
   const { user } = useUser()
   const [loading, setLoading] = useState(true)
@@ -25,7 +27,7 @@ export default function Profile() {
         setLoading(false)
       } catch (e) {
         if (!mounted) return
-        setError(String(e?.message || 'Failed to load profile'))
+        setError(String(e?.message || t('auth:profile.errors.load')))
         setLoading(false)
       }
     }
@@ -35,10 +37,10 @@ export default function Profile() {
 
   function validate() {
     if (form.fullName && form.fullName.trim().length < 2) {
-      return 'Full name must be at least 2 characters'
+      return t('auth:profile.validation.full_name')
     }
     if (form.phone && !/^[- +()0-9]{6,20}$/.test(form.phone)) {
-      return 'Phone contains invalid characters'
+      return t('auth:profile.validation.phone')
     }
     return ''
   }
@@ -58,19 +60,19 @@ export default function Profile() {
       setSaved(true)
       setTimeout(() => setSaved(false), 2000)
     } catch (e) {
-      setFormError('Failed to update: ' + (e?.message || 'Unknown error'))
+      setFormError(t('auth:profile.errors.update') + ': ' + (e?.message || 'Unknown error'))
     } finally {
       setSaving(false)
     }
   }
 
-  if (loading) return <div className="p-6">Loading…</div>
+  if (loading) return <div className="p-6">{t('common:loading')}</div>
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h1 className="mb-2 text-3xl font-bold text-slate-900 dark:text-white">Profile</h1>
+        <h1 className="mb-2 text-3xl font-bold text-slate-900 dark:text-white">{t('auth:profile.title')}</h1>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center gap-4">
@@ -78,7 +80,7 @@ export default function Profile() {
                 {profile?.profileImage ? (
                   <img src={profile.profileImage} alt="avatar" className="h-full w-full object-cover" />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-xl text-slate-500">{(profile?.fullName || '—').slice(0,1)}</div>
+                  <div className="flex h-full w-full items-center justify-center text-xl text-slate-500">{(profile?.fullName || '—').slice(0, 1)}</div>
                 )}
               </div>
               <div>
@@ -88,11 +90,11 @@ export default function Profile() {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded-lg border bg-slate-50 p-3">
-                <div className="text-slate-500">Role</div>
+                <div className="text-slate-500">{t('auth:profile.role')}</div>
                 <div className="font-medium">{profile?.role || '—'}</div>
               </div>
               <div className="rounded-lg border bg-slate-50 p-3">
-                <div className="text-slate-500">Clerk ID</div>
+                <div className="text-slate-500">{t('auth:profile.clerk_id')}</div>
                 <div className="font-medium truncate">{user?.id || '—'}</div>
               </div>
             </div>
@@ -100,11 +102,11 @@ export default function Profile() {
 
           <form onSubmit={onSave} className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-2xl">App Profile</h2>
-              {saved && <span className="text-sm text-emerald-600">Saved</span>}
+              <h2 className="text-2xl">{t('auth:profile.app_profile')}</h2>
+              {saved && <span className="text-sm text-emerald-600">{t('auth:profile.saved')}</span>}
             </div>
             <label className="block mb-3">
-              <span className="mb-1 block text-slate-700">Full name</span>
+              <span className="mb-1 block text-slate-700">{t('auth:profile.full_name')}</span>
               <input
                 value={form.fullName}
                 onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
@@ -114,7 +116,7 @@ export default function Profile() {
               />
             </label>
             <label className="block mb-3">
-              <span className="mb-1 block text-slate-700">Phone</span>
+              <span className="mb-1 block text-slate-700">{t('auth:profile.phone')}</span>
               <input
                 value={form.phone}
                 onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
@@ -124,7 +126,7 @@ export default function Profile() {
               />
             </label>
             {formError && <div className="mb-3 text-sm text-red-600">{formError}</div>}
-            <button className="btn-primary" type="submit" disabled={saving}>{saving ? 'Saving…' : 'Save'}</button>
+            <button className="btn-primary" type="submit" disabled={saving}>{saving ? t('auth:profile.saving') : t('auth:profile.save')}</button>
           </form>
         </div>
       </section>

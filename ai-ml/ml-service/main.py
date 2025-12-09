@@ -136,6 +136,32 @@ def health():
     }
 
 
+def safe_float(x: Any, default: float = 0.0) -> float:
+    """Convert to float safely, treating None/""/"nan"/invalid as default."""
+    try:
+        if x is None:
+            return float(default)
+        # Fast path for numeric types
+        if isinstance(x, (int, float)):
+            try:
+                v = float(x)
+            except Exception:
+                return float(default)
+            if np.isnan(v) or np.isinf(v):
+                return float(default)
+            return v
+        # Strings and others
+        s = str(x).strip()
+        if s == '' or s.lower() in {'none', 'null', 'nan', 'na'}:
+            return float(default)
+        v = float(s)
+        if np.isnan(v) or np.isinf(v):
+            return float(default)
+        return v
+    except Exception:
+        return float(default)
+
+
 def _extract_features(payload: PredictRequest, feature_list: List[str]) -> Dict[str, float]:
     """Extract features from payload and return as dict."""
     features = {}
@@ -149,25 +175,25 @@ def _extract_features(payload: PredictRequest, feature_list: List[str]) -> Dict[
         sensor = payload.sensor_data[0]  # Most recent
         for key in feature_list:
             if key in sensor and key not in features:
-                features[key] = float(sensor.get(key, 0.0))
+                features[key] = safe_float(sensor.get(key, 0.0), 0.0)
     
     # Extract from weather
     if payload.weather:
         for key in feature_list:
             if key in payload.weather and key not in features:
-                features[key] = float(payload.weather.get(key, 0.0))
+                features[key] = safe_float(payload.weather.get(key, 0.0), 0.0)
     
     # Extract from DEM
     if payload.dem:
         for key in feature_list:
             if key in payload.dem and key not in features:
-                features[key] = float(payload.dem.get(key, 0.0))
+                features[key] = safe_float(payload.dem.get(key, 0.0), 0.0)
     
     # Extract from metadata
     if payload.metadata:
         for key in feature_list:
             if key in payload.metadata and key not in features:
-                features[key] = float(payload.metadata.get(key, 0.0))
+                features[key] = safe_float(payload.metadata.get(key, 0.0), 0.0)
     
     return features
 
@@ -238,11 +264,32 @@ def _predict_xgboost(payload: PredictRequest) -> Dict[str, Any]:
             score = float(1 / (1 + np.exp(-float(y[0]))))  # Sigmoid
         
         score = max(0.0, min(1.0, score))
-        
+
+        shap_top = None
+        try:
+            import shap  # type: ignore
+            try:
+                explainer = shap.TreeExplainer(_xgb)
+                sv = explainer.shap_values(X)
+                # Handle binary classifier output shape differences
+                if isinstance(sv, list):
+                    arr = sv[1][0] if len(sv) > 1 else sv[0][0]
+                else:
+                    arr = sv[0]
+                # Pair feature names with contributions and sort by absolute impact
+                paired = list(zip(_xgb_features, [float(x) for x in arr.tolist()]))
+                paired.sort(key=lambda t: abs(t[1]), reverse=True)
+                shap_top = paired[:10]
+            except Exception:
+                shap_top = None
+        except Exception:
+            shap_top = None
+
         return {
             'score': score,
             'features_used': len([f for f in features.values() if f != 0.0]),
-            'total_features': len(_xgb_features)
+            'total_features': len(_xgb_features),
+            'shap_top': shap_top
         }
     except Exception as e:
         print(f"✗ XGBoost prediction failed: {e}")
@@ -338,7 +385,8 @@ def _ensemble_predict(payload: PredictRequest) -> Dict[str, Any]:
                 'safe': f'< {safe_threshold}',
                 'warning': f'< {warning_threshold}',
                 'critical': f'>= {warning_threshold}'
-            }
+            },
+            'shap_top': xgb_result.get('shap_top')
         }
     }
 

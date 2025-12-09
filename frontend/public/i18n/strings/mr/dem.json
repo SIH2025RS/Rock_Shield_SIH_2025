@@ -1,0 +1,34 @@
+{
+    "loading": "DEM डेटा लोड होत आहे...",
+    "title": "DEM भूभाग विश्लेषण",
+    "parameter": "पॅरामीटर",
+    "zone": "क्षेत्र",
+    "zone_analysis": "क्षेत्र विश्लेषण",
+    "zone_not_found": "क्षेत्र सापडले नाही",
+    "current_value": "सध्याचे मूल्य",
+    "std_dev": "मानक विचलन",
+    "description": "वर्णन",
+    "all_zones": "सर्व क्षेत्रांचे विहंगावलोकन",
+    "risk_level": "जोखीम पातळी",
+    "risk_factors": "जोखीम घटक",
+    "status": "स्थिती",
+    "risk": "जोखीम",
+    "sensors": "सेन्सर",
+    "parameters": {
+        "elevation": "उंची",
+        "slope": "उतार",
+        "aspect": "पैलू",
+        "porePressure": "छिद्र दाब",
+        "methanePpm": "मिथेन (ppm)",
+        "roughness": "खडबडीतपणा",
+        "relief": "आराम",
+        "flowAccumulation": "प्रवाह संचय",
+        "topographicWetnessIndex": "TWI"
+    },
+    "risk_levels": {
+        "safe": "सुरक्षित",
+        "low": "कमी",
+        "warning": "चेतावणी",
+        "high": "उच्च"
+    }
+}

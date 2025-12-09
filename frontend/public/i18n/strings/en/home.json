@@ -1,0 +1,30 @@
+{
+    "title": "Operational Analytics",
+    "subtitle": "Real-time data interpretation and insights",
+    "risk_trend": "Risk Trend (24h)",
+    "dem_status": "DEM Status",
+    "dem_preview_alt": "DEM preview",
+    "generating_preview": "Generating DEM preview...",
+    "preview_pending": "DEM preview pending",
+    "weather_pattern": "Weather Pattern (24h)",
+    "temperature": "Temperature (°C)",
+    "humidity": "Humidity (%)",
+    "zone_risk_comparison": "Zone Risk Comparison",
+    "recent_alerts": "Recent Alerts",
+    "no_recent_alerts": "No recent alerts",
+    "dem_viewer_title": "DEM Viewer - Adjust Viewport & Parameters",
+    "dem_full_screen_alt": "DEM full screen",
+    "dem_controls": {
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "zoom": "Zoom (Pad Deg)",
+        "color_ramp": "Color Ramp",
+        "azimuth": "Azimuth (Light Angle)",
+        "altitude": "Altitude (Light Height)",
+        "vertical_exaggeration": "Vertical Exaggeration"
+    },
+    "dem_options": {
+        "terrain": "Terrain (Blue-Red)",
+        "viridis": "Viridis (Dark-Yellow)"
+    }
+}

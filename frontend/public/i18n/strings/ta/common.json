@@ -1,0 +1,117 @@
+{
+    "welcome": "வரவேற்கிறோம்",
+    "loading": "ஏற்றுகிறது...",
+    "submit": "சமர்ப்பிக்கவும்",
+    "cancel": "ரத்துசெய்",
+    "save": "சேமி",
+    "delete": "நீக்கு",
+    "edit": "திருத்து",
+    "search": "தேடு",
+    "actions": {
+        "label": "செயல்கள்",
+        "escalate": "அதிகரிக்கவும்",
+        "acknowledge": "ஒப்புக்கொள்",
+        "listen": "கேளுங்கள்"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "ஆர்வத்துடன் வடிவமைக்கப்பட்ட மேம்பட்ட பாதுகாப்பு தீர்வுகள்.",
+        "developer": "டெவலப்பர்",
+        "made_with": "உடன் உருவாக்கப்பட்டது",
+        "by_team": "RockShield குழுவால்"
+    },
+    "active": "செயலில்",
+    "inactive": "செயலற்றது",
+    "logout": "வெளியேறு",
+    "profile": "சுயவிவரம்",
+    "close": "மூடு",
+    "risk": "ஆபத்து",
+    "probability": "சாத்தியம்",
+    "rendering": "வழங்குகிறது...",
+    "overall_risk": "ஒட்டுமொத்த ஆபத்து",
+    "current_rainfall": "தற்போதைய மழை",
+    "north_wall": "வடக்கு சுவர்",
+    "east_slope": "கிழக்கு சாய்வு",
+    "south_pit": "தெற்கு குழி",
+    "map": {
+        "sensor": "உணரி",
+        "alert": "எச்சரிக்கை",
+        "severity": "தீவிரம்",
+        "elevation": "உயரம்",
+        "type": "வகை",
+        "status": "நிலை",
+        "ml": "ML",
+        "error_token_missing": "Mapbox டோக்கன் காணவில்லை. VITE_MAPBOX_TOKEN அமைக்கவும்.",
+        "error_init": "வரைபடம் துவக்க பிழை",
+        "data_provider": "Open-Meteo வழங்கிய தரவு",
+        "search_prompt": "வானிலை விவரங்களைக் காண வரைபடத்தில் ஒரு இடத்தைத் தேடி தேர்ந்தெடுக்கவும்.",
+        "map_error_title": "வரைபடம் உள்ளமைவு பிழை",
+        "map_error_desc": "Mapbox டோக்கன் உள்ளமைக்கப்படவில்லை. உங்கள் .env கோப்பில் VITE_MAPBOX_TOKEN சேர்க்கவும்.",
+        "get_token": "இங்கே இலவச டோக்கன் பெறவும்",
+        "search_placeholder": "இடத்தைத் தேடு...",
+        "clear_search": "தேடலை அழி",
+        "searching": "தேடுகிறது…",
+        "no_suggestions": "பரிந்துரைகள் இல்லை",
+        "geotiff_view": "GeoTIFF (காட்சி)",
+        "geotiff_view_title": "தற்போதைய வரைபட காட்சிக்கு GeoTIFF பதிவிறக்கவும்",
+        "geotiff_center": "GeoTIFF (மையம்)",
+        "geotiff_center_title": "தேர்ந்தெடுக்கப்பட்ட ஆயங்களைச் சுற்றி பதிவிறக்கவும்",
+        "weather_location": "வானிலை மற்றும் இடம்",
+        "coordinates": "ஆயங்கள்",
+        "latitude": "அட்சரேகை",
+        "longitude": "தீர்க்கரேகை",
+        "wind": "காற்று",
+        "humidity": "ஈரப்பதம்"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "முகப்பு",
+        "dashboard": "டாஷ்போர்டு",
+        "admin": "நிர்வாகி",
+        "map": "வரைபடம்",
+        "alerts": "எச்சரிக்கைகள்",
+        "tasks": "பணிகள்",
+        "sensors": "உணரிகள்",
+        "droneImagery": "ட்ரோன் படங்கள்",
+        "reports": "அறிக்கைகள்",
+        "incidents": "சம்பவங்கள்",
+        "miner": "சுரங்கத் தொழிலாளர் இடைமுகம்",
+        "login": "உள்நுழைவு",
+        "getStarted": "தொடங்குங்கள்"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "நீங்கள் தேடும் பக்கம் கிடைக்கவில்லை அல்லது நகர்த்தப்பட்டிருக்கலாம்.",
+        "go_home": "முகப்புக்குச் செல்"
+    },
+    "severity": {
+        "critical": "முக்கியமான",
+        "high": "அதிகம்",
+        "medium": "நடுத்தரம்",
+        "low": "குறைவு",
+        "safe": "பாதுகாப்பானது"
+    },
+    "i18n": {
+        "language": "மொழி",
+        "english": "ஆங்கிலம்",
+        "hindi": "இந்தி",
+        "marathi": "மராத்தி",
+        "bengali": "வங்காளம்",
+        "telugu": "தெலுங்கு",
+        "kannada": "கன்னடம்",
+        "tamil": "தமிழ்"
+    },
+    "status": {
+        "pending": "நிலுவையில்",
+        "in_progress": "செயலில்",
+        "completed": "முடிந்தது",
+        "cancelled": "ரத்து செய்யப்பட்டது"
+    },
+    "untitled": "தலைப்பு இல்லை",
+    "placeholders": {
+        "location_name": "பெஞ்ச், குழி, மைல்கல்"
+    },
+    "guest": "விருந்தினர்"
+}

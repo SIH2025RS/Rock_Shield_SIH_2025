@@ -116,21 +116,21 @@ async function fetchAndStoreWeatherEnhanced(lat, lon) {
 
     // Note: TWI_dynamic is calculated in DEM service as it requires terrain data
 
-    // Store in database
-    const insert = `
-      INSERT INTO weather_data(
-        lat, lon, temperature, humidity, windspeed, weathercode,
-        rain_24h, rain_72h, rain_168h, fetched_at
-      ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,NOW()) 
-      RETURNING *
-    `;
-
-    const { rows } = await pool.query(insert, [
-      lat, lon, weather_temperature, weather_humidity, windspeed, weathercode,
-      rain_A24, rain_A72, rain_A168
-    ]);
-    
-    console.log(`[Weather] Inserted row into DB:`, rows[0]);
+    // Best-effort DB persistence; ignore schema/insert errors
+    try {
+      const insert = `
+        INSERT INTO weather_data(
+          lat, lon, temperature, humidity, windspeed, weathercode,
+          rain_24h, rain_72h, rain_168h, fetched_at
+        ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,NOW())
+      `;
+      await pool.query(insert, [
+        lat, lon, weather_temperature, weather_humidity, windspeed, weathercode,
+        rain_A24, rain_A72, rain_A168
+      ]);
+    } catch (e) {
+      // ignore DB errors to avoid breaking pipeline
+    }
 
     return {
       weather_temperature,
@@ -139,8 +139,7 @@ async function fetchAndStoreWeatherEnhanced(lat, lon) {
       weathercode,
       rain_A24,
       rain_A72,
-      rain_A168,
-      ...rows[0]
+      rain_A168
     };
 
   } catch (err) {

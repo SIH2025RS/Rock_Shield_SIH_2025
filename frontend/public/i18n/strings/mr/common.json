@@ -1,0 +1,117 @@
+{
+    "welcome": "स्वागत आहे",
+    "loading": "लोड होत आहे...",
+    "submit": "सबमिट करा",
+    "cancel": "रद्द करा",
+    "save": "जतन करा",
+    "delete": "हटवा",
+    "edit": "संपादित करा",
+    "search": "शोधा",
+    "actions": {
+        "label": "क्रिया",
+        "escalate": "वाढवा",
+        "acknowledge": "स्वीकारा",
+        "listen": "ऐका"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "उत्कटतेने तयार केलेले प्रगत सुरक्षा उपाय.",
+        "developer": "विकासक",
+        "made_with": "सह बनवले",
+        "by_team": "RockShield टीमद्वारे"
+    },
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "logout": "लॉग आउट",
+    "profile": "प्रोफाइल",
+    "close": "बंद करा",
+    "risk": "जोखीम",
+    "probability": "संभाव्यता",
+    "rendering": "रेंडर होत आहे...",
+    "overall_risk": "एकूण जोखीम",
+    "current_rainfall": "सध्याचा पाऊस",
+    "north_wall": "उत्तर भिंत",
+    "east_slope": "पूर्व उतार",
+    "south_pit": "दक्षिण खड्डा",
+    "map": {
+        "sensor": "सेन्सर",
+        "alert": "सूचना",
+        "severity": "तीव्रता",
+        "elevation": "उंची",
+        "type": "प्रकार",
+        "status": "स्थिती",
+        "ml": "ML",
+        "error_token_missing": "Mapbox टोकन गहाळ आहे. VITE_MAPBOX_TOKEN सेट करा.",
+        "error_init": "नकाशा प्रारंभ त्रुटी",
+        "data_provider": "Open-Meteo द्वारे प्रदान केलेला डेटा",
+        "search_prompt": "हवामान तपशील पाहण्यासाठी नकाशावर स्थान शोधा आणि निवडा.",
+        "map_error_title": "नकाशा कॉन्फिगरेशन त्रुटी",
+        "map_error_desc": "Mapbox टोकन कॉन्फिगर केलेले नाही. कृपया तुमच्या .env फाइलमध्ये VITE_MAPBOX_TOKEN जोडा.",
+        "get_token": "येथे मोफत टोकन मिळवा",
+        "search_placeholder": "स्थान शोधा...",
+        "clear_search": "शोध साफ करा",
+        "searching": "शोधत आहे…",
+        "no_suggestions": "सूचना नाहीत",
+        "geotiff_view": "GeoTIFF (दृश्य)",
+        "geotiff_view_title": "सध्याच्या नकाशा दृश्यासाठी GeoTIFF डाउनलोड करा",
+        "geotiff_center": "GeoTIFF (केंद्र)",
+        "geotiff_center_title": "निवडलेल्या समन्वयांभोवती डाउनलोड करा",
+        "weather_location": "हवामान आणि स्थान",
+        "coordinates": "समन्वय",
+        "latitude": "अक्षांश",
+        "longitude": "रेखांश",
+        "wind": "वारा",
+        "humidity": "आर्द्रता"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "मुख्यपृष्ठ",
+        "dashboard": "डॅशबोर्ड",
+        "admin": "प्रशासक",
+        "map": "नकाशा",
+        "alerts": "सूचना",
+        "tasks": "कार्ये",
+        "sensors": "सेन्सर",
+        "droneImagery": "ड्रोन इमेजरी",
+        "reports": "अहवाल",
+        "incidents": "घटना",
+        "miner": "खाण कामगार इंटरफेस",
+        "login": "लॉगिन",
+        "getStarted": "सुरू करा"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "तुम्ही शोधत असलेले पृष्ठ सापडले नाही किंवा हलवले गेले असू शकते.",
+        "go_home": "मुख्यपृष्ठावर जा"
+    },
+    "severity": {
+        "critical": "गंभीर",
+        "high": "उच्च",
+        "medium": "मध्यम",
+        "low": "कमी",
+        "safe": "सुरक्षित"
+    },
+    "i18n": {
+        "language": "भाषा",
+        "english": "इंग्रजी",
+        "hindi": "हिंदी",
+        "marathi": "मराठी",
+        "bengali": "बंगाली",
+        "telugu": "तेलुगू",
+        "kannada": "कन्नड",
+        "tamil": "तामिळ"
+    },
+    "status": {
+        "pending": "प्रलंबित",
+        "in_progress": "प्रगतीपथावर",
+        "completed": "पूर्ण",
+        "cancelled": "रद्द"
+    },
+    "untitled": "शीर्षकहीन",
+    "placeholders": {
+        "location_name": "बेंच, खड्डा, खूण"
+    },
+    "guest": "अतिथी"
+}

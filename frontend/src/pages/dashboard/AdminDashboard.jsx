@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { apiGetAuth } from '../../services/api'
 import { Users as UsersIcon, AlertTriangle, Radio, Activity } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function AdminDashboard() {
+  const { t } = useTranslation(['admin', 'common'])
   const { getToken } = useAuth()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -31,7 +33,7 @@ export default function AdminDashboard() {
         setLoading(false)
       } catch (e) {
         if (!mounted) return
-        setError(String(e?.message || 'Failed to load'))
+        setError(String(e?.message || t('admin.errors.load')))
         setLoading(false)
       }
     }
@@ -39,7 +41,7 @@ export default function AdminDashboard() {
     return () => { mounted = false }
   }, [getToken])
 
-  if (loading) return <div className="p-6">Loading…</div>
+  if (loading) return <div className="p-6">{t('common:loading')}</div>
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   const openIncidents = incidents.filter(i => i.status !== 'acknowledged')
@@ -47,14 +49,14 @@ export default function AdminDashboard() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-        <h1 className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">System Admin</h1>
-        <p className="text-sm text-slate-600 dark:text-slate-400">Overview of users, sensors, alerts, and incidents</p>
+        <h1 className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">{t('admin.dashboard_title')}</h1>
+        <p className="text-sm text-slate-600 dark:text-slate-400">{t('admin.dashboard_subtitle')}</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-slate-500 text-sm">Total Users</div>
+                <div className="text-slate-500 text-sm">{t('admin.total_users')}</div>
                 <div className="text-3xl font-bold text-slate-900">{users.length}</div>
               </div>
               <div className="rounded-full p-3 bg-slate-100">
@@ -65,7 +67,7 @@ export default function AdminDashboard() {
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-slate-500 text-sm">Open Incidents</div>
+                <div className="text-slate-500 text-sm">{t('admin.open_incidents')}</div>
                 <div className="text-3xl font-bold text-amber-600">{openIncidents.length}</div>
               </div>
               <div className="rounded-full p-3 bg-amber-50">
@@ -76,7 +78,7 @@ export default function AdminDashboard() {
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-slate-500 text-sm">Recent Alerts</div>
+                <div className="text-slate-500 text-sm">{t('admin.recent_alerts')}</div>
                 <div className="text-3xl font-bold text-red-600">{alerts.length}</div>
               </div>
               <div className="rounded-full p-3 bg-red-50">
@@ -87,7 +89,7 @@ export default function AdminDashboard() {
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-slate-500 text-sm">Registered Sensors</div>
+                <div className="text-slate-500 text-sm">{t('admin.registered_sensors')}</div>
                 <div className="text-3xl font-bold text-blue-600">{sensors.length}</div>
               </div>
               <div className="rounded-full p-3 bg-blue-50">
@@ -99,14 +101,14 @@ export default function AdminDashboard() {
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3">Users</h2>
+            <h2 className="text-lg font-semibold mb-3">{t('admin.table.users') || 'Users'}</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
                 <thead>
                   <tr className="text-left text-slate-600">
-                    <th className="py-2 pr-4">Name</th>
-                    <th className="py-2 pr-4">Email</th>
-                    <th className="py-2 pr-4">Role</th>
+                    <th className="py-2 pr-4">{t('admin.table.name') || 'Name'}</th>
+                    <th className="py-2 pr-4">{t('admin.table.email')}</th>
+                    <th className="py-2 pr-4">{t('admin.table.role')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -122,7 +124,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3">Recent Incidents</h2>
+            <h2 className="text-lg font-semibold mb-3">{t('admin.incidents.recent_title') || 'Recent Incidents'}</h2>
             <ul className="space-y-2 max-h-64 overflow-auto">
               {incidents.slice(0, 8).map(i => (
                 <li key={i.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
@@ -137,7 +139,7 @@ export default function AdminDashboard() {
             </ul>
           </div>
           <div className="md:col-span-2 rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3">Recent Alerts</h2>
+            <h2 className="text-lg font-semibold mb-3">{t('admin.recent_alerts')}</h2>
             <ul className="space-y-2 max-h-72 overflow-auto">
               {alerts.slice(0, 10).map(a => (
                 <li key={a.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">

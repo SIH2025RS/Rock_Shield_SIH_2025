@@ -1,0 +1,16 @@
+{
+    "title": "Miner",
+    "my_tasks": "My Tasks",
+    "forwarded_alerts": "Forwarded Alerts",
+    "status": "Status",
+    "actions": {
+        "start": "Start",
+        "complete": "Complete",
+        "acknowledge": "Acknowledge"
+    },
+    "errors": {
+        "load": "Failed to load",
+        "update": "Failed to update",
+        "acknowledge": "Failed to acknowledge alert"
+    }
+}

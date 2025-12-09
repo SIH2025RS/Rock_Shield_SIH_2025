@@ -1,0 +1,38 @@
+{
+    "title": "Admin",
+    "subtitle": "Manage users, roles, and review incidents",
+    "total_users": "Total Users",
+    "open_incidents": "Open Incidents",
+    "recent_alerts": "Recent Alerts",
+    "registered_sensors": "Registered Sensors",
+    "table": {
+        "user": "User",
+        "email": "Email",
+        "role": "Role",
+        "actions": "Actions"
+    },
+    "incidents": {
+        "title": "Incidents",
+        "subtitle": "Review and acknowledge operator-reported incidents",
+        "headers": {
+            "title": "Title",
+            "type": "Type",
+            "severity": "Severity",
+            "status": "Status",
+            "reported_by": "Reported by",
+            "created": "Created",
+            "actions": "Actions"
+        }
+    },
+    "actions": {
+        "acknowledge": "Acknowledge",
+        "acknowledging": "Acknowledging…",
+        "acknowledged": "Acknowledged"
+    },
+    "errors": {
+        "role_update": "Failed to update role",
+        "acknowledge": "Failed to acknowledge",
+        "load": "Failed to load",
+        "unknown": "Unknown error"
+    }
+}

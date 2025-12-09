@@ -77,7 +77,10 @@ const INITIAL_ANNOTATIONS = {
   ],
 };
 
+import { useTranslation } from 'react-i18next';
+
 export default function DroneImagery() {
+  const { t } = useTranslation('operator');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [annotations, setAnnotations] = useState(INITIAL_ANNOTATIONS);
 
@@ -108,9 +111,9 @@ export default function DroneImagery() {
   return (
     <div className="section space-y-4">
       <div className="mb-2">
-        <h2 className="mb-1">Drone imagery: bounding boxes and heatmap</h2>
+        <h2 className="mb-1">{t('drone_imagery.title')}</h2>
         <p className="subtext">
-          Draw regions of interest on drone frames and switch to heatmap mode to see hotspot patches.
+          {t('drone_imagery.subtitle')}
         </p>
       </div>
 
@@ -123,7 +126,7 @@ export default function DroneImagery() {
               onClick={goPrev}
               disabled={currentIndex === 0}
             >
-              Previous
+              {t('drone_imagery.previous')}
             </button>
             <button
               type="button"
@@ -131,19 +134,18 @@ export default function DroneImagery() {
               onClick={goNext}
               disabled={currentIndex === droneImageList.length - 1}
             >
-              Next
+              {t('drone_imagery.next')}
             </button>
             <span className="text-slate-700">
-              Frame {currentIndex + 1} of {droneImageList.length} ({currentName})
+              {t('drone_imagery.frame_info', { current: currentIndex + 1, total: droneImageList.length, name: currentName })}
             </span>
           </div>
           <div className="text-xs text-slate-600">
-            Total boxes across frames: {totalBoxes}
+            {t('drone_imagery.total_boxes', { count: totalBoxes })}
           </div>
         </div>
         <div className="text-xs text-slate-600">
-          Use the mouse to click and drag on the image to create a box. Switch between box view and heatmap view
-          in the toolbar above the image.
+          {t('drone_imagery.instruction')}
         </div>
       </div>
 

@@ -1,0 +1,41 @@
+{
+    "templates": {
+        "critical": {
+            "subject": "CRITICAL ALERT - RockShield",
+            "sms": "[CRITICAL] RockShield Alert: {{message}}{{#if location}} at {{location}}{{/if}}. Immediate action required!",
+            "voice": "This is a critical alert from RockShield. {{message}}{{#if location}} Location: {{location}}.{{/if}} Immediate action required.",
+            "email": "CRITICAL ALERT\n\n{{message}}\n\n{{#if location}}Location: {{location}}\n{{/if}}{{#if severity}}Severity: {{severity}}\n{{/if}}{{#if confidence}}Confidence: {{confidence}}%\n{{/if}}\n{{#if reasons}}Reasons:\n{{reasons}}\n{{/if}}\nImmediate action is required. Please respond immediately."
+        },
+        "high": {
+            "subject": "HIGH PRIORITY ALERT - RockShield",
+            "sms": "[HIGH] RockShield Alert: {{message}}{{#if location}} at {{location}}{{/if}}. Urgent attention needed.",
+            "voice": "This is a high priority alert from RockShield. {{message}}{{#if location}} Location: {{location}}.{{/if}} Urgent attention needed.",
+            "email": "HIGH PRIORITY ALERT\n\n{{message}}\n\n{{#if location}}Location: {{location}}\n{{/if}}{{#if severity}}Severity: {{severity}}\n{{/if}}{{#if confidence}}Confidence: {{confidence}}%\n{{/if}}\n{{#if reasons}}Reasons:\n{{reasons}}\n{{/if}}\nPlease take action as soon as possible."
+        },
+        "medium": {
+            "subject": "ALERT - RockShield",
+            "sms": "[ALERT] RockShield: {{message}}{{#if location}} at {{location}}{{/if}}. Please review.",
+            "voice": "This is an alert from RockShield. {{message}}{{#if location}} Location: {{location}}.{{/if}} Please review when possible.",
+            "email": "ALERT\n\n{{message}}\n\n{{#if location}}Location: {{location}}\n{{/if}}{{#if severity}}Severity: {{severity}}\n{{/if}}{{#if confidence}}Confidence: {{confidence}}%\n{{/if}}\n{{#if reasons}}Reasons:\n{{reasons}}\n{{/if}}\nPlease review this alert at your earliest convenience."
+        },
+        "low": {
+            "subject": "NOTICE - RockShield",
+            "sms": "[NOTICE] RockShield: {{message}}{{#if location}} at {{location}}{{/if}}.",
+            "voice": "This is a notice from RockShield. {{message}}{{#if location}} Location: {{location}}.{{/if}}",
+            "email": "NOTICE\n\n{{message}}\n\n{{#if location}}Location: {{location}}\n{{/if}}{{#if severity}}Severity: {{severity}}\n{{/if}}{{#if confidence}}Confidence: {{confidence}}%\n{{/if}}\n{{#if reasons}}Reasons:\n{{reasons}}\n{{/if}}\nThis is for your information."
+        }
+    },
+    "reasons": {
+        "tilt_up": "Tilt sensor showing upward movement",
+        "vibration_up": "Increased vibration detected",
+        "rain_24h": "Heavy rainfall in last 24 hours",
+        "temperature_change": "Significant temperature change",
+        "pressure_change": "Atmospheric pressure change detected"
+    },
+    "actions": {
+        "evacuate": "Evacuate the area immediately",
+        "inspect": "Send inspection team",
+        "monitor": "Continue monitoring",
+        "pause_operations": "Pause mining operations"
+    }
+}

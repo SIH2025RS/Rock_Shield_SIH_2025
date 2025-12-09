@@ -1,0 +1,41 @@
+{
+    "templates": {
+        "critical": {
+            "subject": "गंभीर इशारा - रॉकशील्ड",
+            "sms": "[गंभीर] रॉकशील्ड इशारा: {{message}}{{#if location}} ठिकाण {{location}} येथे{{/if}}। तात्काळ कारवाई आवश्यक!",
+            "voice": "हा रॉकशील्डकडून एक गंभीर इशारा आहे। {{message}}{{#if location}} ठिकाण: {{location}}.{{/if}} तात्काळ कारवाई आवश्यक आहे।",
+            "email": "गंभीर इशारा\n\n{{message}}\n\n{{#if location}}ठिकाण: {{location}}\n{{/if}}{{#if severity}}तीव्रता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारणे:\n{{reasons}}\n{{/if}}\nतात्काळ कारवाई आवश्यक आहे। कृपया लगेच प्रतिसाद द्या।"
+        },
+        "high": {
+            "subject": "उच्च प्राधान्य इशारा - रॉकशील्ड",
+            "sms": "[उच्च] रॉकशील्ड इशारा: {{message}}{{#if location}} ठिकाण {{location}} येथे{{/if}}। तातडीचे लक्ष द्या।",
+            "voice": "हा रॉकशील्डकडून एक उच्च प्राधान्य इशारा आहे। {{message}}{{#if location}} ठिकाण: {{location}}.{{/if}} तातडीचे लक्ष देणे आवश्यक आहे।",
+            "email": "उच्च प्राधान्य इशारा\n\n{{message}}\n\n{{#if location}}ठिकाण: {{location}}\n{{/if}}{{#if severity}}तीव्रता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारणे:\n{{reasons}}\n{{/if}}\nकृपया लवकरात लवकर कारवाई करा।"
+        },
+        "medium": {
+            "subject": "इशारा - रॉकशील्ड",
+            "sms": "[इशारा] रॉकशील्ड: {{message}}{{#if location}} ठिकाण {{location}} येथे{{/if}}। कृपया पुनरावलोकन करा।",
+            "voice": "हा रॉकशील्डकडून एक इशारा आहे। {{message}}{{#if location}} ठिकाण: {{location}}.{{/if}} कृपया शक्य असल्यास पुनरावलोकन करा।",
+            "email": "इशारा\n\n{{message}}\n\n{{#if location}}ठिकाण: {{location}}\n{{/if}}{{#if severity}}तीव्रता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारणे:\n{{reasons}}\n{{/if}}\nकृपया तुमच्या सोयीनुसार या इशाऱ्याचे पुनरावलोकन करा।"
+        },
+        "low": {
+            "subject": "सूचना - रॉकशील्ड",
+            "sms": "[सूचना] रॉकशील्ड: {{message}}{{#if location}} ठिकाण {{location}} येथे{{/if}}।",
+            "voice": "ही रॉकशील्डकडून एक सूचना आहे। {{message}}{{#if location}} ठिकाण: {{location}}.{{/if}}",
+            "email": "सूचना\n\n{{message}}\n\n{{#if location}}ठिकाण: {{location}}\n{{/if}}{{#if severity}}तीव्रता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारणे:\n{{reasons}}\n{{/if}}\nही तुमच्या माहितीसाठी आहे।"
+        }
+    },
+    "reasons": {
+        "tilt_up": "झुकाव सेन्सर वरच्या दिशेने हालचाल दर्शवत आहे",
+        "vibration_up": "वाढलेली कंपने आढळली",
+        "rain_24h": "गेल्या 24 तासांत मुसळधार पाऊस",
+        "temperature_change": "लक्षणीय तापमान बदल",
+        "pressure_change": "वातावरणीय दाब बदल आढळला"
+    },
+    "actions": {
+        "evacuate": "तात्काळ क्षेत्र रिकामे करा",
+        "inspect": "तपासणी पथक पाठवा",
+        "monitor": "निरीक्षण सुरू ठेवा",
+        "pause_operations": "खाण कामे थांबवा"
+    }
+}

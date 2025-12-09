@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
+import { useTranslation } from 'react-i18next'
 import { apiGetAuth, apiPostAuth, apiPutAuth, apiUploadAuth, API_BASE_URL } from '../services/api'
 import { io } from 'socket.io-client'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
@@ -7,6 +8,7 @@ import MapWeather from '../components/MapWeather'
 
 export default function Operator() {
   const { getToken } = useAuth()
+  const { t } = useTranslation(['operator', 'common'])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [sensors, setSensors] = useState([])
@@ -48,7 +50,7 @@ export default function Operator() {
     const keys = new Set()
     corrData.forEach(row => Object.keys(row).forEach(k => { if (k !== 'time') keys.add(k) }))
     return Array.from(keys).map((k, i) => (
-      <Line key={k} type="monotone" dataKey={k} stroke={["#3b82f6","#ef4444","#22c55e","#a855f7","#f59e0b"][i % 5]} dot={false} name={k} />
+      <Line key={k} type="monotone" dataKey={k} stroke={["#3b82f6", "#ef4444", "#22c55e", "#a855f7", "#f59e0b"][i % 5]} dot={false} name={k} />
     ))
   }, [corrData])
 
@@ -74,7 +76,7 @@ export default function Operator() {
         await loadHubs()
       } catch (e) {
         if (!mounted) return
-        setError(String(e?.message || 'Failed to load'))
+        setError(String(e?.message || t('messages.error_load')))
         setLoading(false)
       }
     }
@@ -102,7 +104,7 @@ export default function Operator() {
       const token = await getToken({ template: 'backend' })
       const res = await apiGetAuth('/api/operator/plant-hubs?mine=true', token)
       setHubs(res.hubs || [])
-    } catch {}
+    } catch { }
   }
 
   // Real-time socket: alerts + hub streams
@@ -152,9 +154,9 @@ export default function Operator() {
       const token = await getToken({ template: 'backend' })
       await apiPostAuth('/api/operator/submit-report', token, { payload: { message: report } })
       setReport('')
-      alert('Report submitted')
+      alert(t('messages.report_submitted'))
     } catch (e) {
-      alert('Failed to submit: ' + (e?.message || 'Unknown error'))
+      alert(t('messages.submit_failed') + ': ' + (e?.message || 'Unknown error'))
     }
   }
 
@@ -164,7 +166,7 @@ export default function Operator() {
       const res = await apiPutAuth(`/api/operator/alerts/${id}/acknowledge`, token, {})
       setAlerts((prev) => prev.map((a) => (a.id === id ? res.alert : a)))
     } catch (e) {
-      alert('Failed to acknowledge')
+      alert(t('messages.acknowledge_failed'))
     }
   }
 
@@ -175,9 +177,9 @@ export default function Operator() {
       setAlerts((prev) => prev.map((a) => (a.id === id ? res.alert : a)))
       const tasksRes = await apiGetAuth('/api/operator/tasks', token)
       setTasks(tasksRes.tasks || [])
-      alert('Alert forwarded to miners')
+      alert(t('messages.alert_forwarded'))
     } catch (e) {
-      alert('Failed to forward alert')
+      alert(t('messages.forward_failed'))
     }
   }
 
@@ -190,7 +192,7 @@ export default function Operator() {
       if (p.v != null) obj[bKey] = p.v
       map.set(key, obj)
     })
-    return Array.from(map.values()).sort((x,y) => new Date(x.time) - new Date(y.time))
+    return Array.from(map.values()).sort((x, y) => new Date(x.time) - new Date(y.time))
   }
 
   async function loadTiltSeries() {
@@ -199,7 +201,7 @@ export default function Operator() {
       const token = await getToken({ template: 'backend' })
       const data = await apiGetAuth(`/api/operator/insights/timeseries?sensor_id=${encodeURIComponent(sensorId)}&metric=${encodeURIComponent(tiltMetric)}`, token)
       setTiltSeries((data.series || []).map(s => ({ time: new Date(s.t).toLocaleString(), value: s.v })))
-    } catch {}
+    } catch { }
   }
 
   async function loadRainPP() {
@@ -209,7 +211,7 @@ export default function Operator() {
       const rain = await apiGetAuth(`/api/operator/insights/timeseries?sensor_id=${encodeURIComponent(sensorId)}&metric=${encodeURIComponent(rainMetric)}`, token)
       const pp = await apiGetAuth(`/api/operator/insights/timeseries?sensor_id=${encodeURIComponent(sensorId)}&metric=${encodeURIComponent(ppMetric)}`, token)
       setRainPPSeries(mergeSeries(rain.series || [], 'rain', pp.series || [], 'pore_pressure'))
-    } catch {}
+    } catch { }
   }
 
   async function loadCorrelation() {
@@ -225,9 +227,9 @@ export default function Operator() {
         if (!groups[t]) groups[t] = { time: t }
         groups[t][row.sensor_id] = v
       }
-      const arr = Object.values(groups).sort((a,b) => new Date(a.time) - new Date(b.time))
+      const arr = Object.values(groups).sort((a, b) => new Date(a.time) - new Date(b.time))
       setCorrData(arr)
-    } catch {}
+    } catch { }
   }
 
   async function loadVibration() {
@@ -235,7 +237,7 @@ export default function Operator() {
       const token = await getToken({ template: 'backend' })
       const data = await apiGetAuth(`/api/operator/insights/vibration-events?threshold=${encodeURIComponent(vibThreshold)}`, token)
       setVibrationEvents(data.events || [])
-    } catch {}
+    } catch { }
   }
 
   async function createTask(e) {
@@ -246,7 +248,7 @@ export default function Operator() {
       setTasks((prev) => [res.task, ...prev])
       setNewTask({ title: '', task_type: 'inspection', priority: 'medium', description: '' })
     } catch (e) {
-      alert('Failed to create task')
+      alert(t('messages.task_create_failed'))
     }
   }
 
@@ -256,7 +258,7 @@ export default function Operator() {
       const res = await apiPutAuth(`/api/operator/tasks/${id}`, token, { status })
       setTasks((prev) => prev.map((t) => (t.id === id ? res.task : t)))
     } catch (e) {
-      alert('Failed to update task')
+      alert(t('messages.task_update_failed'))
     }
   }
 
@@ -265,18 +267,18 @@ export default function Operator() {
     try {
       const token = await getToken({ template: 'backend' })
       const form = new FormData()
-      Object.entries(incident).forEach(([k,v]) => form.append(k, v))
+      Object.entries(incident).forEach(([k, v]) => form.append(k, v))
       for (const f of incidentFiles) form.append('files', f)
       const res = await apiUploadAuth('/api/operator/incidents', token, form)
       setIncident({ title: '', description: '', incident_type: 'rockfall', location_name: '', location_lat: '', location_lon: '', severity: 'high' })
       setIncidentFiles([])
-      alert('Incident submitted')
+      alert(t('messages.incident_submitted'))
     } catch (e) {
-      alert('Failed to submit incident')
+      alert(t('messages.incident_failed'))
     }
   }
 
-  if (loading) return <div className="p-6">Loading…</div>
+  if (loading) return <div className="p-6">{t('messages.loading')}</div>
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   const demOverlayPoints = activeDemIds.flatMap((id) => hubDem[id] || [])
@@ -284,17 +286,17 @@ export default function Operator() {
   return (
     <main className="mx-auto max-w-6xl px-4">
       <section className="py-10">
-        <h1 className="mb-2">Operator</h1>
+        <h1 className="mb-2">{t('title')}</h1>
         <nav className="mb-4 flex flex-wrap gap-3 text-sm">
-          <a href="#map" className="btn-secondary">Map</a>
-          <a href="#alerts" className="btn-secondary">Alerts</a>
-          <a href="#tasks" className="btn-secondary">Tasks</a>
-          <a href="#sensors" className="btn-secondary">Sensors</a>
-          <a href="#reports" className="btn-secondary">Reports</a>
-          <a href="#incidents" className="btn-secondary">Incident</a>
+          <a href="#map" className="btn-secondary">{t('nav.map')}</a>
+          <a href="#alerts" className="btn-secondary">{t('nav.alerts')}</a>
+          <a href="#tasks" className="btn-secondary">{t('nav.tasks')}</a>
+          <a href="#sensors" className="btn-secondary">{t('nav.sensors')}</a>
+          <a href="#reports" className="btn-secondary">{t('nav.reports')}</a>
+          <a href="#incidents" className="btn-secondary">{t('nav.incident')}</a>
         </nav>
         <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h2 id="sensors" className="mb-4">Last 24h sensors</h2>
+          <h2 id="sensors" className="mb-4">{t('sections.sensors')}</h2>
           <ul className="space-y-1 text-sm">
             {sensors.map((s) => (
               <li key={s.sensor_id} className="flex justify-between">
@@ -306,14 +308,14 @@ export default function Operator() {
         </div>
 
         <form id="reports" onSubmit={submitReport} className="mt-6 rounded-xl border bg-white p-6 shadow-sm">
-          <h2 className="mb-4">Submit report</h2>
-          <textarea value={report} onChange={(e) => setReport(e.target.value)} className="input" rows={4} placeholder="Enter report details" />
-          <button className="btn-primary mt-3" type="submit">Submit</button>
+          <h2 className="mb-4">{t('sections.submit_report')}</h2>
+          <textarea value={report} onChange={(e) => setReport(e.target.value)} className="input" rows={4} placeholder={t('placeholders.enter_report')} />
+          <button className="btn-primary mt-3" type="submit">{t('actions.submit')}</button>
         </form>
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div id="alerts" className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-4">Alerts</h2>
+            <h2 className="mb-4">{t('sections.alerts')}</h2>
             <ul className="space-y-3">
               {alerts.map((a) => (
                 <li key={a.id} className="rounded border p-3">
@@ -327,8 +329,8 @@ export default function Operator() {
                   <div className="mt-1 text-sm text-slate-700">{a.description || ''}</div>
                   <div className="mt-1 text-xs text-slate-600">Sensor: {a.sensor_id || '—'}{a.location_lat && a.location_lon ? ` · (${a.location_lat}, ${a.location_lon})` : ''}</div>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <button className="btn-secondary" onClick={() => acknowledgeAlert(a.id)} disabled={a.status === 'acknowledged'}>Acknowledge</button>
-                    <button className="btn-primary" onClick={() => forwardAlert(a.id)} disabled={a.forwarded_to_miners}>Forward to miners</button>
+                    <button className="btn-secondary" onClick={() => acknowledgeAlert(a.id)} disabled={a.status === 'acknowledged'}>{t('actions.acknowledge')}</button>
+                    <button className="btn-primary" onClick={() => forwardAlert(a.id)} disabled={a.forwarded_to_miners}>{t('actions.forward_miners')}</button>
                   </div>
                 </li>
               ))}
@@ -336,21 +338,21 @@ export default function Operator() {
           </div>
 
           <div id="tasks" className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-2">Task Management</h2>
+            <h2 className="mb-2">{t('sections.task_management')}</h2>
             <form onSubmit={createTask} className="mb-4 grid grid-cols-1 gap-2">
-              <input className="input" placeholder="Title" value={newTask.title} onChange={(e) => setNewTask({ ...newTask, title: e.target.value })} />
-              <input className="input" placeholder="Description" value={newTask.description} onChange={(e) => setNewTask({ ...newTask, description: e.target.value })} />
+              <input className="input" placeholder={t('placeholders.title')} value={newTask.title} onChange={(e) => setNewTask({ ...newTask, title: e.target.value })} />
+              <input className="input" placeholder={t('placeholders.description')} value={newTask.description} onChange={(e) => setNewTask({ ...newTask, description: e.target.value })} />
               <div className="flex gap-2">
                 <select className="input" value={newTask.task_type} onChange={(e) => setNewTask({ ...newTask, task_type: e.target.value })}>
-                  <option value="inspection">inspection</option>
-                  <option value="alert_response">alert_response</option>
-                  <option value="incident_review">incident_review</option>
+                  <option value="inspection">{t('tasks_page.types.inspection')}</option>
+                  <option value="alert_response">{t('tasks_page.types.alert_response')}</option>
+                  <option value="incident_review">{t('tasks_page.types.incident_review')}</option>
                 </select>
                 <select className="input" value={newTask.priority} onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}>
-                  <option value="critical">critical</option>
-                  <option value="high">high</option>
-                  <option value="medium">medium</option>
-                  <option value="low">low</option>
+                  <option value="critical">{t('tasks_page.priorities.critical')}</option>
+                  <option value="high">{t('tasks_page.priorities.high')}</option>
+                  <option value="medium">{t('tasks_page.priorities.medium')}</option>
+                  <option value="low">{t('tasks_page.priorities.low')}</option>
                 </select>
               </div>
               <button className="btn-primary" type="submit">Create</button>
@@ -363,8 +365,8 @@ export default function Operator() {
                     <div className="text-xs text-slate-600">{t.task_type} · {t.priority} · {t.status}</div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="btn-secondary" onClick={() => updateTaskStatus(t.id, 'in_progress')}>Start</button>
-                    <button className="btn-primary" onClick={() => updateTaskStatus(t.id, 'completed')}>Complete</button>
+                    <button className="btn-secondary" onClick={() => updateTaskStatus(t.id, 'in_progress')}>{t('actions.start')}</button>
+                    <button className="btn-primary" onClick={() => updateTaskStatus(t.id, 'completed')}>{t('actions.complete')}</button>
                   </div>
                 </li>
               ))}
@@ -389,19 +391,19 @@ export default function Operator() {
             </div>
             <div>
               <div className="rounded border p-4">
-                <h3 className="font-medium mb-2">Save as Plant Hub</h3>
+                <h3 className="font-medium mb-2">{t('map.save_hub')}</h3>
                 {selectedLoc ? (
                   <form onSubmit={savePlantHub} className="space-y-2">
-                    <input className="input" placeholder="Hub name" value={hubName} onChange={(e) => setHubName(e.target.value)} />
+                    <input className="input" placeholder={t('placeholders.hub_name')} value={hubName} onChange={(e) => setHubName(e.target.value)} />
                     <div className="text-xs text-slate-600">Lat: {selectedLoc.lat.toFixed(6)} · Lon: {selectedLoc.lon.toFixed(6)}</div>
-                    <button className="btn-primary w-full" type="submit">Save Hub</button>
+                    <button className="btn-primary w-full" type="submit">{t('actions.save_hub')}</button>
                   </form>
                 ) : (
-                  <div className="text-sm text-slate-500">Search and select a location to save it.</div>
+                  <div className="text-sm text-slate-500">{t('map.search_prompt')}</div>
                 )}
               </div>
               <div className="mt-4 rounded border p-4">
-                <h3 className="font-medium mb-2">Your Plant Hubs</h3>
+                <h3 className="font-medium mb-2">{t('map.your_hubs')}</h3>
                 <ul className="space-y-3 max-h-80 overflow-auto">
                   {hubs.map((h) => (
                     <li key={h.id} className="rounded border p-3">
@@ -413,27 +415,27 @@ export default function Operator() {
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-2">
                         <button className="btn-secondary" onClick={() => (activeWeatherIds.includes(h.id) ? stopHubWeather(h.id) : startHubWeather(h.id))}>
-                          {activeWeatherIds.includes(h.id) ? 'Stop Weather' : 'Start Weather'}
+                          {activeWeatherIds.includes(h.id) ? t('actions.stop_weather') : t('actions.start_weather')}
                         </button>
                         <button className="btn-secondary" onClick={() => (activeDemIds.includes(h.id) ? stopHubDem(h.id) : startHubDem(h.id))}>
-                          {activeDemIds.includes(h.id) ? 'Stop DEM' : 'Start DEM'}
+                          {activeDemIds.includes(h.id) ? t('actions.stop_dem') : t('actions.start_dem')}
                         </button>
                       </div>
                       <div className="mt-3 text-xs">
                         {hubWeather[h.id] ? (
                           <div className="rounded bg-slate-50 p-2">
-                            <div>Temp: {hubWeather[h.id].temperature_2m}°C</div>
-                            <div>Humidity: {hubWeather[h.id].relative_humidity_2m}%</div>
-                            <div>Wind: {hubWeather[h.id].wind_speed_10m} km/h</div>
+                            <div>{t('map.weather.temp')}: {hubWeather[h.id].temperature_2m}°C</div>
+                            <div>{t('map.weather.humidity')}: {hubWeather[h.id].relative_humidity_2m}%</div>
+                            <div>{t('map.weather.wind')}: {hubWeather[h.id].wind_speed_10m} km/h</div>
                           </div>
                         ) : (
-                          <div className="text-slate-500">No weather yet</div>
+                          <div className="text-slate-500">{t('map.no_weather')}</div>
                         )}
                         <div className="mt-2 rounded bg-slate-50 p-2 max-h-28 overflow-auto">
-                          <div className="font-medium mb-1">DEM Patch</div>
+                          <div className="font-medium mb-1">{t('map.dem.patch')}</div>
                           {hubDem[h.id]?.length ? (
                             <div>
-                              <div className="mb-1">Points: {hubDem[h.id].length}</div>
+                              <div className="mb-1">{t('map.dem.points')}: {hubDem[h.id].length}</div>
                               <div className="space-y-1">
                                 {hubDem[h.id].slice(0, 6).map((p, idx) => (
                                   <div key={idx}>{p.lat.toFixed(4)}, {p.lon.toFixed(4)} · {p.elevation?.toFixed?.(1) ?? '—'} m</div>
@@ -441,7 +443,7 @@ export default function Operator() {
                               </div>
                             </div>
                           ) : (
-                            <div className="text-slate-500">No DEM yet</div>
+                            <div className="text-slate-500">{t('map.no_dem')}</div>
                           )}
                         </div>
                       </div>
@@ -450,12 +452,12 @@ export default function Operator() {
                 </ul>
               </div>
               <div className="mt-4 rounded border p-4">
-                <h3 className="font-medium mb-2">Overlay controls</h3>
+                <h3 className="font-medium mb-2">{t('map.overlay_controls')}</h3>
                 <div className="mb-3 flex flex-wrap items-center gap-3 text-sm">
-                  <label className="flex items-center gap-2"><input type="checkbox" checked={showMapSensors} onChange={(e) => setShowMapSensors(e.target.checked)} /> Show sensors</label>
-                  <label className="flex items-center gap-2"><input type="checkbox" checked={showMapAlerts} onChange={(e) => setShowMapAlerts(e.target.checked)} /> Show alerts</label>
-                  <input type="number" className="input w-28" min={1} placeholder="Hours" value={mapHours} onChange={(e) => setMapHours(Number(e.target.value) || 24)} />
-                  <button className="btn-secondary" onClick={loadMapData}>Refresh</button>
+                  <label className="flex items-center gap-2"><input type="checkbox" checked={showMapSensors} onChange={(e) => setShowMapSensors(e.target.checked)} /> {t('map.show_sensors')}</label>
+                  <label className="flex items-center gap-2"><input type="checkbox" checked={showMapAlerts} onChange={(e) => setShowMapAlerts(e.target.checked)} /> {t('map.show_alerts')}</label>
+                  <input type="number" className="input w-28" min={1} placeholder={t('map.hours')} value={mapHours} onChange={(e) => setMapHours(Number(e.target.value) || 24)} />
+                  <button className="btn-secondary" onClick={loadMapData}>{t('actions.refresh')}</button>
                 </div>
               </div>
             </div>
@@ -464,11 +466,11 @@ export default function Operator() {
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-2">Sensor Insights: Tilt vs time</h2>
+            <h2 className="mb-2">{t('sections.sensor_insights')}</h2>
             <div className="flex gap-2 mb-3">
-              <input className="input" placeholder="Sensor ID" value={sensorId} onChange={(e) => setSensorId(e.target.value)} />
-              <input className="input" placeholder="Metric" value={tiltMetric} onChange={(e) => setTiltMetric(e.target.value)} />
-              <button className="btn-secondary" onClick={loadTiltSeries}>Load</button>
+              <input className="input" placeholder={t('placeholders.sensor_id')} value={sensorId} onChange={(e) => setSensorId(e.target.value)} />
+              <input className="input" placeholder={t('placeholders.metric')} value={tiltMetric} onChange={(e) => setTiltMetric(e.target.value)} />
+              <button className="btn-secondary" onClick={loadTiltSeries}>{t('actions.load')}</button>
             </div>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -485,12 +487,12 @@ export default function Operator() {
           </div>
 
           <div className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-2">Rainfall vs Pore Pressure</h2>
+            <h2 className="mb-2">{t('sections.rainfall_pp')}</h2>
             <div className="flex gap-2 mb-3">
-              <input className="input" placeholder="Sensor ID" value={sensorId} onChange={(e) => setSensorId(e.target.value)} />
-              <input className="input" placeholder="Rain metric" value={rainMetric} onChange={(e) => setRainMetric(e.target.value)} />
-              <input className="input" placeholder="Pore pressure metric" value={ppMetric} onChange={(e) => setPpMetric(e.target.value)} />
-              <button className="btn-secondary" onClick={loadRainPP}>Load</button>
+              <input className="input" placeholder={t('placeholders.sensor_id')} value={sensorId} onChange={(e) => setSensorId(e.target.value)} />
+              <input className="input" placeholder={t('placeholders.rain_metric')} value={rainMetric} onChange={(e) => setRainMetric(e.target.value)} />
+              <input className="input" placeholder={t('placeholders.pp_metric')} value={ppMetric} onChange={(e) => setPpMetric(e.target.value)} />
+              <button className="btn-secondary" onClick={loadRainPP}>{t('actions.load')}</button>
             </div>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -510,11 +512,11 @@ export default function Operator() {
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-2">Multi-sensor correlation</h2>
+            <h2 className="mb-2">{t('sections.correlation')}</h2>
             <div className="flex gap-2 mb-3">
-              <input className="input" placeholder="Sensor IDs (comma sep)" value={corrSensorIds} onChange={(e) => setCorrSensorIds(e.target.value)} />
-              <input className="input" placeholder="Metric" value={corrMetric} onChange={(e) => setCorrMetric(e.target.value)} />
-              <button className="btn-secondary" onClick={loadCorrelation}>Load</button>
+              <input className="input" placeholder={t('placeholders.sensor_ids_comma')} value={corrSensorIds} onChange={(e) => setCorrSensorIds(e.target.value)} />
+              <input className="input" placeholder={t('placeholders.metric')} value={corrMetric} onChange={(e) => setCorrMetric(e.target.value)} />
+              <button className="btn-secondary" onClick={loadCorrelation}>{t('actions.load')}</button>
             </div>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -531,10 +533,10 @@ export default function Operator() {
           </div>
 
           <div className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-2">Vibration event log</h2>
+            <h2 className="mb-2">{t('sections.vibration')}</h2>
             <div className="flex gap-2 mb-3">
-              <input className="input" type="number" placeholder="Threshold" value={vibThreshold} onChange={(e) => setVibThreshold(e.target.value)} />
-              <button className="btn-secondary" onClick={loadVibration}>Load</button>
+              <input className="input" type="number" placeholder={t('placeholders.threshold')} value={vibThreshold} onChange={(e) => setVibThreshold(e.target.value)} />
+              <button className="btn-secondary" onClick={loadVibration}>{t('actions.load')}</button>
             </div>
             <ul className="space-y-2 max-h-64 overflow-auto">
               {vibrationEvents.map((ev) => (
@@ -548,21 +550,21 @@ export default function Operator() {
         </div>
 
         <form id="incidents" onSubmit={submitIncident} className="mt-6 rounded-xl border bg-white p-6 shadow-sm">
-          <h2 className="mb-4">Incident Reporting</h2>
+          <h2 className="mb-4">{t('sections.incident_reporting')}</h2>
           <div className="grid gap-2 md:grid-cols-2">
-            <input className="input" placeholder="Title" value={incident.title} onChange={(e) => setIncident({ ...incident, title: e.target.value })} />
+            <input className="input" placeholder={t('placeholders.title')} value={incident.title} onChange={(e) => setIncident({ ...incident, title: e.target.value })} />
             <select className="input" value={incident.incident_type} onChange={(e) => setIncident({ ...incident, incident_type: e.target.value })}>
-              <option value="rockfall">rockfall</option>
-              <option value="hazard">hazard</option>
+              <option value="rockfall">{t('incidents_page.types.rockfall')}</option>
+              <option value="hazard">{t('incidents_page.types.hazard')}</option>
             </select>
-            <input className="input" placeholder="Severity" value={incident.severity} onChange={(e) => setIncident({ ...incident, severity: e.target.value })} />
-            <input className="input" placeholder="Location name" value={incident.location_name} onChange={(e) => setIncident({ ...incident, location_name: e.target.value })} />
-            <input className="input" placeholder="Latitude" value={incident.location_lat} onChange={(e) => setIncident({ ...incident, location_lat: e.target.value })} />
-            <input className="input" placeholder="Longitude" value={incident.location_lon} onChange={(e) => setIncident({ ...incident, location_lon: e.target.value })} />
+            <input className="input" placeholder={t('placeholders.severity')} value={incident.severity} onChange={(e) => setIncident({ ...incident, severity: e.target.value })} />
+            <input className="input" placeholder={t('placeholders.location_name')} value={incident.location_name} onChange={(e) => setIncident({ ...incident, location_name: e.target.value })} />
+            <input className="input" placeholder={t('placeholders.latitude')} value={incident.location_lat} onChange={(e) => setIncident({ ...incident, location_lat: e.target.value })} />
+            <input className="input" placeholder={t('placeholders.longitude')} value={incident.location_lon} onChange={(e) => setIncident({ ...incident, location_lon: e.target.value })} />
           </div>
-          <textarea className="input mt-2" rows={3} placeholder="Description" value={incident.description} onChange={(e) => setIncident({ ...incident, description: e.target.value })} />
+          <textarea className="input mt-2" rows={3} placeholder={t('placeholders.description')} value={incident.description} onChange={(e) => setIncident({ ...incident, description: e.target.value })} />
           <input className="input mt-2" type="file" multiple onChange={(e) => setIncidentFiles(Array.from(e.target.files || []))} />
-          <button className="btn-primary mt-3" type="submit">Submit Incident</button>
+          <button className="btn-primary mt-3" type="submit">{t('actions.submit_incident')}</button>
         </form>
       </section>
     </main>
