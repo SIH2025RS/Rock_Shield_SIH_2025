@@ -20,6 +20,7 @@ const minerRoutes = require("./routes/minerroutes");
 const usersRoutes = require("./routes/usersroutes");
 const mlRoutes = require("./routes/mlroutes");
 const alertRoutes = require("./routes/alertroutes");
+const i18nRoutes = require("./routes/i18nroutes");
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,15 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+// Serve translation files with caching
+const translationsPath = path.join(__dirname, "../../frontend/public/i18n/strings");
+app.use("/i18n/strings", express.static(translationsPath, {
+  maxAge: "1d",
+  setHeaders: (res) => {
+    res.set("Cache-Control", "public, max-age=86400");
+  }
+}));
+
 app.use("/api/dem", demRoutes);
 app.use("/api/weather", weatherRoutes);
 app.use("/api/iot", iotRoutes);
@@ -44,6 +54,7 @@ app.use("/api/miner", minerRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api", mlRoutes);
 app.use("/api/alerts", alertRoutes);
+app.use("/api/i18n", i18nRoutes);
 
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });

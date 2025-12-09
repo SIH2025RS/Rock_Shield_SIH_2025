@@ -1,1 +1,41 @@
-{}
+{
+    "templates": {
+        "critical": {
+            "subject": "গুরুতর সতর্কতা - রকশিল্ড",
+            "sms": "[গুরুতর] রকশিল্ড সতর্কতা: {{message}}{{#if location}} স্থান {{location}} এ{{/if}}। অবিলম্বে পদক্ষেপ প্রয়োজন!",
+            "voice": "এটি রকশিল্ড থেকে একটি গুরুতর সতর্কতা। {{message}}{{#if location}} স্থান: {{location}}.{{/if}} অবিলম্বে পদক্ষেপ প্রয়োজন।",
+            "email": "গুরুতর সতর্কতা\n\n{{message}}\n\n{{#if location}}স্থান: {{location}}\n{{/if}}{{#if severity}}তীব্রতা: {{severity}}\n{{/if}}{{#if confidence}}আত্মবিশ্বাস: {{confidence}}%\n{{/if}}\n{{#if reasons}}কারণ:\n{{reasons}}\n{{/if}}\nঅবিলম্বে পদক্ষেপ প্রয়োজন। অনুগ্রহ করে অবিলম্বে সাড়া দিন।"
+        },
+        "high": {
+            "subject": "উচ্চ অগ্রাধিকার সতর্কতা - রকশিল্ড",
+            "sms": "[উচ্চ] রকশিল্ড সতর্কতা: {{message}}{{#if location}} স্থান {{location}} এ{{/if}}। জরুরি মনোযোগ প্রয়োজন।",
+            "voice": "এটি রকশিল্ড থেকে একটি উচ্চ অগ্রাধিকার সতর্কতা। {{message}}{{#if location}} স্থান: {{location}}.{{/if}} জরুরি মনোযোগ প্রয়োজন।",
+            "email": "উচ্চ অগ্রাধিকার সতর্কতা\n\n{{message}}\n\n{{#if location}}স্থান: {{location}}\n{{/if}}{{#if severity}}তীব্রতা: {{severity}}\n{{/if}}{{#if confidence}}আত্মবিশ্বাস: {{confidence}}%\n{{/if}}\n{{#if reasons}}কারণ:\n{{reasons}}\n{{/if}}\nঅনুগ্রহ করে যত তাড়াতাড়ি সম্ভব পদক্ষেপ নিন।"
+        },
+        "medium": {
+            "subject": "সতর্কতা - রকশিল্ড",
+            "sms": "[সতর্কতা] রকশিল্ড: {{message}}{{#if location}} স্থান {{location}} এ{{/if}}। অনুগ্রহ করে পর্যালোচনা করুন।",
+            "voice": "এটি রকশিল্ড থেকে একটি সতর্কতা। {{message}}{{#if location}} স্থান: {{location}}.{{/if}} সম্ভব হলে অনুগ্রহ করে পর্যালোচনা করুন।",
+            "email": "সতর্কতা\n\n{{message}}\n\n{{#if location}}স্থান: {{location}}\n{{/if}}{{#if severity}}তীব্রতা: {{severity}}\n{{/if}}{{#if confidence}}আত্মবিশ্বাস: {{confidence}}%\n{{/if}}\n{{#if reasons}}কারণ:\n{{reasons}}\n{{/if}}\nঅনুগ্রহ করে আপনার সুবিধামত এই সতর্কতা পর্যালোচনা করুন।"
+        },
+        "low": {
+            "subject": "বিজ্ঞপ্তি - রকশিল্ড",
+            "sms": "[বিজ্ঞপ্তি] রকশিল্ড: {{message}}{{#if location}} স্থান {{location}} এ{{/if}}।",
+            "voice": "এটি রকশিল্ড থেকে একটি বিজ্ঞপ্তি। {{message}}{{#if location}} স্থান: {{location}}.{{/if}}",
+            "email": "বিজ্ঞপ্তি\n\n{{message}}\n\n{{#if location}}স্থান: {{location}}\n{{/if}}{{#if severity}}তীব্রতা: {{severity}}\n{{/if}}{{#if confidence}}আত্মবিশ্বাস: {{confidence}}%\n{{/if}}\n{{#if reasons}}কারণ:\n{{reasons}}\n{{/if}}\nএটি আপনার তথ্যের জন্য।"
+        }
+    },
+    "reasons": {
+        "tilt_up": "টিল্ট সেন্সর ঊর্ধ্বমুখী গতি দেখাচ্ছে",
+        "vibration_up": "বর্ধিত কম্পন সনাক্ত করা হয়েছে",
+        "rain_24h": "গত 24 ঘন্টায় ভারী বৃষ্টিপাত",
+        "temperature_change": "উল্লেখযোগ্য তাপমাত্রা পরিবর্তন",
+        "pressure_change": "বায়ুমণ্ডলীয় চাপ পরিবর্তন সনাক্ত করা হয়েছে"
+    },
+    "actions": {
+        "evacuate": "অবিলম্বে এলাকা খালি করুন",
+        "inspect": "পরিদর্শন দল পাঠান",
+        "monitor": "পর্যবেক্ষণ চালিয়ে যান",
+        "pause_operations": "খনন কার্যক্রম বন্ধ করুন"
+    }
+}

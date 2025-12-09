@@ -1,1 +1,41 @@
-{}
+{
+    "templates": {
+        "critical": {
+            "subject": "ನಿರ್ಣಾಯಕ ಎಚ್ಚರಿಕೆ - ರಾಕ್‌ಶೀಲ್ಡ್",
+            "sms": "[ನಿರ್ಣಾಯಕ] ರಾಕ್‌ಶೀಲ್ಡ್ ಎಚ್ಚರಿಕೆ: {{message}}{{#if location}} ಸ್ಥಳ {{location}} ನಲ್ಲಿ{{/if}}। ತಕ್ಷಣ ಕ್ರಮ ಅಗತ್ಯ!",
+            "voice": "ಇದು ರಾಕ್‌ಶೀಲ್ಡ್‌ನಿಂದ ನಿರ್ಣಾಯಕ ಎಚ್ಚರಿಕೆ. {{message}}{{#if location}} ಸ್ಥಳ: {{location}}.{{/if}} ತಕ್ಷಣ ಕ್ರಮ ಅಗತ್ಯ.",
+            "email": "ನಿರ್ಣಾಯಕ ಎಚ್ಚರಿಕೆ\n\n{{message}}\n\n{{#if location}}ಸ್ಥಳ: {{location}}\n{{/if}}{{#if severity}}ತೀವ್ರತೆ: {{severity}}\n{{/if}}{{#if confidence}}ವಿಶ್ವಾಸ: {{confidence}}%\n{{/if}}\n{{#if reasons}}ಕಾರಣಗಳು:\n{{reasons}}\n{{/if}}\nತಕ್ಷಣ ಕ್ರಮ ಅಗತ್ಯ. ದಯವಿಟ್ಟು ತಕ್ಷಣ ಪ್ರತಿಕ್ರಿಯಿಸಿ."
+        },
+        "high": {
+            "subject": "ಹೆಚ್ಚಿನ ಆದ್ಯತೆ ಎಚ್ಚರಿಕೆ - ರಾಕ್‌ಶೀಲ್ಡ್",
+            "sms": "[ಹೆಚ್ಚಿನ] ರಾಕ್‌ಶೀಲ್ಡ್ ಎಚ್ಚರಿಕೆ: {{message}}{{#if location}} ಸ್ಥಳ {{location}} ನಲ್ಲಿ{{/if}}। ತುರ್ತು ಗಮನ ಅಗತ್ಯ.",
+            "voice": "ಇದು ರಾಕ್‌ಶೀಲ್ಡ್‌ನಿಂದ ಹೆಚ್ಚಿನ ಆದ್ಯತೆ ಎಚ್ಚರಿಕೆ. {{message}}{{#if location}} ಸ್ಥಳ: {{location}}.{{/if}} ತುರ್ತು ಗಮನ ಅಗತ್ಯ.",
+            "email": "ಹೆಚ್ಚಿನ ಆದ್ಯತೆ ಎಚ್ಚರಿಕೆ\n\n{{message}}\n\n{{#if location}}ಸ್ಥಳ: {{location}}\n{{/if}}{{#if severity}}ತೀವ್ರತೆ: {{severity}}\n{{/if}}{{#if confidence}}ವಿಶ್ವಾಸ: {{confidence}}%\n{{/if}}\n{{#if reasons}}ಕಾರಣಗಳು:\n{{reasons}}\n{{/if}}\nದಯವಿಟ್ಟು ಸಾಧ್ಯವಾದಷ್ಟು ಬೇಗ ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳಿ."
+        },
+        "medium": {
+            "subject": "ಎಚ್ಚರಿಕೆ - ರಾಕ್‌ಶೀಲ್ಡ್",
+            "sms": "[ಎಚ್ಚರಿಕೆ] ರಾಕ್‌ಶೀಲ್ಡ್: {{message}}{{#if location}} ಸ್ಥಳ {{location}} ನಲ್ಲಿ{{/if}}। ದಯವಿಟ್ಟು ಪರಿಶೀಲಿಸಿ.",
+            "voice": "ಇದು ರಾಕ್‌ಶೀಲ್ಡ್‌ನಿಂದ ಎಚ್ಚರಿಕೆ. {{message}}{{#if location}} ಸ್ಥಳ: {{location}}.{{/if}} ಸಾಧ್ಯವಾದಾಗ ದಯವಿಟ್ಟು ಪರಿಶೀಲಿಸಿ.",
+            "email": "ಎಚ್ಚರಿಕೆ\n\n{{message}}\n\n{{#if location}}ಸ್ಥಳ: {{location}}\n{{/if}}{{#if severity}}ತೀವ್ರತೆ: {{severity}}\n{{/if}}{{#if confidence}}ವಿಶ್ವಾಸ: {{confidence}}%\n{{/if}}\n{{#if reasons}}ಕಾರಣಗಳು:\n{{reasons}}\n{{/if}}\nದಯವಿಟ್ಟು ನಿಮ್ಮ ಅನುಕೂಲಕ್ಕೆ ತಕ್ಕಂತೆ ಈ ಎಚ್ಚರಿಕೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
+        },
+        "low": {
+            "subject": "ಸೂಚನೆ - ರಾಕ್‌ಶೀಲ್ಡ್",
+            "sms": "[ಸೂಚನೆ] ರಾಕ್‌ಶೀಲ್ಡ್: {{message}}{{#if location}} ಸ್ಥಳ {{location}} ನಲ್ಲಿ{{/if}}।",
+            "voice": "ಇದು ರಾಕ್‌ಶೀಲ್ಡ್‌ನಿಂದ ಸೂಚನೆ. {{message}}{{#if location}} ಸ್ಥಳ: {{location}}.{{/if}}",
+            "email": "ಸೂಚನೆ\n\n{{message}}\n\n{{#if location}}ಸ್ಥಳ: {{location}}\n{{/if}}{{#if severity}}ತೀವ್ರತೆ: {{severity}}\n{{/if}}{{#if confidence}}ವಿಶ್ವಾಸ: {{confidence}}%\n{{/if}}\n{{#if reasons}}ಕಾರಣಗಳು:\n{{reasons}}\n{{/if}}\nಇದು ನಿಮ್ಮ ಮಾಹಿತಿಗಾಗಿ."
+        }
+    },
+    "reasons": {
+        "tilt_up": "ಟಿಲ್ಟ್ ಸೆನ್ಸಾರ್ ಮೇಲ್ಮುಖ ಚಲನೆಯನ್ನು ತೋರಿಸುತ್ತಿದೆ",
+        "vibration_up": "ಹೆಚ್ಚಿದ ಕಂಪನ ಪತ್ತೆಯಾಗಿದೆ",
+        "rain_24h": "ಕಳೆದ 24 ಗಂಟೆಗಳಲ್ಲಿ ಭಾರೀ ಮಳೆ",
+        "temperature_change": "ಗಮನಾರ್ಹ ತಾಪಮಾನ ಬದಲಾವಣೆ",
+        "pressure_change": "ವಾತಾವರಣದ ಒತ್ತಡ ಬದಲಾವಣೆ ಪತ್ತೆಯಾಗಿದೆ"
+    },
+    "actions": {
+        "evacuate": "ತಕ್ಷಣ ಪ್ರದೇಶವನ್ನು ಖಾಲಿ ಮಾಡಿ",
+        "inspect": "ತಪಾಸಣೆ ತಂಡವನ್ನು ಕಳುಹಿಸಿ",
+        "monitor": "ಮೇಲ್ವಿಚಾರಣೆ ಮುಂದುವರಿಸಿ",
+        "pause_operations": "ಗಣಿಗಾರಿಕೆ ಕಾರ್ಯಾಚರಣೆಗಳನ್ನು ನಿಲ್ಲಿಸಿ"
+    }
+}

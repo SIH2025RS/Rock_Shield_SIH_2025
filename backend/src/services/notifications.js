@@ -1,4 +1,5 @@
 // Notification service for sending SMS, voice, and email alerts
+const { getAlertTemplate } = require("./i18nserver");
 
 function getTwilioClient() {
   try {
@@ -36,6 +37,11 @@ function getMailer() {
 function mapLang(lang) {
   const s = String(lang || "").toLowerCase();
   if (s.startsWith("hi")) return "hi-IN";
+  if (s.startsWith("mr")) return "mr-IN";
+  if (s.startsWith("bn")) return "bn-IN";
+  if (s.startsWith("te")) return "te-IN";
+  if (s.startsWith("kn")) return "kn-IN";
+  if (s.startsWith("ta")) return "ta-IN";
   return "en-US";
 }
 
@@ -82,33 +88,42 @@ async function sendEmail({ to, subject, text }) {
 
 async function sendAlertEscalation({
   toList = {},
-  severity,
+  severity = "medium",
   language = "en",
   message,
   location,
+  reasons,
+  confidence,
 }) {
   const smsNumbers = Array.isArray(toList.sms) ? toList.sms : [];
   const emails = Array.isArray(toList.email) ? toList.email : [];
   const voiceNumbers = Array.isArray(toList.voice) ? toList.voice : [];
 
-  const smsText = message || `[${String(severity).toUpperCase()}] RockShield Alert: Immediate attention required${location ? ` at ${location}` : ''}.`;
-  const voiceText = message || `This is a ${severity} alert from RockShield. Immediate attention required${location ? ` at ${location}` : ''}.`;
-  const subject = `[${String(severity).toUpperCase()}] RockShield Alert`;
+  // Get localized templates
+  const templates = await getAlertTemplate(language, severity, {
+    message: message || "Alert detected",
+    location: location || "",
+    severity: severity.toUpperCase(),
+    confidence: confidence ? Math.round(confidence * 100) : "",
+    reasons: Array.isArray(reasons) ? reasons.join(", ") : "",
+  });
 
   const results = { sms: [], voice: [], email: [] };
   for (const to of smsNumbers) {
     // eslint-disable-next-line no-await-in-loop
-    results.sms.push(await sendSms({ to, body: smsText }));
+    results.sms.push(await sendSms({ to, body: templates.sms }));
   }
   for (const to of voiceNumbers) {
     // eslint-disable-next-line no-await-in-loop
     results.voice.push(
-      await sendVoice({ to, text: voiceText, lang: language })
+      await sendVoice({ to, text: templates.voice, lang: language })
     );
   }
   for (const to of emails) {
     // eslint-disable-next-line no-await-in-loop
-    results.email.push(await sendEmail({ to, subject, text: smsText }));
+    results.email.push(
+      await sendEmail({ to, subject: templates.subject, text: templates.email })
+    );
   }
   return results;
 }
