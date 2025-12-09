@@ -387,10 +387,10 @@ export default function HubDashboard() {
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
               <MapPin size={32} className="text-blue-600" />
-              {t("title")}
+              {t("Hub Dashboard")}
             </h1>
             <p className="text-slate-600 dark:text-slate-400 mt-1">
-              {selectedHub ? selectedHub.name : t("subtitle_select_hub")}
+              {selectedHub ? selectedHub.name : t("Select a hub to view data")}
             </p>
           </div>
         </div>
@@ -400,7 +400,7 @@ export default function HubDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-center gap-2 flex-1">
               <label className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
-                {t("labels.hub")}
+                {t("Hub")}
               </label>
               <select
                 className="input flex-1"
@@ -416,7 +416,7 @@ export default function HubDashboard() {
             </div>
             <div className="flex items-center gap-2">
               <label className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
-                {t("labels.hours")}
+                {t("Hours")}
               </label>
               <input
                 type="number"
@@ -433,7 +433,7 @@ export default function HubDashboard() {
             </div>
             <div className="flex items-center gap-2">
               <label className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
-                {t("labels.radius")}
+                {t("Radius")}
               </label>
               <input
                 type="number"
@@ -495,14 +495,14 @@ export default function HubDashboard() {
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
           <Activity size={20} className="text-blue-600" />
-          {t("sections.current_conditions")}
+          {t("Current Conditions")}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* Temperature Card */}
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
               <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
-                {t("cards.current_temperature")}
+                {t("Current Temperature")}
               </span>
               <ThermometerSun size={20} className="text-orange-500" />
             </div>
@@ -513,9 +513,7 @@ export default function HubDashboard() {
               </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-              {weatherNow
-                ? t("status.real_time")
-                : t("status.waiting_for_data")}
+              {weatherNow ? t("Real-time") : t("Waiting for data")}
             </p>
           </div>
 
@@ -523,7 +521,7 @@ export default function HubDashboard() {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
               <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
-                {t("cards.wind")}
+                {t("Wind")}
               </span>
               <Wind size={20} className="text-sky-500" />
             </div>
@@ -534,9 +532,7 @@ export default function HubDashboard() {
               </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-              {weatherNow
-                ? t("status.real_time")
-                : t("status.waiting_for_data")}
+              {weatherNow ? t("Real-time") : t("Waiting for data")}
             </p>
           </div>
 
@@ -544,7 +540,7 @@ export default function HubDashboard() {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
               <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
-                {t("cards.humidity")}
+                {t("Humidity")}
               </span>
               <Droplets size={20} className="text-blue-500" />
             </div>
@@ -553,9 +549,7 @@ export default function HubDashboard() {
               <span className="text-lg ml-1">%</span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-              {weatherNow
-                ? t("status.real_time")
-                : t("status.waiting_for_data")}
+              {weatherNow ? t("Real-time") : t("Waiting for data")}
             </p>
           </div>
 
@@ -563,7 +557,7 @@ export default function HubDashboard() {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
               <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
-                {t("cards.nearby_alerts")}
+                {t("Nearby Alerts")}
               </span>
               <Bell size={20} className="text-red-500" />
             </div>
@@ -571,7 +565,7 @@ export default function HubDashboard() {
               {nearbyAlerts.length}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-              {t("status.within_radius", { km: radiusKm })}
+              {t("Within {{km}} km", { km: radiusKm })}
             </p>
           </div>
         </div>
@@ -583,7 +577,7 @@ export default function HubDashboard() {
         <div className="lg:col-span-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
             <Activity size={20} className="text-red-500" />
-            {t("sections.temperature_live")}
+            {t("Live Temperature")}
           </h3>
           <div className="h-72">
             {tempSeries.length > 0 ? (
@@ -618,7 +612,7 @@ export default function HubDashboard() {
               </ResponsiveContainer>
             ) : (
               <div className="h-full flex items-center justify-center text-slate-500">
-                {t("status.waiting_for_temperature")}
+                {t("Waiting for temperature data...")}
               </div>
             )}
           </div>
@@ -628,7 +622,7 @@ export default function HubDashboard() {
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
             <Satellite size={20} className="text-purple-500" />
-            {t("sections.dem")}
+            {t("Elevation Map")}
           </h3>
           <DemMiniHeatmap points={demPatch.points} />
         </div>
@@ -640,7 +634,7 @@ export default function HubDashboard() {
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
             <Wind size={20} className="text-sky-500" />
-            {t("sections.wind_humidity_live")}
+            {t("Wind & Humidity")}
           </h3>
           <div className="h-72">
             {weatherSeries.length > 0 ? (
@@ -688,7 +682,7 @@ export default function HubDashboard() {
               </ResponsiveContainer>
             ) : (
               <div className="h-full flex items-center justify-center text-slate-500">
-                {t("status.waiting_for_weather")}
+                {t("Waiting for weather data...")}
               </div>
             )}
           </div>
@@ -698,7 +692,7 @@ export default function HubDashboard() {
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
             <Brain size={20} className="text-purple-500" />
-            {t("sections.ml_risk_live")}
+            {t("ML Risk Assessment")}
           </h3>
           <div className="h-72">
             {riskSeries.length > 0 ? (
@@ -756,7 +750,7 @@ export default function HubDashboard() {
               </ResponsiveContainer>
             ) : (
               <div className="h-full flex items-center justify-center text-slate-500">
-                {t("status.waiting_for_ml")}
+                {t("Waiting for ML predictions...")}
               </div>
             )}
           </div>
@@ -789,7 +783,7 @@ function DemMiniHeatmap({ points }) {
   if (!points || points.length === 0) {
     return (
       <div className="h-64 rounded border bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 text-sm">
-        {t("status.no_dem_data")}
+        {t("No DEM data available")}
       </div>
     );
   }
@@ -845,7 +839,7 @@ function DemMiniHeatmap({ points }) {
         </div>
       </div>
       <div className="mt-3 text-xs text-slate-600 dark:text-slate-400 flex justify-between">
-        <span>{t("status.elevation_range")}</span>
+        <span>{t("Elevation range")}</span>
         <span className="font-medium">
           {isFinite(min) ? min.toFixed(0) : "—"} –{" "}
           {isFinite(max) ? max.toFixed(0) : "—"} m
