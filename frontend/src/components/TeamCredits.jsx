@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Shield, Code, Users, Heart } from 'lucide-react';
 
 export default function TeamCredits() {
+  const { t } = useTranslation('common');
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -34,10 +36,10 @@ export default function TeamCredits() {
               <Shield className="w-8 h-8 text-blue-400" />
             </div>
             <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-amber-400 mb-4">
-              RockShield
+              {t('team.title')}
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              Advanced safety solutions engineered with passion.
+              {t('team.subtitle')}
             </p>
           </div>
 
@@ -58,7 +60,7 @@ export default function TeamCredits() {
                     </h3>
                     <div className="text-xs text-blue-400 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-10px] group-hover:translate-x-0">
                       <Code size={12} />
-                      <span>Developer</span>
+                      <span>{t('team.developer')}</span>
                     </div>
                   </div>
                 </div>
@@ -69,9 +71,9 @@ export default function TeamCredits() {
 
           <div className="mt-16 text-center">
             <div className="inline-flex items-center gap-2 text-slate-500 text-sm">
-              <span>Made with</span>
+              <span>{t('team.made_with')}</span>
               <Heart className="w-4 h-4 text-red-500 animate-bounce" fill="currentColor" />
-              <span>by the RockShield Team</span>
+              <span>{t('team.by_team')}</span>
             </div>
           </div>
 

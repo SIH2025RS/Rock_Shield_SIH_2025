@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { apiGetAuth, apiPutAuth, API_BASE_URL } from '../services/api'
-import { io } from 'socket.io-client'
 import { Shield } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function Miner() {
+  const { t } = useTranslation(['miner', 'common'])
   const { getToken } = useAuth()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -24,7 +25,7 @@ export default function Miner() {
         setLoading(false)
       } catch (e) {
         if (!mounted) return
-        setError(String(e?.message || 'Failed to load'))
+        setError(String(e?.message || t('miner.errors.load')))
         setLoading(false)
       }
     }
@@ -59,7 +60,7 @@ export default function Miner() {
       const res = await apiPutAuth(`/api/operator/tasks/${taskId}`, token, { status })
       setTasks((prev) => prev.map((t) => (t.id === taskId ? res.task : t)))
     } catch (e) {
-      alert('Failed to update: ' + (e?.message || 'Unknown error'))
+      alert(t('miner.errors.update') + ': ' + (e?.message || 'Unknown error'))
     }
   }
 
@@ -69,11 +70,11 @@ export default function Miner() {
       await apiPutAuth(`/api/operator/alerts/${id}/acknowledge`, token, {})
       setAlerts((prev) => prev.map((a) => (a.id === id ? { ...a, status: 'acknowledged' } : a)))
     } catch (e) {
-      alert('Failed to acknowledge alert')
+      alert(t('miner.errors.acknowledge'))
     }
   }
 
-  if (loading) return <div className="p-6">Loading…</div>
+  if (loading) return <div className="p-6">{t('common:loading')}</div>
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   return (
@@ -83,21 +84,21 @@ export default function Miner() {
           <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow">
             <Shield size={18} />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Miner</h1>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{t('miner.title')}</h1>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-lg font-semibold">My Tasks</h2>
+            <h2 className="mb-4 text-lg font-semibold">{t('miner.my_tasks')}</h2>
             <ul className="space-y-2 max-h-64 overflow-auto">
               {tasks.map((t) => (
                 <li key={t.id} className="flex items-center justify-between rounded border p-3 bg-white dark:bg-slate-900">
                   <div>
                     <div className="font-medium">{t.title}</div>
-                    <div className="text-xs text-slate-600">Status: {t.status}</div>
+                    <div className="text-xs text-slate-600">{t('miner.status')}: {t(t.status)}</div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="btn-secondary" onClick={() => updateStatus(t.id, 'in_progress')}>Start</button>
-                    <button className="btn-primary" onClick={() => updateStatus(t.id, 'completed')}>Complete</button>
+                    <button className="btn-secondary" onClick={() => updateStatus(t.id, 'in_progress')}>{t('miner.actions.start')}</button>
+                    <button className="btn-primary" onClick={() => updateStatus(t.id, 'completed')}>{t('miner.actions.complete')}</button>
                   </div>
                 </li>
               ))}
@@ -105,7 +106,7 @@ export default function Miner() {
           </div>
 
           <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-lg font-semibold">Forwarded Alerts</h2>
+            <h2 className="mb-4 text-lg font-semibold">{t('miner.forwarded_alerts')}</h2>
             <ul className="space-y-2 max-h-64 overflow-auto">
               {alerts.map((a) => (
                 <li key={a.id} className="rounded border p-3 bg-white dark:bg-slate-900">
@@ -115,7 +116,7 @@ export default function Miner() {
                   </div>
                   <div className="text-xs text-slate-700">{a.description || ''}</div>
                   <div className="mt-2 flex gap-2">
-                    <button className="btn-secondary" onClick={() => acknowledgeAlert(a.id)} disabled={a.status === 'acknowledged'}>Acknowledge</button>
+                    <button className="btn-secondary" onClick={() => acknowledgeAlert(a.id)} disabled={a.status === 'acknowledged'}>{t('miner.actions.acknowledge')}</button>
                   </div>
                 </li>
               ))}

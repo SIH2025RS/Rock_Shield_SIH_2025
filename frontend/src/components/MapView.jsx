@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
@@ -23,6 +24,7 @@ export default function MapView({
   fitToData = true,
   style = { height: '420px', width: '100%' },
 }) {
+  const { t } = useTranslation('common')
   const mapContainer = useRef(null)
   const mapRef = useRef(null)
   const markersRef = useRef([])
@@ -74,7 +76,7 @@ export default function MapView({
           .setPopup(
             new mapboxgl.Popup({ offset: 12 }).setHTML(
               `<div style="font: 12px system-ui">
-                <div><strong>Sensor</strong>: ${escapeHtml(s.sensor_id || '—')}</div>
+                <div><strong>${t('map.sensor')}</strong>: ${escapeHtml(s.sensor_id || '—')}</div>
                 <div>${escapeHtml(new Date(s.measured_at).toLocaleString())}</div>
               </div>`
             )
@@ -103,8 +105,8 @@ export default function MapView({
           .setPopup(
             new mapboxgl.Popup({ offset: 12 }).setHTML(
               `<div style="font: 12px system-ui">
-                <div><strong>${escapeHtml(a.title || 'Alert')}</strong></div>
-                <div>Severity: <span style="color:${color}">${escapeHtml(a.severity || '')}</span></div>
+                <div><strong>${escapeHtml(a.title || t('map.alert'))}</strong></div>
+                <div>${t('map.severity')}: <span style="color:${color}">${escapeHtml(a.severity || '')}</span></div>
                 <div>${escapeHtml(new Date(a.created_at).toLocaleString())}</div>
                 <div>${escapeHtml(a.sensor_id || '')}</div>
                 <div>${escapeHtml(a.recommended_action || '')}</div>
@@ -121,14 +123,14 @@ export default function MapView({
     if (fitToData && hasPoint) {
       try {
         map.fitBounds(bounds, { padding: 40, duration: 500 })
-      } catch {}
+      } catch { }
     }
   }, [sensors, alerts, showSensors, showAlerts, severityColors, fitToData])
 
   if (!defaultToken && !accessToken) {
     return (
       <div className="rounded-xl border bg-white p-6 shadow-sm text-sm text-red-600">
-        Mapbox token missing. Set VITE_MAPBOX_TOKEN in your environment.
+        {t('map.error_token_missing')}
       </div>
     )
   }

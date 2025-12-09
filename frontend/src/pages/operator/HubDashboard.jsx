@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import { apiGetAuth, API_BASE_URL } from "../../services/api";
+import { apiGetAuth, API_BASE_URL, apiPostAuth } from "../../services/api";
+import { useTranslation } from "react-i18next";
+import InsightCard from "../../components/InsightCard";
 import { io } from "socket.io-client";
 import {
   MapPin,
@@ -22,6 +24,8 @@ import {
   Tooltip,
   LineChart,
   Line,
+  BarChart,
+  Bar,
 } from "recharts";
 
 const SOCKET_URL =
@@ -33,6 +37,7 @@ const SOCKET_URL =
 export default function HubDashboard() {
   const { getToken } = useAuth();
   const socketRef = useRef(null);
+  const { t, i18n } = useTranslation();
 
   const [hubs, setHubs] = useState([]);
   const [selectedHubId, setSelectedHubId] = useState("");
@@ -56,12 +61,14 @@ export default function HubDashboard() {
     stepDeg: 0,
   });
 
-  const [nearbyAlerts, setNearbyAlerts] = useState([])
-  const [nearbySensors, setNearbySensors] = useState([])
-  const [nearbyIncidents, setNearbyIncidents] = useState([])
-  const [hours, setHours] = useState(168)
-  const [demTileSizeM, setDemTileSizeM] = useState(200)
-  const [demDataset, setDemDataset] = useState('SRTMGL1')
+  const [nearbyAlerts, setNearbyAlerts] = useState([]);
+  const [nearbySensors, setNearbySensors] = useState([]);
+  const [nearbyIncidents, setNearbyIncidents] = useState([]);
+  const [hours, setHours] = useState(168);
+  const [demTileSizeM, setDemTileSizeM] = useState(200);
+  const [demDataset, setDemDataset] = useState("SRTMGL1");
+  const [mlPredictions, setMlPredictions] = useState([]);
+  const [ackAt, setAckAt] = useState(null);
 
   // Load hubs and meta
   useEffect(() => {
@@ -153,15 +160,20 @@ export default function HubDashboard() {
       gridSize: 5,
       stepDeg: 0.005,
     });
+    s.emit("subscribe-hub-ml", {
+      hubId: Number(selectedHubId),
+      intervalMs: 15000,
+    });
 
     return () => {
       try {
         s.emit("unsubscribe-hub-weather", { hubId: Number(selectedHubId) });
         s.emit("unsubscribe-hub-dem", { hubId: Number(selectedHubId) });
+        s.emit("unsubscribe-hub-ml", { hubId: Number(selectedHubId) });
         s.off("hub-weather:update", onHubWeather);
         s.off("hub-dem:update", onHubDem);
         s.off("ml:prediction", onMlPrediction);
-      } catch {}
+      } catch { }
     };
   }, [selectedHubId]);
 
@@ -170,7 +182,7 @@ export default function HubDashboard() {
     return () => {
       try {
         socketRef.current?.disconnect();
-      } catch {}
+      } catch { }
     };
   }, []);
 
@@ -244,23 +256,27 @@ export default function HubDashboard() {
       })),
     [weatherSeries]
   );
-  const riskSeries = useMemo(
-    () =>
-      mlPredictions
-        .slice(0, 180)
-        .reverse()
-        .map((p) => {
-          const risk = Number(
-            p?.risk ?? p?.score ?? p?.probability ?? p?.value
-          );
-          return {
-            time: new Date(p.at || Date.now()).toLocaleTimeString(),
-            risk: Number.isFinite(risk) ? risk : null,
-          };
-        })
-        .filter((d) => d.risk !== null),
-    [mlPredictions]
-  );
+  const riskSeries = useMemo(() => {
+    const filtered = mlPredictions
+      .filter((p) => !p.hubId || String(p.hubId) === String(selectedHubId))
+      .slice(0, 180)
+      .reverse();
+    return filtered
+      .map((p) => {
+        const raw =
+          p?.risk ??
+          p?.score ??
+          p?.probability ??
+          p?.value ??
+          p?.prediction?.risk_score;
+        const risk = Number(raw);
+        return {
+          time: new Date(p.at || Date.now()).toLocaleTimeString(),
+          risk: Number.isFinite(risk) ? risk : null,
+        };
+      })
+      .filter((d) => d.risk !== null);
+  }, [mlPredictions, selectedHubId]);
 
   const classifySeverity = (r) => {
     const v = Number(r);
@@ -271,23 +287,97 @@ export default function HubDashboard() {
     return "low";
   };
 
-  const demBBox = useMemo(() => {
-    if (!selectedHub) return null
-    const size = Math.max(10, Number(demTileSizeM) || 200)
-    return computeSquareBBox(selectedHub.lat, selectedHub.lon, size)
-  }, [selectedHub, demTileSizeM])
+  const latestPred = useMemo(() => {
+    const firstForHub = mlPredictions.find(
+      (p) => !p.hubId || String(p.hubId) === String(selectedHubId)
+    );
+    return firstForHub || mlPredictions[0] || null;
+  }, [mlPredictions, selectedHubId]);
 
-  const demDownloadUrl = useMemo(() => {
-    if (!demBBox) return ''
-    const params = new URLSearchParams({
-      demtype: demDataset,
-      south: demBBox.south.toFixed(6),
-      north: demBBox.north.toFixed(6),
-      west: demBBox.west.toFixed(6),
-      east: demBBox.east.toFixed(6)
-    })
-    return `${API_BASE_URL}/api/dem/geotiff?${params.toString()}`
-  }, [demBBox, demDataset])
+  const insightData = useMemo(() => {
+    const p = latestPred?.prediction || latestPred || null;
+    if (!p) return null;
+    const risk = Number(
+      p?.risk_score ?? p?.risk ?? p?.score ?? p?.probability ?? null
+    );
+    const severity = classifySeverity(risk);
+    const confidence = Number.isFinite(p?.confidence)
+      ? p.confidence
+      : Number.isFinite(risk)
+        ? risk
+        : null;
+    const lat = Number(p?.lat ?? latestPred?.location?.lat);
+    const lon = Number(p?.lon ?? latestPred?.location?.lon);
+
+    // Extract top reasons
+    const shap =
+      p?.explainability?.shap_top ||
+      p?.ensemble_details?.xgb_info?.shap_top ||
+      [];
+    const parsed = Array.isArray(shap)
+      ? shap
+        .map((it) => {
+          if (!it) return null;
+          if (Array.isArray(it))
+            return { name: String(it[0]), value: Number(it[1]) };
+          if (typeof it === "object")
+            return {
+              name: String(it.feature || it.name || it.key || ""),
+              value: Number(it.value),
+            };
+          return null;
+        })
+        .filter((x) => x && x.name)
+      : [];
+    const names = parsed.map((d) => d.name);
+    const mapReasonKey = (n) => {
+      const s = String(n || "").toLowerCase();
+      if (s.includes("tilt") || s.includes("incline")) return "tilt_up";
+      if (s.includes("vib") || s.includes("accel") || s.includes("shake"))
+        return "vibration_up";
+      if (s.includes("rain") || s.includes("precip")) return "rain_24h";
+      return null;
+    };
+    const keys = names.map(mapReasonKey).filter(Boolean);
+    const reasons = (
+      keys.length ? keys : ["tilt_up", "vibration_up", "rain_24h"]
+    )
+      .slice(0, 3)
+      .map((k) => t(`dashboard:insight.reasons.${k}`));
+    const contribs = parsed.slice(0, 5).map((d) => ({
+      name: d.name,
+      value: Number.isFinite(d.value) ? d.value : 0,
+    }));
+
+    return {
+      severity,
+      confidence,
+      reasons,
+      location:
+        Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null,
+      action: p?.recommended_action || null,
+      contribs,
+    };
+  }, [latestPred, t]);
+
+  async function onEscalate() {
+    try {
+      const token = await getToken({ template: "backend" });
+      await apiPostAuth("/api/alerts/escalate", token, {
+        alertId: null,
+        message: insightData?.action || null,
+        severity: insightData?.severity,
+        location: insightData?.location,
+        language: i18n.language,
+      });
+    } catch (e) {
+      // no-op
+    }
+  }
+
+  function onAcknowledge() {
+    setAckAt(new Date().toISOString());
+  }
 
   return (
     <div className="p-6">
@@ -307,7 +397,7 @@ export default function HubDashboard() {
           </select>
         </div>
         <div className="ml-auto flex items-center gap-2 text-sm">
-          <span>Hours</span>
+          <span>{t("dashboard:labels.hours")}</span>
           <input
             type="number"
             className="input w-24"
@@ -321,7 +411,7 @@ export default function HubDashboard() {
             }
           />
           <span>·</span>
-          <span>Radius</span>
+          <span>{t("dashboard:labels.radius")}</span>
           <input
             type="number"
             className="input w-24"
@@ -334,59 +424,86 @@ export default function HubDashboard() {
               )
             }
           />
-          <span>km</span>
-          <button
-            className="btn-secondary"
-            onClick={() => {
-              if (!selectedHub) return;
-              const pad = 0.02;
-              const south = (selectedHub.lat - pad).toFixed(6);
-              const north = (selectedHub.lat + pad).toFixed(6);
-              const west = (selectedHub.lon - pad).toFixed(6);
-              const east = (selectedHub.lon + pad).toFixed(6);
-              const url = `${API_BASE_URL}/api/dem/geotiff?south=${south}&north=${north}&west=${west}&east=${east}`;
-              window.open(url, "_blank");
-            }}
-            title="Download GeoTIFF around selected hub"
-          >
-            GeoTIFF
-          </button>
         </div>
       </div>
+
+      {insightData && (
+        <div className="mb-6">
+          <InsightCard
+            severity={insightData.severity}
+            confidence={insightData.confidence}
+            reasons={insightData.reasons}
+            onEscalate={onEscalate}
+            onAcknowledge={onAcknowledge}
+            locationLabel={selectedHub ? `${selectedHub.name}` : undefined}
+            whyDetails={
+              Array.isArray(insightData.contribs) &&
+                insightData.contribs.length ? (
+                <div className="h-40">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      layout="vertical"
+                      data={insightData.contribs}
+                      margin={{ left: 8, right: 12, top: 4, bottom: 4 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis type="number" stroke="#64748b" />
+                      <YAxis
+                        type="category"
+                        dataKey="name"
+                        width={120}
+                        stroke="#64748b"
+                      />
+                      <Tooltip />
+                      <Bar dataKey="value" fill="#6366f1" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : null
+            }
+          />
+        </div>
+      )}
 
       {/* Summary cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">Current Temperature</div>
+          <div className="text-slate-500 text-sm">
+            {t("dashboard:cards.current_temperature")}
+          </div>
           <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
             <ThermometerSun size={18} className="text-orange-600" />{" "}
             {weatherNow
-              ? `${weatherNow.temperature_2m} ${
-                  weatherNow?.units?.temperature_2m || "°C"
-                }`
+              ? `${weatherNow.temperature_2m} ${weatherNow?.units?.temperature_2m || "°C"
+              }`
               : "—"}
           </div>
         </div>
         <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">Wind</div>
+          <div className="text-slate-500 text-sm">
+            {t("dashboard:cards.wind")}
+          </div>
           <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
             <Wind size={18} className="text-sky-600" />{" "}
             {weatherNow
-              ? `${weatherNow.wind_speed_10m} ${
-                  weatherNow?.units?.wind_speed_10m || "km/h"
-                }`
+              ? `${weatherNow.wind_speed_10m} ${weatherNow?.units?.wind_speed_10m || "km/h"
+              }`
               : "—"}
           </div>
         </div>
         <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">Humidity</div>
+          <div className="text-slate-500 text-sm">
+            {t("dashboard:cards.humidity")}
+          </div>
           <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
             <Droplets size={18} className="text-blue-600" />{" "}
             {weatherNow ? `${weatherNow.relative_humidity_2m}%` : "—"}
           </div>
         </div>
         <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">Nearby Alerts</div>
+          <div className="text-slate-500 text-sm">
+            {t("dashboard:cards.nearby_alerts")}
+          </div>
           <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
             <Bell size={18} className="text-red-600" /> {nearbyAlerts.length}
           </div>
@@ -396,7 +513,8 @@ export default function HubDashboard() {
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <div className="rounded-xl border bg-white p-6 shadow-sm lg:col-span-2">
           <h3 className="mb-3 flex items-center gap-2">
-            <Activity size={18} className="text-blue-600" /> Temperature (live)
+            <Activity size={18} className="text-blue-600" />{" "}
+            {t("dashboard:sections.temperature_live")}
           </h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -427,7 +545,7 @@ export default function HubDashboard() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h3 className="mb-3">Wind & Humidity (live)</h3>
+          <h3 className="mb-3">{t("dashboard:sections.wind_humidity_live")}</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
@@ -466,7 +584,8 @@ export default function HubDashboard() {
         </div>
         <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm lg:col-span-2">
           <h3 className="mb-3 flex items-center gap-2">
-            <Brain size={18} className="text-purple-600" /> ML Risk (live)
+            <Brain size={18} className="text-purple-600" />{" "}
+            {t("dashboard:sections.ml_risk_live")}
           </h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -492,7 +611,7 @@ export default function HubDashboard() {
                   stroke="#64748b"
                   hide={riskSeries.length > 40}
                 />
-                <YAxis domain={[0, 1]} stroke="#64748b" />
+                <YAxis domain={[0, "auto"]} stroke="#64748b" />
                 <Tooltip />
                 <Area
                   type="monotone"
@@ -513,78 +632,25 @@ export default function HubDashboard() {
           </div>
         </div>
       </div>
-
-      <div className="rounded-xl border bg-white p-6 shadow-sm">
-        <h3 className="mb-3 flex items-center gap-2"><Satellite size={18} className="text-indigo-600" /> DEM GeoTIFF (OpenTopography)</h3>
-        {selectedHub ? (
-          <div className="space-y-3 text-sm">
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <div className="text-xs text-slate-500 mb-1">Dataset</div>
-                <select className="input w-full" value={demDataset} onChange={(e) => setDemDataset(e.target.value)}>
-                  <option value="SRTMGL1">SRTM GL1 (30m)</option>
-                  <option value="AW3D30">AW3D30 / ALOS (30m)</option>
-                  <option value="COP30">Copernicus DEM 30m</option>
-                </select>
-              </div>
-              <div>
-                <div className="text-xs text-slate-500 mb-1">Tile size (m, square)</div>
-                <input
-                  type="number"
-                  className="input w-full"
-                  min={50}
-                  max={2000}
-                  value={demTileSizeM}
-                  onChange={(e) => setDemTileSizeM(e.target.value)}
-                />
-              </div>
-            </div>
-            {demBBox && (
-              <div className="text-[11px] text-slate-600">
-                Bounding box (approx):
-                <br />
-                south {demBBox.south.toFixed(5)}, north {demBBox.north.toFixed(5)}
-                <br />
-                west {demBBox.west.toFixed(5)}, east {demBBox.east.toFixed(5)}
-              </div>
-            )}
-            <div>
-              <a
-                className="btn-secondary"
-                href={demDownloadUrl || undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download DEM GeoTIFF
-              </a>
-            </div>
-            <div className="text-[11px] text-slate-500">
-              Uses the backend /api/dem/geotiff endpoint (OpenTopography Global DEM API).
-            </div>
-          </div>
-        ) : (
-          <div className="text-sm text-slate-500">Select a plant hub to enable DEM download.</div>
-        )}
-      </div>
     </div>
   );
 }
 
 function computeSquareBBox(lat, lon, sizeM) {
-  const half = sizeM / 2
-  const mPerDegLat = 110574
-  const latRad = lat * Math.PI / 180
-  const mPerDegLon = 111320 * Math.cos(latRad)
+  const half = sizeM / 2;
+  const mPerDegLat = 110574;
+  const latRad = (lat * Math.PI) / 180;
+  const mPerDegLon = 111320 * Math.cos(latRad);
   if (!isFinite(mPerDegLon) || mPerDegLon <= 0) {
-    return { south: lat, north: lat, west: lon, east: lon }
+    return { south: lat, north: lat, west: lon, east: lon };
   }
-  const dLat = half / mPerDegLat
-  const dLon = half / mPerDegLon
-  const south = Math.max(-90, lat - dLat)
-  const north = Math.min(90, lat + dLat)
-  const west = Math.max(-180, lon - dLon)
-  const east = Math.min(180, lon + dLon)
-  return { south, north, west, east }
+  const dLat = half / mPerDegLat;
+  const dLon = half / mPerDegLon;
+  const south = Math.max(-90, lat - dLat);
+  const north = Math.min(90, lat + dLat);
+  const west = Math.max(-180, lon - dLon);
+  const east = Math.min(180, lon + dLon);
+  return { south, north, west, east };
 }
 
 function DemMiniHeatmap({ points }) {
@@ -592,7 +658,7 @@ function DemMiniHeatmap({ points }) {
   if (!points || points.length === 0) {
     return (
       <div className="h-64 rounded border bg-slate-50 flex items-center justify-center text-slate-500 text-sm">
-        No DEM data
+        {t('dashboard:map.no_dem') || 'No DEM data'}
       </div>
     );
   }
@@ -667,9 +733,9 @@ function isWithinRadius(lat1, lon1, lat2, lon2, radiusKm) {
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c <= radiusKm;
 }

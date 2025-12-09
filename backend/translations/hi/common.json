@@ -1,0 +1,31 @@
+{
+  "app": {
+    "name": "रॉकशील्ड"
+  },
+  "nav": {
+    "home": "होम",
+    "dashboard": "डैशबोर्ड",
+    "admin": "प्रशासन",
+    "map": "मानचित्र",
+    "alerts": "चेतावनियाँ",
+    "tasks": "कार्य",
+    "sensors": "सेंसर",
+    "droneImagery": "ड्रोन चित्र",
+    "reports": "रिपोर्ट",
+    "incidents": "घटनाएँ",
+    "miner": "खनिक",
+    "login": "लॉगिन",
+    "getStarted": "शुरू करें"
+  },
+  "i18n": {
+    "language": "भाषा",
+    "english": "अंग्रेज़ी",
+    "hindi": "हिन्दी"
+  },
+  "actions": {
+    "acknowledge": "स्वीकार करें",
+    "escalate": "एस्केलेट",
+    "call": "कॉल",
+    "listen": "सुनें"
+  }
+}

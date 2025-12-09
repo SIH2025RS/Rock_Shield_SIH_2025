@@ -1,0 +1,26 @@
+{
+  "cards": {
+    "total_sensors": "மொத்த சென்சார்கள்",
+    "active_alerts": "செயலில் உள்ள எச்சரிக்கைகள்",
+    "plant_hubs": "செயல் மையங்கள்",
+    "critical_suffix": "கடுமையான",
+    "monitoring": "கண்காணிப்பு",
+    "current_weather": "தற்போதைய வானிலை"
+  },
+  "controls": {
+    "mode_3d": "3D நில அமைப்பு",
+    "mode_sat": "செயற்கைக்கோள் காட்சி",
+    "mode_street": "தெரு காட்சி",
+    "add_sensor": "சென்சார் சேர்க்க",
+    "cancel": "ரத்து செய்",
+    "hours": "மணிநேரம்"
+  },
+  "map": {
+    "select_location": "வானிலையை பார்க்க இடத்தைத் தேர்வு செய்யவும்"
+  },
+  "weather_widget": {
+    "current_temperature": "தற்போதைய வெப்பநிலை",
+    "humidity": "ஈரப்பதம்",
+    "wind_speed": "காற்றின் வேகம்"
+  }
+}

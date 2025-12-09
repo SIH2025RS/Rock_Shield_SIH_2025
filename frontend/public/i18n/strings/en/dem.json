@@ -1,0 +1,34 @@
+{
+    "loading": "Loading DEM data...",
+    "title": "DEM Terrain Analysis",
+    "parameter": "Parameter",
+    "zone": "Zone",
+    "zone_analysis": "Zone Analysis",
+    "zone_not_found": "Zone not found",
+    "current_value": "Current Value",
+    "std_dev": "Standard Deviation",
+    "description": "Description",
+    "all_zones": "All Zones Overview",
+    "risk_level": "Risk Level",
+    "risk_factors": "Risk Factors",
+    "status": "Status",
+    "risk": "Risk",
+    "sensors": "Sensors",
+    "parameters": {
+        "elevation": "Elevation",
+        "slope": "Slope",
+        "aspect": "Aspect",
+        "porePressure": "Pore Pressure",
+        "methanePpm": "Methane (ppm)",
+        "roughness": "Roughness",
+        "relief": "Relief",
+        "flowAccumulation": "Flow Accumulation",
+        "topographicWetnessIndex": "TWI"
+    },
+    "risk_levels": {
+        "safe": "SAFE",
+        "low": "LOW",
+        "warning": "WARNING",
+        "high": "HIGH"
+    }
+}

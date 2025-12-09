@@ -1,0 +1,255 @@
+{
+    "title": "Operator",
+    "nav": {
+        "map": "Map",
+        "alerts": "Alerts",
+        "tasks": "Tasks",
+        "sensors": "Sensors",
+        "reports": "Reports",
+        "incident": "Incident"
+    },
+    "sections": {
+        "sensors": "Last 24h sensors",
+        "submit_report": "Submit report",
+        "alerts": "Alerts",
+        "task_management": "Task Management",
+        "map": "Map",
+        "sensor_insights": "Sensor Insights: Tilt vs time",
+        "rainfall_pp": "Rainfall vs Pore Pressure",
+        "correlation": "Multi-sensor correlation",
+        "vibration": "Vibration event log",
+        "incident_reporting": "Incident Reporting"
+    },
+    "placeholders": {
+        "enter_report": "Enter report details",
+        "title": "Title",
+        "description": "Description",
+        "sensor_id": "Sensor ID",
+        "metric": "Metric",
+        "rain_metric": "Rain metric",
+        "pp_metric": "Pore pressure metric",
+        "sensor_ids_comma": "Sensor IDs (comma sep)",
+        "threshold": "Threshold",
+        "severity": "Severity",
+        "location_name": "Location name",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "hub_name": "Hub name"
+    },
+    "actions": {
+        "submit": "Submit",
+        "acknowledge": "Acknowledge",
+        "forward_miners": "Forward to miners",
+        "create": "Create",
+        "start": "Start",
+        "complete": "Complete",
+        "load": "Load",
+        "submit_incident": "Submit Incident",
+        "save_hub": "Save Hub",
+        "stop_weather": "Stop Weather",
+        "start_weather": "Start Weather",
+        "stop_dem": "Stop DEM",
+        "start_dem": "Start DEM",
+        "refresh": "Refresh"
+    },
+    "messages": {
+        "loading": "Loading...",
+        "error_load": "Failed to load",
+        "report_submitted": "Report submitted",
+        "submit_failed": "Failed to submit",
+        "alert_forwarded": "Alert forwarded to miners",
+        "incident_submitted": "Incident submitted",
+        "acknowledge_failed": "Failed to acknowledge",
+        "forward_failed": "Failed to forward alert",
+        "task_create_failed": "Failed to create task",
+        "task_update_failed": "Failed to update task",
+        "incident_failed": "Failed to submit incident"
+    },
+    "alerts_page": {
+        "title": "Risk Alerts",
+        "subtitle": "Monitor and manage active alerts from your sensor network",
+        "create_new": "Create New Alert",
+        "creating": "Creating...",
+        "create_btn": "Create alert",
+        "sensor_label": "Sensor:",
+        "forward_btn": "Forward",
+        "pk_title": "Title",
+        "pk_sensor_optional": "Sensor ID (optional)",
+        "pk_action_optional": "Recommended action (optional)",
+        "pk_lat_optional": "Latitude (optional)",
+        "pk_lon_optional": "Longitude (optional)",
+        "pk_desc_optional": "Description (optional)"
+    },
+    "tasks_page": {
+        "title": "Task Management",
+        "subtitle": "Create and track tasks for operators and miners",
+        "create_btn": "Create",
+        "types": {
+            "inspection": "Inspection",
+            "alert_response": "Alert Response",
+            "incident_review": "Incident Review"
+        },
+        "priorities": {
+            "critical": "Critical",
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low"
+        }
+    },
+    "reports_page": {
+        "title": "Reports",
+        "subtitle": "View and submit field reports",
+        "add_btn": "Add Report",
+        "close_btn": "Close",
+        "recent_title": "Recent Reports",
+        "no_reports": "No reports yet",
+        "guidance_title": "Guidance",
+        "tips": {
+            "one": "Add a short, clear title.",
+            "two": "Pick a category to aid triage.",
+            "three": "Provide specific details and context."
+        },
+        "form": {
+            "title": "Title",
+            "category": "Category",
+            "details": "Details",
+            "placeholder_title": "Short title",
+            "placeholder_details": "Enter report details",
+            "submit": "Submit",
+            "submitting": "Submitting...",
+            "submitted": "Submitted"
+        },
+        "templates": {
+            "weather": "Weather",
+            "rockface": "Rockface",
+            "equipment": "Equipment"
+        },
+        "templates_text": {
+            "weather": "Weather note: Light rain, gusty winds near bench 3.",
+            "rockface": "Rockface observation: Fresh cracks observed, minor debris at toe.",
+            "equipment": "Equipment issue: Loader vibrating under load; schedule inspection."
+        },
+        "categories": {
+            "general": "General",
+            "observation": "Observation",
+            "hazard": "Hazard",
+            "maintenance": "Maintenance"
+        }
+    },
+    "incidents_page": {
+        "title": "Incidents",
+        "subtitle": "View and report incidents with attachments",
+        "add_btn": "Add Incident",
+        "types": {
+            "rockfall": "Rockfall",
+            "hazard": "Hazard",
+            "near_miss": "Near Miss",
+            "equipment": "Equipment Failure"
+        },
+        "recent_title": "Recent Incidents",
+        "no_incidents": "No incidents yet",
+        "tips_title": "Tips for clear reports",
+        "tips": {
+            "one": "Provide specific location and time.",
+            "two": "Describe conditions (weather, terrain, equipment).",
+            "three": "Attach clear photos or videos when safe.",
+            "four": "Use severity to indicate urgency."
+        },
+        "admin_note": "System admins will review and acknowledge your report.",
+        "form": {
+            "title": "Title",
+            "type": "Type",
+            "severity": "Severity",
+            "location_name": "Location name",
+            "lat": "Latitude",
+            "lon": "Longitude",
+            "desc": "Description",
+            "attachments": "Attachments",
+            "upload_prompt": "Upload images, videos, or PDFs",
+            "submit": "Submit Incident"
+        }
+    },
+    "sensors_page": {
+        "title": "Sensors",
+        "subtitle": "{{filtered}} of {{total}} sensors",
+        "search_placeholder": "Search",
+        "all_types": "All types",
+        "any_status": "Any status",
+        "refresh": "Refresh",
+        "added": "Added",
+        "id": "ID",
+        "unknown": "unknown",
+        "types": {
+            "tilt": "Tilt",
+            "vibration": "Vibration",
+            "weather": "Weather",
+            "camera": "Camera",
+            "other": "Other"
+        },
+        "status": {
+            "green": "Green",
+            "yellow": "Yellow",
+            "red": "Red"
+        }
+    },
+    "drone_imagery": {
+        "title": "Drone imagery: bounding boxes and heatmap",
+        "subtitle": "Draw regions of interest on drone frames and switch to heatmap mode to see hotspot patches.",
+        "previous": "Previous",
+        "next": "Next",
+        "frame_info": "Frame {{current}} of {{total}} ({{name}})",
+        "total_boxes": "Total boxes across frames: {{count}}",
+        "instruction": "Use the mouse to click and drag on the image to create a box. Switch between box view and heatmap view in the toolbar above the image."
+    },
+    "cards": {
+        "total_sensors": "Total Sensors",
+        "active_alerts": "Active Alerts",
+        "plant_hubs": "Plant Hubs",
+        "monitoring": "monitoring",
+        "critical_suffix": "Critical",
+        "current_weather": "Current Weather",
+        "real_time_alerts": "Real-time Alerts"
+    },
+    "controls": {
+        "mode_3d": "3D",
+        "mode_sat": "Satellite",
+        "mode_street": "Street",
+        "add_sensor": "Add Sensor",
+        "cancel": "Cancel",
+        "hours": "Hours",
+        "terrain_settings": "3D Terrain Settings",
+        "exaggeration": "Terrain Exaggeration",
+        "show_hillshade": "Show Hillshade",
+        "show_contours": "Show Contours",
+        "contour_interval": "Contour Interval (m)"
+    },
+    "weather_widget": {
+        "current_temperature": "Current Temperature",
+        "humidity": "Humidity",
+        "wind_speed": "Wind Speed"
+    },
+    "map": {
+        "select_location": "Select a location on the map to see weather data",
+        "save_hub": "Save as Plant Hub",
+        "your_hubs": "Your Plant Hubs",
+        "overlay_controls": "Overlay controls",
+        "search_prompt": "Search and select a location to save it.",
+        "no_weather": "No weather yet",
+        "no_dem": "No DEM yet",
+        "dem_loading": "DEM Patches Loading",
+        "patches_suffix": "patches",
+        "value": "Value",
+        "show_sensors": "Show sensors",
+        "show_alerts": "Show alerts",
+        "hours": "Hours",
+        "weather": {
+            "temp": "Temp",
+            "humidity": "Humidity",
+            "wind": "Wind"
+        },
+        "dem": {
+            "patch": "DEM Patch",
+            "points": "Points"
+        }
+    }
+}

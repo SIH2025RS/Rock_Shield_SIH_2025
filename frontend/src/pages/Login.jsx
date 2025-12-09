@@ -2,8 +2,10 @@ import { useEffect } from 'react'
 import { SignIn, useUser } from '@clerk/clerk-react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Shield } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function Login() {
+  const { t } = useTranslation('auth')
   const { isSignedIn } = useUser()
   const navigate = useNavigate()
   const location = useLocation()
@@ -20,8 +22,8 @@ export default function Login() {
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg">
               <Shield size={24} />
             </div>
-            <h1 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">Welcome back</h1>
-            <p className="text-sm text-slate-600 dark:text-slate-400">Sign in to access the Operator Hub</p>
+            <h1 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">{t('login.welcome')}</h1>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t('login.subtitle')}</p>
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
             <SignIn routing="path" path="/login" />

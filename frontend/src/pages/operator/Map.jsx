@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import { apiGetAuth, apiPostAuth, API_BASE_URL } from "../../services/api";
+import {
+  apiGetAuth,
+  apiPostAuth,
+  apiPutAuth,
+  API_BASE_URL,
+} from "../../services/api";
 import { io } from "socket.io-client";
 import Map3D from "../../components/map/Map3D";
 import MapSatellite from "../../components/map/MapSatellite";
 import MapStreets from "../../components/map/MapStreets";
+import InsightCard from "../../components/InsightCard";
+import { useTranslation } from "react-i18next";
 import {
   LineChart,
   Line,
@@ -45,6 +52,7 @@ import {
 export default function OperatorMap() {
   const { getToken } = useAuth();
   const socketRef = useRef(null);
+  const { t, i18n } = useTranslation();
   const weatherPollersRef = useRef(new Map());
   const [mapSensors, setMapSensors] = useState([]);
   const [mapAlerts, setMapAlerts] = useState([]);
@@ -70,6 +78,7 @@ export default function OperatorMap() {
   const [activeDemIds, setActiveDemIds] = useState([]);
   const [demLoadingStates, setDemLoadingStates] = useState({}); // Track loading state per hub
   const [mlPredictions, setMlPredictions] = useState([]);
+  const [selectedAlert, setSelectedAlert] = useState(null);
 
   const [addSensorMode, setAddSensorMode] = useState(false);
   const [pendingPoint, setPendingPoint] = useState(null);
@@ -93,7 +102,7 @@ export default function OperatorMap() {
         if (!mounted) return;
         setSeverityColors(meta.severityColors || {});
         await Promise.all([loadMapData(), loadHubs(), loadRegisteredSensors()]);
-      } catch {}
+      } catch { }
     }
     init();
     return () => {
@@ -116,7 +125,7 @@ export default function OperatorMap() {
       ]);
       setMapSensors(s.sensors || []);
       setMapAlerts(a.alerts || []);
-    } catch {}
+    } catch { }
   }
 
   async function loadHubs() {
@@ -124,7 +133,7 @@ export default function OperatorMap() {
       const token = await getToken({ template: "backend" });
       const res = await apiGetAuth("/api/operator/plant-hubs?mine=true", token);
       setHubs(res.hubs || []);
-    } catch {}
+    } catch { }
   }
 
   async function loadRegisteredSensors() {
@@ -139,7 +148,7 @@ export default function OperatorMap() {
         const lon = Number(s.lon);
         if (isFinite(lat) && isFinite(lon)) setCenterOn({ lat, lon });
       }
-    } catch {}
+    } catch { }
   }
 
   useEffect(() => {
@@ -167,9 +176,86 @@ export default function OperatorMap() {
       try {
         for (const t of weatherPollersRef.current.values()) clearInterval(t);
         weatherPollersRef.current.clear();
-      } catch {}
+      } catch { }
     };
   }, []);
+
+  function onAlertSelect(a) {
+    setSelectedAlert(a || null);
+  }
+
+  const selectedInsight = useMemo(() => {
+    const a = selectedAlert;
+    if (!a) return null;
+    const severity = String(a.severity || "low").toLowerCase();
+    const meta = a.metadata || {};
+    const explain =
+      meta.explainability ||
+      (meta.ensemble_details && meta.ensemble_details.xgb_info) ||
+      {};
+    const shapTop = explain.shap_top || [];
+    const names = Array.isArray(shapTop)
+      ? shapTop
+        .map((it) => {
+          if (!it) return null;
+          if (Array.isArray(it)) return String(it[0]);
+          if (typeof it === "object")
+            return String(it.feature || it.name || it.key || "");
+          return String(it);
+        })
+        .filter(Boolean)
+      : [];
+    const mapReasonKey = (n) => {
+      const s = String(n || "").toLowerCase();
+      if (s.includes("tilt") || s.includes("incline")) return "tilt_up";
+      if (s.includes("vib") || s.includes("accel") || s.includes("shake"))
+        return "vibration_up";
+      if (s.includes("rain") || s.includes("precip")) return "rain_24h";
+      return null;
+    };
+    const keys = names.map(mapReasonKey).filter(Boolean);
+    const reasons = (
+      keys.length ? keys : ["tilt_up", "vibration_up", "rain_24h"]
+    )
+      .slice(0, 3)
+      .map((k) => t(`dashboard:insight.reasons.${k}`));
+    return {
+      severity,
+      reasons,
+      action: a.recommended_action || null,
+      coords:
+        typeof a.location_lat === "number" && typeof a.location_lon === "number"
+          ? { lat: a.location_lat, lon: a.location_lon }
+          : null,
+    };
+  }, [selectedAlert, t]);
+
+  async function onEscalateSelected() {
+    if (!selectedInsight) return;
+    try {
+      const token = await getToken({ template: "backend" });
+      await apiPostAuth("/api/alerts/escalate", token, {
+        alertId: selectedAlert?.id || null,
+        message: selectedInsight.action || null,
+        severity: selectedInsight.severity,
+        location: selectedInsight.coords,
+        language: i18n.language,
+      });
+    } catch { }
+  }
+
+  async function onAcknowledgeSelected() {
+    if (!selectedAlert?.id) return;
+    try {
+      const token = await getToken({ template: "backend" });
+      await apiPutAuth(
+        `/api/operator/alerts/${selectedAlert.id}/acknowledge`,
+        token,
+        {}
+      );
+      setSelectedAlert(null);
+    } catch { }
+  }
 
   function onLocationSelect(loc) {
     setSelectedLoc(loc);
@@ -196,7 +282,7 @@ export default function OperatorMap() {
       setSelectedLoc(null);
       setHubName("");
       await loadHubs();
-    } catch {}
+    } catch { }
   }
 
   function startHubWeather(hubId) {
@@ -223,7 +309,7 @@ export default function OperatorMap() {
         );
         const curr = data?.current || null;
         if (curr) setHubWeather((prev) => ({ ...prev, [hubId]: curr }));
-      } catch {}
+      } catch { }
     };
     poll();
     const t = setInterval(poll, 15000);
@@ -407,7 +493,7 @@ export default function OperatorMap() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">
-                  Total Sensors
+                  {t("operator:cards.total_sensors")}
                 </p>
                 <p className="text-3xl font-bold text-slate-900 mt-1">
                   {mapSensors.length}
@@ -424,14 +510,14 @@ export default function OperatorMap() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">
-                  Active Alerts
+                  {t("operator:cards.active_alerts")}
                 </p>
                 <p className="text-3xl font-bold text-slate-900 mt-1">
                   {mapAlerts.length}
                 </p>
                 <p className="text-xs text-red-600 mt-1">
                   {mapAlerts.filter((a) => a.severity === "high").length}{" "}
-                  critical
+                  {t("operator:cards.critical_suffix")}
                 </p>
               </div>
               <div className="bg-red-100 p-3 rounded-lg">
@@ -443,12 +529,14 @@ export default function OperatorMap() {
           <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Plant Hubs</p>
+                <p className="text-sm font-medium text-slate-600">
+                  {t("operator:cards.plant_hubs")}
+                </p>
                 <p className="text-3xl font-bold text-slate-900 mt-1">
                   {hubs.length}
                 </p>
                 <p className="text-xs text-emerald-600 mt-1">
-                  {activeWeatherIds.length} monitoring
+                  {activeWeatherIds.length} {t("operator:cards.monitoring")}
                 </p>
               </div>
               <div className="bg-emerald-100 p-3 rounded-lg">
@@ -466,17 +554,16 @@ export default function OperatorMap() {
                 <button
                   key={mode}
                   onClick={() => setMapMode(mode)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    mapMode === mode
-                      ? "bg-blue-600 text-white shadow-md"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                  }`}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${mapMode === mode
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
                 >
                   {mode === "3d"
-                    ? "3D Terrain"
+                    ? t("operator:controls.mode_3d")
                     : mode === "sat"
-                    ? "Satellite"
-                    : "Streets"}
+                      ? t("operator:controls.mode_sat")
+                      : t("operator:controls.mode_street")}
                 </button>
               ))}
             </div>
@@ -488,18 +575,19 @@ export default function OperatorMap() {
                 setAddSensorMode(!addSensorMode);
                 setPendingPoint(null);
               }}
-              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
-                addSensorMode
-                  ? "bg-blue-600 text-white"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }`}
+              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${addSensorMode
+                ? "bg-blue-600 text-white"
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
             >
               {addSensorMode ? (
                 <X className="w-4 h-4" />
               ) : (
                 <Plus className="w-4 h-4" />
               )}
-              {addSensorMode ? "Cancel" : "Add Sensor"}
+              {addSensorMode
+                ? t("operator:controls.cancel")
+                : t("operator:controls.add_sensor")}
             </button>
             <div className="flex items-center gap-2">
               <input
@@ -509,10 +597,24 @@ export default function OperatorMap() {
                 onChange={(e) => setMapHours(Number(e.target.value) || 24)}
                 min={1}
               />
-              <span className="text-sm text-slate-600">hours</span>
+              <span className="text-sm text-slate-600">
+                {t("operator:controls.hours")}
+              </span>
             </div>
           </div>
         </div>
+
+        {selectedInsight && (
+          <div className="mb-6">
+            <InsightCard
+              severity={selectedInsight.severity}
+              reasons={selectedInsight.reasons}
+              onEscalate={onEscalateSelected}
+              onAcknowledge={onAcknowledgeSelected}
+              locationLabel={selectedAlert?.title || undefined}
+            />
+          </div>
+        )}
         {/* Main Map */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-slate-200">
           {mapMode === "3d" && (
@@ -536,6 +638,7 @@ export default function OperatorMap() {
               enableMapClicks={addSensorMode}
               onMapClick={onMapAddSensorClick}
               centerOn={centerOn}
+              onAlertSelect={onAlertSelect}
             />
           )}
           {mapMode === "sat" && (
@@ -555,6 +658,7 @@ export default function OperatorMap() {
               enableMapClicks={addSensorMode}
               onMapClick={onMapAddSensorClick}
               centerOn={centerOn}
+              onAlertSelect={onAlertSelect}
             />
           )}
           {mapMode === "street" && (
@@ -574,6 +678,7 @@ export default function OperatorMap() {
               enableMapClicks={addSensorMode}
               onMapClick={onMapAddSensorClick}
               centerOn={centerOn}
+              onAlertSelect={onAlertSelect}
             />
           )}
         </div>
@@ -583,12 +688,12 @@ export default function OperatorMap() {
             <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
               <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
                 <Settings className="w-5 h-5 text-slate-600" />
-                3D Terrain Settings
+                {t('operator:controls.terrain_settings')}
               </h3>
               <div className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-slate-700 mb-2 block">
-                    Terrain Exaggeration:{" "}
+                    {t('operator:controls.exaggeration')}:{" "}
                     <span className="text-blue-600">
                       {terrainExaggeration.toFixed(1)}x
                     </span>
@@ -613,7 +718,7 @@ export default function OperatorMap() {
                       onChange={(e) => setShowHillshade(e.target.checked)}
                       className="rounded accent-blue-600"
                     />
-                    <span className="text-slate-700">Show Hillshade</span>
+                    <span className="text-slate-700">{t('operator:controls.show_hillshade')}</span>
                   </label>
                   <label className="flex items-center gap-2 text-sm">
                     <input
@@ -622,12 +727,12 @@ export default function OperatorMap() {
                       onChange={(e) => setShowContours(e.target.checked)}
                       className="rounded accent-blue-600"
                     />
-                    <span className="text-slate-700">Show Contours</span>
+                    <span className="text-slate-700">{t('operator:controls.show_contours')}</span>
                   </label>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 mb-2 block">
-                    Contour Interval (m)
+                    {t('operator:controls.contour_interval')}
                   </label>
                   <input
                     type="number"
@@ -650,7 +755,7 @@ export default function OperatorMap() {
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl shadow-sm p-6 border border-emerald-200">
               <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
                 <Mountain className="w-5 h-5 text-emerald-600" />
-                DEM Patches Loading
+                {t('operator:map.dem_loading')}
               </h3>
               <div className="space-y-3">
                 {activeDemIds.map((hubId) => {
@@ -670,12 +775,12 @@ export default function OperatorMap() {
                           <div className="flex items-center gap-2">
                             <div className="w-4 h-4 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
                             <span className="text-xs text-emerald-600 font-medium">
-                              Loading...
+                              {t('common:loading')}
                             </span>
                           </div>
                         ) : (
                           <span className="text-xs text-emerald-600 font-medium">
-                            ✓ {patchCount} patches
+                            ✓ {patchCount} {t('operator:map.patches_suffix')}
                           </span>
                         )}
                       </div>
@@ -692,7 +797,7 @@ export default function OperatorMap() {
           <div className="bg-gradient-to-br from-white-50 to-white-50 rounded-xl shadow-sm p-6 border border-red-200 mb-8">
             <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-600" />
-              Real-time Alerts
+              {t('operator:cards.real_time_alerts')}
             </h3>
             <div className="space-y-3 max-h-64 overflow-y-auto">
               {recentAlertsData.map((alert) => (
@@ -707,19 +812,18 @@ export default function OperatorMap() {
                           {alert.sensor}
                         </span>
                         <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${
-                            alert.severity === "critical"
-                              ? "bg-red-100 text-red-700"
-                              : alert.severity === "warning"
+                          className={`px-2 py-1 rounded text-xs font-medium ${alert.severity === "critical"
+                            ? "bg-red-100 text-red-700"
+                            : alert.severity === "warning"
                               ? "bg-amber-100 text-amber-700"
                               : "bg-blue-100 text-blue-700"
-                          }`}
+                            }`}
                         >
                           {alert.type}
                         </span>
                       </div>
                       <p className="text-sm text-slate-600">
-                        Value:{" "}
+                        {t('operator:map.value')}:{" "}
                         <span className="font-semibold">{alert.value}</span>
                       </p>
                     </div>
@@ -736,7 +840,7 @@ export default function OperatorMap() {
           <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-sm p-6 border border-blue-200">
             <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
               <Cloud className="w-5 h-5 text-blue-600" />
-              Current Weather
+              {t("operator:cards.current_weather")}
             </h3>
             {weatherData ? (
               <div className="space-y-4">
@@ -745,20 +849,24 @@ export default function OperatorMap() {
                     {weatherData.temperature_2m}°C
                   </div>
                   <div className="text-sm text-slate-600 mt-1">
-                    Current Temperature
+                    {t("operator:weather_widget.current_temperature")}
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-white rounded-lg p-3 text-center">
                     <Droplets className="w-5 h-5 text-blue-500 mx-auto mb-1" />
-                    <div className="text-xs text-slate-600">Humidity</div>
+                    <div className="text-xs text-slate-600">
+                      {t("operator:weather_widget.humidity")}
+                    </div>
                     <div className="text-lg font-bold text-slate-900">
                       {weatherData.relative_humidity_2m}%
                     </div>
                   </div>
                   <div className="bg-white rounded-lg p-3 text-center">
                     <Wind className="w-5 h-5 text-cyan-500 mx-auto mb-1" />
-                    <div className="text-xs text-slate-600">Wind Speed</div>
+                    <div className="text-xs text-slate-600">
+                      {t("operator:weather_widget.wind_speed")}
+                    </div>
                     <div className="text-lg font-bold text-slate-900">
                       {weatherData.wind_speed_10m} km/h
                     </div>
@@ -769,7 +877,7 @@ export default function OperatorMap() {
               <div className="text-center py-8">
                 <Cloud className="w-12 h-12 mx-auto text-slate-300 mb-3" />
                 <p className="text-sm text-slate-500">
-                  Select a location to view weather
+                  {t("operator:map.select_location")}
                 </p>
               </div>
             )}

@@ -1,0 +1,31 @@
+{
+  "app": {
+    "name": "RockShield"
+  },
+  "nav": {
+    "home": "ಮುಖಪುಟ",
+    "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    "admin": "ನಿರ್ವಹಣೆ",
+    "map": "ನಕ್ಷೆ",
+    "alerts": "ಎಚ್ಚರಿಕೆಗಳು",
+    "tasks": "ಕಾರ್ಯಗಳು",
+    "sensors": "ಸೆನ್ಸರ್‌ಗಳು",
+    "droneImagery": "ಡ್ರೋನ್ ಚಿತ್ರಗಳು",
+    "reports": "ವರದಿಗಳು",
+    "incidents": "ಘಟನೆಗಳು",
+    "miner": "ಗಣಿ ಕಾರ್ಮಿಕ",
+    "login": "ಲಾಗಿನ್",
+    "getStarted": "ಪ್ರಾರಂಭಿಸಿ"
+  },
+  "i18n": {
+    "language": "ಭಾಷೆ",
+    "english": "ಇಂಗ್ಲಿಷ್",
+    "hindi": "ಹಿಂದಿ"
+  },
+  "actions": {
+    "acknowledge": "ಸ್ವೀಕರಿಸಿ",
+    "escalate": "ಎಸ್ಕಲೇಟ್ ಮಾಡಿ",
+    "call": "ಕರೆ ಮಾಡಿ",
+    "listen": "ಕೆಳಿ"
+  }
+}

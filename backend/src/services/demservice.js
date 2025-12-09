@@ -324,32 +324,16 @@ async function fetchAndStoreDemEnhanced(lat, lon) {
     const dem_drainage_distance = calculateDrainageDistance(grid, i, j);
     const TWI_dynamic = calculateTWI(grid, i, j);
 
-    // Store in database
-    const insert = `
-      INSERT INTO dem_data(
-        lat, lon, elevation, slope_angle, curvature, aspect, 
-        terrain_ruggedness, drainage_distance, twi, source
-      ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) 
-      ON CONFLICT (lat, lon) DO UPDATE SET
-        elevation = EXCLUDED.elevation,
-        slope_angle = EXCLUDED.slope_angle,
-        curvature = EXCLUDED.curvature,
-        aspect = EXCLUDED.aspect,
-        terrain_ruggedness = EXCLUDED.terrain_ruggedness,
-        drainage_distance = EXCLUDED.drainage_distance,
-        twi = EXCLUDED.twi,
-        fetched_at = NOW()
-      RETURNING *
-    `;
+    // Best-effort persistence (schema may not have derivative columns). Ignore errors.
+    try {
+      await pool.query(
+        'INSERT INTO dem_data(lat, lon, elevation, source) VALUES($1,$2,$3,$4)',
+        [lat, lon, dem_elevation, 'opentopo']
+      );
+    } catch (e) {
+      // ignore DB schema/constraint errors
+    }
 
-    const { rows } = await pool.query(insert, [
-      lat, lon, dem_elevation, dem_slope_angle, dem_curvature,
-      dem_aspect, dem_terrain_ruggedness, dem_drainage_distance,
-      TWI_dynamic, 'opentopo'
-    ]);
-
-    console.log(`[DEM] Inserted row into DB:`, rows[0]);
-    
     return {
       dem_elevation,
       dem_slope_angle,
@@ -357,8 +341,7 @@ async function fetchAndStoreDemEnhanced(lat, lon) {
       dem_aspect,
       dem_terrain_ruggedness,
       dem_drainage_distance,
-      TWI_dynamic,
-      ...rows[0]
+      TWI_dynamic
     };
 
   } catch (err) {

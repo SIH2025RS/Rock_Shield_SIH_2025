@@ -1,0 +1,103 @@
+{
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "actions": {
+        "label": "Actions",
+        "escalate": "Escalate",
+        "acknowledge": "Acknowledge",
+        "listen": "Listen"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "Advanced safety solutions engineered with passion.",
+        "developer": "Developer",
+        "made_with": "Made with",
+        "by_team": "by the RockShield Team"
+    },
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "logout": "Logout",
+    "profile": "Profile",
+    "close": "Close",
+    "risk": "Risk",
+    "probability": "Prob",
+    "rendering": "Rendering...",
+    "overall_risk": "Overall Risk",
+    "current_rainfall": "Current Rainfall",
+    "north_wall": "North Wall",
+    "east_slope": "East Slope",
+    "south_pit": "South Pit",
+    "map": {
+        "sensor": "Sensor",
+        "alert": "Alert",
+        "severity": "Severity",
+        "elevation": "Elevation",
+        "type": "Type",
+        "status": "Status",
+        "ml": "ML",
+        "error_token_missing": "Mapbox token missing. Set VITE_MAPBOX_TOKEN.",
+        "error_init": "Map initialization error",
+        "data_provider": "Data provided by Open-Meteo",
+        "search_prompt": "Search and select a location on the map to see weather details.",
+        "map_error_title": "Map Configuration Error",
+        "map_error_desc": "Mapbox token is not configured. Please add VITE_MAPBOX_TOKEN to your .env file.",
+        "get_token": "Get a free token at",
+        "search_placeholder": "Search location...",
+        "clear_search": "Clear search",
+        "searching": "Searching…",
+        "no_suggestions": "No suggestions",
+        "geotiff_view": "GeoTIFF (view)",
+        "geotiff_view_title": "Download GeoTIFF for current map view",
+        "geotiff_center": "GeoTIFF (center)",
+        "geotiff_center_title": "Download around selected coordinates",
+        "weather_location": "Weather & Location",
+        "coordinates": "Coordinates",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "wind": "Wind",
+        "humidity": "Humidity"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "Home",
+        "dashboard": "Dashboard",
+        "admin": "Admin",
+        "map": "Map",
+        "alerts": "Alerts",
+        "tasks": "Tasks",
+        "sensors": "Sensors",
+        "droneImagery": "Drone Imagery",
+        "reports": "Reports",
+        "incidents": "Incidents",
+        "miner": "Miner Interface",
+        "login": "Login",
+        "getStarted": "Get Started"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "The page you are looking for could not be found or may have been moved.",
+        "go_home": "Go home"
+    },
+    "severity": {
+        "critical": "Critical",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low",
+        "safe": "Safe"
+    },
+    "i18n": {
+        "language": "Language",
+        "english": "English",
+        "hindi": "Hindi"
+    },
+    "guest": "Guest"
+}

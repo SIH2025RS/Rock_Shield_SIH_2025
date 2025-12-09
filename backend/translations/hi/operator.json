@@ -1,0 +1,26 @@
+{
+  "cards": {
+    "total_sensors": "कुल सेंसर",
+    "active_alerts": "सक्रिय चेतावनियाँ",
+    "plant_hubs": "प्लांट हब",
+    "critical_suffix": "क्रिटिकल",
+    "monitoring": "निगरानी",
+    "current_weather": "वर्तमान मौसम"
+  },
+  "controls": {
+    "mode_3d": "3D टेरेन",
+    "mode_sat": "उपग्रह",
+    "mode_street": "सड़कें",
+    "add_sensor": "सेंसर जोड़ें",
+    "cancel": "रद्द करें",
+    "hours": "घंटे"
+  },
+  "map": {
+    "select_location": "मौसम देखने के लिए कोई स्थान चुनें"
+  },
+  "weather_widget": {
+    "current_temperature": "वर्तमान तापमान",
+    "humidity": "आर्द्रता",
+    "wind_speed": "पवन वेग"
+  }
+}

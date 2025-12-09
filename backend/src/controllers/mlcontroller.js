@@ -206,6 +206,83 @@ exports.predict = async (req, res) => {
       location_id: locationId || null
     };
 
+    const risk = Number(prediction.risk_score);
+    if (Number.isFinite(risk)) {
+      let severity = null;
+      if (risk >= 0.6) severity = 'critical';
+      else if (risk >= 0.3) severity = 'high';
+      if (severity) {
+        try {
+          const insertAlert = `
+            INSERT INTO alerts(
+              severity, title, description, source, sensor_id,
+              location_lat, location_lon, recommended_action, metadata
+            ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)
+            RETURNING *
+          `;
+          const title = severity === 'critical' ? 'ML Risk Critical' : 'ML Risk Warning';
+          const description = `Risk score ${risk.toFixed(3)} at (${lat}, ${lon})`;
+          const meta = {
+            model_name: prediction.model_name,
+            confidence: prediction.confidence,
+            ensemble_details: prediction.ensemble_details || null,
+            explainability: prediction.explainability || null,
+          };
+          await pool.query(insertAlert, [
+            severity,
+            title,
+            description,
+            'ml-model',
+            sensorId || null,
+            lat,
+            lon,
+            prediction.recommended_action || null,
+            JSON.stringify(meta)
+          ]);
+        } catch (e) {}
+      }
+    }
+
+    if (Number.isFinite(risk)) {
+      let reportSeverity = null;
+      if (risk >= 0.6) reportSeverity = 'critical';
+      else if (risk >= 0.3) reportSeverity = 'high';
+      if (reportSeverity) {
+        try {
+          const shapTop = (prediction.explainability && prediction.explainability.shap_top) || (prediction.ensemble_details && prediction.ensemble_details.xgb_info && prediction.ensemble_details.xgb_info.shap_top) || null;
+          const reportTitle = reportSeverity === 'critical' ? 'ML SHAP Report - Critical' : 'ML SHAP Report - Warning';
+          const reportDesc = `Risk ${risk.toFixed(3)} at (${lat}, ${lon})`;
+          const reportMeta = {
+            shap_top: shapTop,
+            risk_score: prediction.risk_score,
+            model_name: prediction.model_name,
+            ensemble_details: prediction.ensemble_details || null
+          };
+          const insertIncident = `
+            INSERT INTO incidents (title, description, incident_type, location_lat, location_lon, location_name, severity, reported_by, attachments, metadata)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+            RETURNING *
+          `;
+          const { rows: incRows } = await pool.query(insertIncident, [
+            reportTitle,
+            reportDesc,
+            'ml_shap_report',
+            lat,
+            lon,
+            null,
+            reportSeverity,
+            null,
+            JSON.stringify([]),
+            JSON.stringify(reportMeta)
+          ]);
+          const io = req.app.get('io');
+          if (io) {
+            io.emit('admin_incident_reported', { id: incRows[0].id, title: incRows[0].title, severity: incRows[0].severity || null });
+          }
+        } catch (e) {}
+      }
+    }
+
     // Step 9: Emit real-time event (if socket available)
     if (req.app.get('io')) {
       const io = req.app.get('io');

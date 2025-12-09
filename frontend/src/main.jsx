@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import "./i18n";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
@@ -25,14 +26,23 @@ const OperatorReports = React.lazy(() => import("./pages/operator/Reports"));
 const OperatorIncidents = React.lazy(() =>
   import("./pages/operator/Incidents")
 );
-const OperatorHubDashboard = React.lazy(() => import("./pages/operator/HubDashboard"));
+const OperatorHubDashboard = React.lazy(() =>
+  import("./pages/operator/HubDashboard")
+);
 // Role-specific dashboards
-const AdminDashboard = React.lazy(() => import("./pages/dashboard/AdminDashboard"));
-const MineControlDashboard = React.lazy(() => import("./pages/dashboard/MineControlDashboard"));
-const CaveMinerDashboard = React.lazy(() => import("./pages/dashboard/CaveMinerDashboard"));
+const AdminDashboard = React.lazy(() =>
+  import("./pages/dashboard/AdminDashboard")
+);
+const MineControlDashboard = React.lazy(() =>
+  import("./pages/dashboard/MineControlDashboard")
+);
+const CaveMinerDashboard = React.lazy(() =>
+  import("./pages/dashboard/CaveMinerDashboard")
+);
 
 import { ThemeProvider } from "./context/ThemeContext";
 import { UserProvider } from "./context/UserContext";
+import { LowLiteracyProvider } from "./context/LowLiteracyContext";
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -40,98 +50,102 @@ function App() {
   return (
     <ClerkProvider
       publishableKey={clerkPubKey}
-      afterSignInUrl="/dashboard"
-      afterSignUpUrl="/dashboard"
+      fallbackRedirectUrl="/dashboard"
     >
       <UserProvider>
         <ThemeProvider>
-          <BrowserRouter>
-            <Navbar />
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <OperatorHubDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/dashboard/admin"
-                  element={
-                    <ProtectedRoute roles={["system_admin"]}>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/dashboard/control"
-                  element={
-                    <ProtectedRoute roles={["operator", "system_admin"]}>
-                      <MineControlDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/dashboard/miner"
-                  element={
-                    <ProtectedRoute roles={["miner"]}>
-                      <CaveMinerDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute roles={["system_admin"]}>
-                      <Admin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/operator"
-                  element={
-                    <ProtectedRoute roles={["operator", "system_admin"]}>
-                      <OperatorLayout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route index element={<OperatorMap />} />
-                  <Route path="map" element={<OperatorMap />} />
-                  
-                  <Route path="alerts" element={<OperatorAlerts />} />
-                  <Route path="tasks" element={<OperatorTasks />} />
-                  <Route path="sensors" element={<OperatorSensors />} />
-                  <Route path="drone-imagery" element={<OperatorDroneImagery />} />
-                  <Route path="reports" element={<OperatorReports />} />
-                  <Route path="incidents" element={<OperatorIncidents />} />
-                </Route>
-                <Route
-                  path="/miner"
-                  element={
-                    <ProtectedRoute
-                      roles={["miner", "operator", "system_admin"]}
-                    >
-                      <Miner />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
+          <LowLiteracyProvider>
+            <BrowserRouter>
+              <Navbar />
+              <Suspense fallback={<Loading />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <OperatorHubDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/admin"
+                    element={
+                      <ProtectedRoute roles={["system_admin"]}>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/control"
+                    element={
+                      <ProtectedRoute roles={["operator", "system_admin"]}>
+                        <MineControlDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/miner"
+                    element={
+                      <ProtectedRoute roles={["miner"]}>
+                        <CaveMinerDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin"
+                    element={
+                      <ProtectedRoute roles={["system_admin"]}>
+                        <Admin />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/operator"
+                    element={
+                      <ProtectedRoute roles={["operator", "system_admin"]}>
+                        <OperatorLayout />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route index element={<OperatorMap />} />
+                    <Route path="map" element={<OperatorMap />} />
+
+                    <Route path="alerts" element={<OperatorAlerts />} />
+                    <Route path="tasks" element={<OperatorTasks />} />
+                    <Route path="sensors" element={<OperatorSensors />} />
+                    <Route
+                      path="drone-imagery"
+                      element={<OperatorDroneImagery />}
+                    />
+                    <Route path="reports" element={<OperatorReports />} />
+                    <Route path="incidents" element={<OperatorIncidents />} />
+                  </Route>
+                  <Route
+                    path="/miner"
+                    element={
+                      <ProtectedRoute
+                        roles={["miner", "operator", "system_admin"]}
+                      >
+                        <Miner />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </LowLiteracyProvider>
         </ThemeProvider>
       </UserProvider>
     </ClerkProvider>

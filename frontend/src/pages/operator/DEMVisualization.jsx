@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDEMData } from "./DEMDataContext";
 import { useSensorData } from "./SensorDataContext";
 import {
@@ -39,46 +40,48 @@ const DEMVisualization = () => {
     historicalDEMData,
     isInitialized,
   } = useDEMData();
+  const { t } = useTranslation(["dem", "common"]);
   const { zoneRiskData } = useSensorData();
 
-  if (!isInitialized) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-gray-500">Loading DEM data...</div>
-      </div>
-    );
-  }
   const [selectedParameter, setSelectedParameter] = useState("slope");
   const [selectedZone, setSelectedZone] = useState("A3");
   const [viewMode, setViewMode] = useState("overview"); // overview, detailed, comparison
 
+  if (!isInitialized) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-gray-500">{t('dem.loading')}</div>
+      </div>
+    );
+  }
+
   const parameterOptions = [
-    { key: "elevation", label: "Elevation", icon: Mountain, color: "#8B4513" },
-    { key: "slope", label: "Slope", icon: TrendingUp, color: "#FF6B6B" },
-    { key: "aspect", label: "Aspect", icon: Map, color: "#4ECDC4" },
+    { key: "elevation", label: t('dem.parameters.elevation'), icon: Mountain, color: "#8B4513" },
+    { key: "slope", label: t('dem.parameters.slope'), icon: TrendingUp, color: "#FF6B6B" },
+    { key: "aspect", label: t('dem.parameters.aspect'), icon: Map, color: "#4ECDC4" },
     {
       key: "porePressure",
-      label: "Pore Pressure",
+      label: t('dem.parameters.porePressure'),
       icon: Droplet,
       color: "#0ea5e9",
     },
     {
       key: "methanePpm",
-      label: "Methane (ppm)",
+      label: t('dem.parameters.methanePpm'),
       icon: Flame,
       color: "#f97316",
     },
-    { key: "roughness", label: "Roughness", icon: Eye, color: "#FFEAA7" },
-    { key: "relief", label: "Relief", icon: Mountain, color: "#DDA0DD" },
+    { key: "roughness", label: t('dem.parameters.roughness'), icon: Eye, color: "#FFEAA7" },
+    { key: "relief", label: t('dem.parameters.relief'), icon: Mountain, color: "#DDA0DD" },
     {
       key: "flowAccumulation",
-      label: "Flow Accumulation",
+      label: t('dem.parameters.flowAccumulation'),
       icon: TrendingUp,
       color: "#98D8C8",
     },
     {
       key: "topographicWetnessIndex",
-      label: "TWI",
+      label: t('dem.parameters.topographicWetnessIndex'),
       icon: Layers,
       color: "#F7DC6F",
     },
@@ -111,12 +114,12 @@ const DEMVisualization = () => {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h3 className="text-lg font-semibold flex items-center gap-2">
             <Mountain className="w-5 h-5 text-indigo-600" />
-            DEM Terrain Analysis
+            {t('dem.title')}
           </h3>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">Parameter:</span>
+              <span className="text-sm text-gray-600">{t('dem.parameter')}:</span>
               <select
                 value={selectedParameter}
                 onChange={(e) => setSelectedParameter(e.target.value)}
@@ -131,7 +134,7 @@ const DEMVisualization = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">Zone:</span>
+              <span className="text-sm text-gray-600">{t('dem.zone')}:</span>
               <select
                 value={selectedZone}
                 onChange={(e) => setSelectedZone(e.target.value)}
@@ -200,14 +203,14 @@ const DEMVisualization = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="p-3 bg-gray-50 rounded-lg">
-                <div className="text-sm text-gray-600">Current Value</div>
+                <div className="text-sm text-gray-600">{t('dem.current_value')}</div>
                 <div className="text-xl font-bold">
                   {demParameters[selectedParameter]?.mean.toFixed(2)}{" "}
                   {demParameters[selectedParameter]?.unit}
                 </div>
               </div>
               <div className="p-3 bg-gray-50 rounded-lg">
-                <div className="text-sm text-gray-600">Standard Deviation</div>
+                <div className="text-sm text-gray-600">{t('dem.std_dev')}</div>
                 <div className="text-xl font-bold">
                   {demParameters[selectedParameter]?.std.toFixed(2)}{" "}
                   {demParameters[selectedParameter]?.unit}
@@ -217,7 +220,7 @@ const DEMVisualization = () => {
 
             <div className="p-3 bg-blue-50 rounded-lg">
               <div className="text-sm text-blue-800 font-medium">
-                Description
+                {t('dem.description')}
               </div>
               <div className="text-sm text-blue-700">
                 {demParameters[selectedParameter]?.description}
@@ -226,7 +229,7 @@ const DEMVisualization = () => {
 
             {/* Historical trend for selected parameter */}
             <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%" minHeight={200}>
                 <LineChart data={historicalDEMData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="time" />
@@ -239,12 +242,12 @@ const DEMVisualization = () => {
                       selectedParameter === "slope"
                         ? "avgSlope"
                         : selectedParameter === "roughness"
-                        ? "avgRoughness"
-                        : selectedParameter === "porePressure"
-                        ? "avgPorePressure"
-                        : selectedParameter === "methanePpm"
-                        ? "avgMethanePpm"
-                        : "avgElevation"
+                          ? "avgRoughness"
+                          : selectedParameter === "porePressure"
+                            ? "avgPorePressure"
+                            : selectedParameter === "methanePpm"
+                              ? "avgMethanePpm"
+                              : "avgElevation"
                     }
                     stroke={
                       parameterOptions.find((p) => p.key === selectedParameter)
@@ -266,12 +269,12 @@ const DEMVisualization = () => {
         <div className="bg-white p-6 rounded-xl shadow-lg">
           <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <Map className="w-5 h-5 text-green-600" />
-            Zone Analysis - {selectedZone}
+            {t('dem.zone_analysis')} - {selectedZone}
           </h4>
 
           {(() => {
             const zone = zoneAnalysis.find((z) => z.id === selectedZone);
-            if (!zone) return <div>Zone not found</div>;
+            if (!zone) return <div>{t('dem.zone_not_found')}</div>;
 
             return (
               <div className="space-y-4">
@@ -281,7 +284,7 @@ const DEMVisualization = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-medium">{zone.name}</div>
-                      <div className="text-sm opacity-80">Risk Level: SAFE</div>
+                      <div className="text-sm opacity-80">{t('dem.risk_level')}: {t('dem.risk_levels.safe')}</div>
                     </div>
                     <div
                       className="w-4 h-4 rounded-full"
@@ -292,7 +295,7 @@ const DEMVisualization = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm text-gray-600">Elevation</div>
+                    <div className="text-sm text-gray-600">{t('dem.parameters.elevation')}</div>
                     <div className="font-bold">
                       {zone.elevation.mean.toFixed(0)}m
                     </div>
@@ -301,7 +304,7 @@ const DEMVisualization = () => {
                     </div>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm text-gray-600">Slope</div>
+                    <div className="text-sm text-gray-600">{t('dem.parameters.slope')}</div>
                     <div className="font-bold">
                       {zone.slope.mean.toFixed(1)}°
                     </div>
@@ -310,7 +313,7 @@ const DEMVisualization = () => {
                     </div>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm text-gray-600">Aspect</div>
+                    <div className="text-sm text-gray-600">{t('dem.parameters.aspect')}</div>
                     <div className="font-bold">
                       {zone.aspect.mean.toFixed(0)}°
                     </div>
@@ -319,7 +322,7 @@ const DEMVisualization = () => {
                     </div>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm text-gray-600">Roughness</div>
+                    <div className="text-sm text-gray-600">{t('dem.parameters.roughness')}</div>
                     <div className="font-bold">
                       {zone.roughness.toFixed(1)} TRI
                     </div>
@@ -328,7 +331,7 @@ const DEMVisualization = () => {
 
                 <div className="p-3 bg-yellow-50 rounded-lg">
                   <div className="text-sm text-yellow-800 font-medium">
-                    Risk Factors
+                    {t('dem.risk_factors')}
                   </div>
                   <ul className="text-sm text-yellow-700 mt-1">
                     {zone.riskFactors.map((factor, idx) => (
@@ -346,7 +349,7 @@ const DEMVisualization = () => {
       <div className="bg-white p-6 rounded-xl shadow-lg">
         <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
           <Layers className="w-5 h-5 text-purple-600" />
-          All Zones Overview
+          {t('dem.all_zones')}
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {zoneRiskData.map((z) => (
@@ -362,15 +365,15 @@ const DEMVisualization = () => {
                 ></div>
               </div>
               <div className="text-sm text-gray-600 mb-2">
-                Sensors: {z.sensors}
+                {t('dem.sensors')}: {z.sensors}
               </div>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <div className="text-gray-500">Status</div>
+                  <div className="text-gray-500">{t('dem.status')}</div>
                   <div className="font-medium capitalize">{z.status}</div>
                 </div>
                 <div>
-                  <div className="text-gray-500">Risk</div>
+                  <div className="text-gray-500">{t('dem.risk')}</div>
                   <div className="font-medium">{z.risk.toFixed(2)}</div>
                 </div>
               </div>
