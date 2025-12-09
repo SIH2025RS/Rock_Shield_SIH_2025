@@ -1,0 +1,34 @@
+{
+    "loading": "DEM ಡೇಟಾ ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+    "title": "DEM ಭೂಪ್ರದೇಶ ವಿಶ್ಲೇಷಣೆ",
+    "parameter": "ನಿಯತಾಂಕ",
+    "zone": "ವಲಯ",
+    "zone_analysis": "ವಲಯ ವಿಶ್ಲೇಷಣೆ",
+    "zone_not_found": "ವಲಯ ಕಂಡುಬಂದಿಲ್ಲ",
+    "current_value": "ಪ್ರಸ್ತುತ ಮೌಲ್ಯ",
+    "std_dev": "ಪ್ರಮಾಣಿತ ವಿಚಲನ",
+    "description": "ವಿವರಣೆ",
+    "all_zones": "ಎಲ್ಲಾ ವಲಯಗಳ ಅವಲೋಕನ",
+    "risk_level": "ಅಪಾಯ ಮಟ್ಟ",
+    "risk_factors": "ಅಪಾಯ ಅಂಶಗಳು",
+    "status": "ಸ್ಥಿತಿ",
+    "risk": "ಅಪಾಯ",
+    "sensors": "ಸಂವೇದಕಗಳು",
+    "parameters": {
+        "elevation": "ಎತ್ತರ",
+        "slope": "ಇಳಿಜಾರು",
+        "aspect": "ಅಂಶ",
+        "porePressure": "ರಂಧ್ರ ಒತ್ತಡ",
+        "methanePpm": "ಮೀಥೇನ್ (ppm)",
+        "roughness": "ಒರಟುತನ",
+        "relief": "ಪರಿಹಾರ",
+        "flowAccumulation": "ಹರಿವು ಸಂಚಯ",
+        "topographicWetnessIndex": "TWI"
+    },
+    "risk_levels": {
+        "safe": "ಸುರಕ್ಷಿತ",
+        "low": "ಕಡಿಮೆ",
+        "warning": "ಎಚ್ಚರಿಕೆ",
+        "high": "ಹೆಚ್ಚು"
+    }
+}

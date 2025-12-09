@@ -1,0 +1,34 @@
+{
+    "loading": "DEM డేటా లోడ్ అవుతోంది...",
+    "title": "DEM భూభాగ విశ్లేషణ",
+    "parameter": "పారామీటర్",
+    "zone": "ప్రాంతం",
+    "zone_analysis": "ప్రాంత విశ్లేషణ",
+    "zone_not_found": "ప్రాంతం కనుగొనబడలేదు",
+    "current_value": "ప్రస్తుత విలువ",
+    "std_dev": "ప్రామాణిక విచలనం",
+    "description": "వివరణ",
+    "all_zones": "అన్ని ప్రాంతాల అవలోకనం",
+    "risk_level": "ప్రమాదం స్థాయి",
+    "risk_factors": "ప్రమాదం కారకాలు",
+    "status": "స్థితి",
+    "risk": "ప్రమాదం",
+    "sensors": "సెన్సార్లు",
+    "parameters": {
+        "elevation": "ఎత్తు",
+        "slope": "వాలు",
+        "aspect": "కోణం",
+        "porePressure": "రంధ్ర ఒత్తిడి",
+        "methanePpm": "మీథేన్ (ppm)",
+        "roughness": "కరుకుదనం",
+        "relief": "ఉపశమనం",
+        "flowAccumulation": "ప్రవాహ సంచయం",
+        "topographicWetnessIndex": "TWI"
+    },
+    "risk_levels": {
+        "safe": "సురక్షితం",
+        "low": "తక్కువ",
+        "warning": "హెచ్చరిక",
+        "high": "అధిక"
+    }
+}

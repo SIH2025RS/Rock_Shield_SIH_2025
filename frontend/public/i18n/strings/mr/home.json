@@ -1,0 +1,30 @@
+{
+    "title": "ऑपरेशनल विश्लेषण",
+    "subtitle": "रिअल-टाइम डेटा व्याख्या आणि अंतर्दृष्टी",
+    "risk_trend": "जोखीम ट्रेंड (24 तास)",
+    "dem_status": "DEM स्थिती",
+    "dem_preview_alt": "DEM पूर्वावलोकन",
+    "generating_preview": "DEM पूर्वावलोकन तयार होत आहे...",
+    "preview_pending": "DEM पूर्वावलोकन प्रलंबित",
+    "weather_pattern": "हवामान पॅटर्न (24 तास)",
+    "temperature": "तापमान (°C)",
+    "humidity": "आर्द्रता (%)",
+    "zone_risk_comparison": "क्षेत्र जोखीम तुलना",
+    "recent_alerts": "अलीकडील सूचना",
+    "no_recent_alerts": "कोणत्याही अलीकडील सूचना नाहीत",
+    "dem_viewer_title": "DEM व्ह्यूअर - व्ह्यूपोर्ट आणि पॅरामीटर समायोजित करा",
+    "dem_full_screen_alt": "DEM पूर्ण स्क्रीन",
+    "dem_controls": {
+        "latitude": "अक्षांश",
+        "longitude": "रेखांश",
+        "zoom": "झूम (पॅड डिग्री)",
+        "color_ramp": "रंग रॅम्प",
+        "azimuth": "अझिमुथ (प्रकाश कोन)",
+        "altitude": "उंची (प्रकाश उंची)",
+        "vertical_exaggeration": "उभी अतिशयोक्ती"
+    },
+    "dem_options": {
+        "terrain": "भूभाग (निळा-लाल)",
+        "viridis": "विरिडिस (गडद-पिवळा)"
+    }
+}

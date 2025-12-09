@@ -1,0 +1,51 @@
+{
+    "insight": {
+        "headline": {
+            "critical": "গুরুতর ঝুঁকি সনাক্ত করা হয়েছে",
+            "high": "উচ্চ ঝুঁকি সতর্কতা",
+            "medium": "মাঝারি ঝুঁকি সতর্কতা",
+            "low": "স্থিতিশীল অবস্থা"
+        },
+        "confidence": "{{val}}% আত্মবিশ্বাস",
+        "reasons_title": "এটি কেন ঘটছে?"
+    },
+    "mine_control": {
+        "title": "খনি নিয়ন্ত্রণ",
+        "subtitle": "সেন্সর, সতর্কতা এবং ঘটনার জন্য লাইভ অপারেশন ওভারভিউ।",
+        "active_sensors": "সক্রিয় সেন্সর",
+        "alerts_24h": "সতর্কতা (24 ঘন্টা)",
+        "incidents_7d": "ঘটনা (7 দিন)",
+        "critical_alerts": "গুরুতর সতর্কতা",
+        "recent_alerts": "সাম্প্রতিক সতর্কতা",
+        "registered_sensors": "নিবন্ধিত সেন্সর",
+        "no_alerts_24h": "গত 24 ঘন্টায় কোনো সতর্কতা নেই",
+        "no_sensors": "কোনো নিবন্ধিত সেন্সর নেই"
+    },
+    "cave_miner": {
+        "title": "গুহা খনি শ্রমিক",
+        "subtitle": "আপনার কাজ এবং ফরওয়ার্ড করা সতর্কতা",
+        "my_tasks": "আমার কাজ",
+        "forwarded_alerts": "ফরওয়ার্ড করা সতর্কতা",
+        "acknowledged": "স্বীকার করা হয়েছে",
+        "no_tasks": "কোনো কাজ বরাদ্দ করা হয়নি",
+        "no_alerts": "কোনো সতর্কতা নেই"
+    },
+    "cards": {
+        "current_temperature": "বর্তমান তাপমাত্রা",
+        "wind": "বাতাস",
+        "humidity": "আর্দ্রতা",
+        "nearby_alerts": "কাছাকাছি সতর্কতা"
+    },
+    "sections": {
+        "temperature_live": "লাইভ তাপমাত্রা",
+        "wind_humidity_live": "বাতাস এবং আর্দ্রতা",
+        "ml_risk_live": "ML ঝুঁকি মূল্যায়ন"
+    },
+    "labels": {
+        "hours": "ঘন্টা",
+        "radius": "ব্যাসার্ধ (কিমি)"
+    },
+    "map": {
+        "no_dem": "কোনো DEM ডেটা নেই"
+    }
+}

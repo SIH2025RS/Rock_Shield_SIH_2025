@@ -1,0 +1,51 @@
+{
+    "insight": {
+        "headline": {
+            "critical": "गंभीर जोखीम आढळली",
+            "high": "उच्च जोखीम चेतावणी",
+            "medium": "मध्यम जोखीम चेतावणी",
+            "low": "स्थिर परिस्थिती"
+        },
+        "confidence": "{{val}}% विश्वास",
+        "reasons_title": "हे का होत आहे?"
+    },
+    "mine_control": {
+        "title": "खाण नियंत्रण",
+        "subtitle": "सेन्सर, सूचना आणि घटनांसाठी थेट ऑपरेशन विहंगावलोकन.",
+        "active_sensors": "सक्रिय सेन्सर",
+        "alerts_24h": "सूचना (24 तास)",
+        "incidents_7d": "घटना (7 दिवस)",
+        "critical_alerts": "गंभीर सूचना",
+        "recent_alerts": "अलीकडील सूचना",
+        "registered_sensors": "नोंदणीकृत सेन्सर",
+        "no_alerts_24h": "गेल्या 24 तासांत कोणत्याही सूचना नाहीत",
+        "no_sensors": "कोणतेही नोंदणीकृत सेन्सर नाहीत"
+    },
+    "cave_miner": {
+        "title": "गुहा खाण कामगार",
+        "subtitle": "तुमची कार्ये आणि अग्रेषित सूचना",
+        "my_tasks": "माझी कार्ये",
+        "forwarded_alerts": "अग्रेषित सूचना",
+        "acknowledged": "स्वीकारले",
+        "no_tasks": "कोणतीही कार्ये नियुक्त नाहीत",
+        "no_alerts": "कोणत्याही सूचना नाहीत"
+    },
+    "cards": {
+        "current_temperature": "सध्याचे तापमान",
+        "wind": "वारा",
+        "humidity": "आर्द्रता",
+        "nearby_alerts": "जवळच्या सूचना"
+    },
+    "sections": {
+        "temperature_live": "थेट तापमान",
+        "wind_humidity_live": "वारा आणि आर्द्रता",
+        "ml_risk_live": "ML जोखीम मूल्यांकन"
+    },
+    "labels": {
+        "hours": "तास",
+        "radius": "त्रिज्या (किमी)"
+    },
+    "map": {
+        "no_dem": "DEM डेटा नाही"
+    }
+}

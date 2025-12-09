@@ -1,0 +1,103 @@
+{
+    "welcome": "স্বাগতম",
+    "loading": "লোড হচ্ছে...",
+    "submit": "জমা দিন",
+    "cancel": "বাতিল করুন",
+    "save": "সংরক্ষণ করুন",
+    "delete": "মুছুন",
+    "edit": "সম্পাদনা করুন",
+    "search": "অনুসন্ধান করুন",
+    "actions": {
+        "label": "কর্ম",
+        "escalate": "বৃদ্ধি করুন",
+        "acknowledge": "স্বীকার করুন",
+        "listen": "শুনুন"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "উৎসাহের সাথে ইঞ্জিনিয়ার করা উন্নত সুরক্ষা সমাধান।",
+        "developer": "ডেভেলপার",
+        "made_with": "দিয়ে তৈরি",
+        "by_team": "RockShield টিম দ্বারা"
+    },
+    "status": "অবস্থা",
+    "active": "সক্রিয়",
+    "inactive": "নিষ্ক্রিয়",
+    "logout": "লগ আউট",
+    "profile": "প্রোফাইল",
+    "close": "বন্ধ করুন",
+    "risk": "ঝুঁকি",
+    "probability": "সম্ভাবনা",
+    "rendering": "রেন্ডার হচ্ছে...",
+    "overall_risk": "সামগ্রিক ঝুঁকি",
+    "current_rainfall": "বর্তমান বৃষ্টিপাত",
+    "north_wall": "উত্তর দেয়াল",
+    "east_slope": "পূর্ব ঢাল",
+    "south_pit": "দক্ষিণ গর্ত",
+    "map": {
+        "sensor": "সেন্সর",
+        "alert": "সতর্কতা",
+        "severity": "তীব্রতা",
+        "elevation": "উচ্চতা",
+        "type": "প্রকার",
+        "status": "অবস্থা",
+        "ml": "ML",
+        "error_token_missing": "Mapbox টোকেন অনুপস্থিত। VITE_MAPBOX_TOKEN সেট করুন।",
+        "error_init": "মানচিত্র প্রারম্ভিক ত্রুটি",
+        "data_provider": "Open-Meteo দ্বারা প্রদত্ত ডেটা",
+        "search_prompt": "আবহাওয়া বিবরণ দেখতে মানচিত্রে একটি স্থান অনুসন্ধান এবং নির্বাচন করুন।",
+        "map_error_title": "মানচিত্র কনফিগারেশন ত্রুটি",
+        "map_error_desc": "Mapbox টোকেন কনফিগার করা হয়নি। অনুগ্রহ করে আপনার .env ফাইলে VITE_MAPBOX_TOKEN যোগ করুন।",
+        "get_token": "এখানে বিনামূল্যে টোকেন পান",
+        "search_placeholder": "স্থান অনুসন্ধান করুন...",
+        "clear_search": "অনুসন্ধান সাফ করুন",
+        "searching": "অনুসন্ধান করা হচ্ছে…",
+        "no_suggestions": "কোনো পরামর্শ নেই",
+        "geotiff_view": "GeoTIFF (দৃশ্য)",
+        "geotiff_view_title": "বর্তমান মানচিত্র দৃশ্যের জন্য GeoTIFF ডাউনলোড করুন",
+        "geotiff_center": "GeoTIFF (কেন্দ্র)",
+        "geotiff_center_title": "নির্বাচিত স্থানাঙ্কের চারপাশে ডাউনলোড করুন",
+        "weather_location": "আবহাওয়া এবং অবস্থান",
+        "coordinates": "স্থানাঙ্ক",
+        "latitude": "অক্ষাংশ",
+        "longitude": "দ্রাঘিমাংশ",
+        "wind": "বাতাস",
+        "humidity": "আর্দ্রতা"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "হোম",
+        "dashboard": "ড্যাশবোর্ড",
+        "admin": "প্রশাসক",
+        "map": "মানচিত্র",
+        "alerts": "সতর্কতা",
+        "tasks": "কাজ",
+        "sensors": "সেন্সর",
+        "droneImagery": "ড্রোন ইমেজারি",
+        "reports": "রিপোর্ট",
+        "incidents": "ঘটনা",
+        "miner": "খনি শ্রমিক ইন্টারফেস",
+        "login": "লগইন",
+        "getStarted": "শুরু করুন"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "আপনি যে পৃষ্ঠাটি খুঁজছেন তা পাওয়া যায়নি বা সরানো হতে পারে।",
+        "go_home": "হোমে যান"
+    },
+    "severity": {
+        "critical": "গুরুতর",
+        "high": "উচ্চ",
+        "medium": "মাঝারি",
+        "low": "কম",
+        "safe": "নিরাপদ"
+    },
+    "i18n": {
+        "language": "ভাষা",
+        "english": "ইংরেজি",
+        "hindi": "হিন্দি"
+    },
+    "guest": "অতিথি"
+}
