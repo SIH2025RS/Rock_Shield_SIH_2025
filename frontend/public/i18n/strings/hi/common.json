@@ -109,5 +109,9 @@
         "completed": "पूर्ण",
         "cancelled": "रद्द"
     },
+    "untitled": "शीर्षकहीन",
+    "placeholders": {
+        "location_name": "बेंच, गड्ढा, स्थल चिह्न"
+    },
     "guest": "अतिथि"
 }

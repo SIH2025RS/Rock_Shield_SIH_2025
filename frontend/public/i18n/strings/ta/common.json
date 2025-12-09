@@ -109,5 +109,9 @@
         "completed": "முடிந்தது",
         "cancelled": "ரத்து செய்யப்பட்டது"
     },
+    "untitled": "தலைப்பு இல்லை",
+    "placeholders": {
+        "location_name": "பெஞ்ச், குழி, மைல்கல்"
+    },
     "guest": "விருந்தினர்"
 }

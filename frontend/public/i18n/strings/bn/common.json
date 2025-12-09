@@ -109,5 +109,9 @@
         "completed": "সম্পন্ন",
         "cancelled": "বাতিল"
     },
+    "untitled": "শিরোনামহীন",
+    "placeholders": {
+        "location_name": "বেঞ্চ, গর্ত, ল্যান্ডমার্ক"
+    },
     "guest": "অতিথি"
 }

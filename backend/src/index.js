@@ -19,7 +19,6 @@ const operatorRoutes = require("./routes/operatorroutes");
 const minerRoutes = require("./routes/minerroutes");
 const usersRoutes = require("./routes/usersroutes");
 const mlRoutes = require("./routes/mlroutes");
-const i18nRoutes = require("./routes/i18nroutes");
 const alertRoutes = require("./routes/alertroutes");
 
 const app = express();
@@ -44,33 +43,7 @@ app.use("/api/operator", operatorRoutes);
 app.use("/api/miner", minerRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api", mlRoutes);
-app.use("/api/i18n", i18nRoutes);
 app.use("/api/alerts", alertRoutes);
-
-// Serve translations as static JSON with caching
-const translationsDir = path.join(__dirname, "../translations");
-app.use(
-  "/i18n/strings",
-  express.static(translationsDir, {
-    setHeaders: (res) => {
-      res.setHeader(
-        "Cache-Control",
-        "public, max-age=300, s-maxage=86400, stale-while-revalidate=600"
-      );
-    },
-  })
-);
-app.use(
-  "/api/i18n/strings",
-  express.static(translationsDir, {
-    setHeaders: (res) => {
-      res.setHeader(
-        "Cache-Control",
-        "public, max-age=300, s-maxage=86400, stale-while-revalidate=600"
-      );
-    },
-  })
-);
 
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
@@ -254,14 +227,14 @@ io.on("connection", (socket) => {
           header.xllcorner != null
             ? Number(header.xllcorner)
             : header.xllcenter != null
-            ? Number(header.xllcenter) - cellsize / 2
-            : null;
+              ? Number(header.xllcenter) - cellsize / 2
+              : null;
         const yllcorner =
           header.yllcorner != null
             ? Number(header.yllcorner)
             : header.yllcenter != null
-            ? Number(header.yllcenter) - cellsize / 2
-            : null;
+              ? Number(header.yllcenter) - cellsize / 2
+              : null;
         const nodata =
           header["nodata_value"] != null
             ? Number(header["nodata_value"])
@@ -365,7 +338,7 @@ io.on("connection", (socket) => {
               );
               CREATE INDEX IF NOT EXISTS idx_dem_lat_lon ON dem_data(lat, lon);
             `);
-            } catch (e) {}
+            } catch (e) { }
             const grid = parseAAIGrid(text);
             const out = [];
             for (let dy = -halfSteps; dy <= halfSteps; dy++) {
@@ -385,7 +358,7 @@ io.on("connection", (socket) => {
                       "INSERT INTO dem_data(lat, lon, elevation, source) VALUES ($1,$2,$3,$4)",
                       [plat, plon, elev, "opentopo"]
                     );
-                  } catch (e) {}
+                  } catch (e) { }
                 }
               }
             }

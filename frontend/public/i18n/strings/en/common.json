@@ -109,5 +109,9 @@
         "completed": "Completed",
         "cancelled": "Cancelled"
     },
+    "untitled": "Untitled",
+    "placeholders": {
+        "location_name": "Bench, pit, landmark"
+    },
     "guest": "Guest"
 }
