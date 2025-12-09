@@ -1,1 +1,41 @@
-{}
+{
+    "templates": {
+        "critical": {
+            "subject": "முக்கியமான எச்சரிக்கை - ராக்ஷீல்ட்",
+            "sms": "[முக்கியமான] ராக்ஷீல்ட் எச்சரிக்கை: {{message}}{{#if location}} இடம் {{location}} இல்{{/if}}। உடனடி நடவடிக்கை தேவை!",
+            "voice": "இது ராக்ஷீல்ட் இலிருந்து ஒரு முக்கியமான எச்சரிக்கை. {{message}}{{#if location}} இடம்: {{location}}.{{/if}} உடனடி நடவடிக்கை தேவை.",
+            "email": "முக்கியமான எச்சரிக்கை\n\n{{message}}\n\n{{#if location}}இடம்: {{location}}\n{{/if}}{{#if severity}}தீவிரம்: {{severity}}\n{{/if}}{{#if confidence}}நம்பிக்கை: {{confidence}}%\n{{/if}}\n{{#if reasons}}காரணங்கள்:\n{{reasons}}\n{{/if}}\nஉடனடி நடவடிக்கை தேவை. தயவுசெய்து உடனடியாக பதிலளிக்கவும்."
+        },
+        "high": {
+            "subject": "உயர் முன்னுரிமை எச்சரிக்கை - ராக்ஷீல்ட்",
+            "sms": "[உயர்] ராக்ஷீல்ட் எச்சரிக்கை: {{message}}{{#if location}} இடம் {{location}} இல்{{/if}}। அவசர கவனம் தேவை.",
+            "voice": "இது ராக்ஷீல்ட் இலிருந்து ஒரு உயர் முன்னுரிமை எச்சரிக்கை. {{message}}{{#if location}} இடம்: {{location}}.{{/if}} அவசர கவனம் தேவை.",
+            "email": "உயர் முன்னுரிமை எச்சரிக்கை\n\n{{message}}\n\n{{#if location}}இடம்: {{location}}\n{{/if}}{{#if severity}}தீவிரம்: {{severity}}\n{{/if}}{{#if confidence}}நம்பிக்கை: {{confidence}}%\n{{/if}}\n{{#if reasons}}காரணங்கள்:\n{{reasons}}\n{{/if}}\nதயவுசெய்து விரைவில் நடவடிக்கை எடுக்கவும்."
+        },
+        "medium": {
+            "subject": "எச்சரிக்கை - ராக்ஷீல்ட்",
+            "sms": "[எச்சரிக்கை] ராக்ஷீல்ட்: {{message}}{{#if location}} இடம் {{location}} இல்{{/if}}। தயவுசெய்து மதிப்பாய்வு செய்யவும்.",
+            "voice": "இது ராக்ஷீல்ட் இலிருந்து ஒரு எச்சரிக்கை. {{message}}{{#if location}} இடம்: {{location}}.{{/if}} முடிந்தால் தயவுசெய்து மதிப்பாய்வு செய்யவும்.",
+            "email": "எச்சரிக்கை\n\n{{message}}\n\n{{#if location}}இடம்: {{location}}\n{{/if}}{{#if severity}}தீவிரம்: {{severity}}\n{{/if}}{{#if confidence}}நம்பிக்கை: {{confidence}}%\n{{/if}}\n{{#if reasons}}காரணங்கள்:\n{{reasons}}\n{{/if}}\nதயவுசெய்து உங்கள் வசதிக்கேற்ப இந்த எச்சரிக்கையை மதிப்பாய்வு செய்யவும்."
+        },
+        "low": {
+            "subject": "அறிவிப்பு - ராக்ஷீல்ட்",
+            "sms": "[அறிவிப்பு] ராக்ஷீல்ட்: {{message}}{{#if location}} இடம் {{location}} இல்{{/if}}।",
+            "voice": "இது ராக்ஷீல்ட் இலிருந்து ஒரு அறிவிப்பு. {{message}}{{#if location}} இடம்: {{location}}.{{/if}}",
+            "email": "அறிவிப்பு\n\n{{message}}\n\n{{#if location}}இடம்: {{location}}\n{{/if}}{{#if severity}}தீவிரம்: {{severity}}\n{{/if}}{{#if confidence}}நம்பிக்கை: {{confidence}}%\n{{/if}}\n{{#if reasons}}காரணங்கள்:\n{{reasons}}\n{{/if}}\nஇது உங்கள் தகவலுக்காக."
+        }
+    },
+    "reasons": {
+        "tilt_up": "சாய்வு சென்சார் மேல்நோக்கி இயக்கத்தைக் காட்டுகிறது",
+        "vibration_up": "அதிகரித்த அதிர்வு கண்டறியப்பட்டது",
+        "rain_24h": "கடந்த 24 மணி நேரத்தில் கனமழை",
+        "temperature_change": "குறிப்பிடத்தக்க வெப்பநிலை மாற்றம்",
+        "pressure_change": "வளிமண்டல அழுத்த மாற்றம் கண்டறியப்பட்டது"
+    },
+    "actions": {
+        "evacuate": "உடனடியாக பகுதியை காலி செய்யவும்",
+        "inspect": "ஆய்வு குழுவை அனுப்பவும்",
+        "monitor": "கண்காணிப்பைத் தொடரவும்",
+        "pause_operations": "சுரங்க செயல்பாடுகளை நிறுத்தவும்"
+    }
+}

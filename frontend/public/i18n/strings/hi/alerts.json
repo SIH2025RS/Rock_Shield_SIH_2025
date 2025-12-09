@@ -1,1 +1,41 @@
-{}
+{
+    "templates": {
+        "critical": {
+            "subject": "गंभीर चेतावनी - रॉकशील्ड",
+            "sms": "[गंभीर] रॉकशील्ड चेतावनी: {{message}}{{#if location}} स्थान {{location}} पर{{/if}}। तत्काल कार्रवाई आवश्यक!",
+            "voice": "यह रॉकशील्ड से एक गंभीर चेतावनी है। {{message}}{{#if location}} स्थान: {{location}}।{{/if}} तत्काल कार्रवाई आवश्यक है।",
+            "email": "गंभीर चेतावनी\n\n{{message}}\n\n{{#if location}}स्थान: {{location}}\n{{/if}}{{#if severity}}गंभीरता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारण:\n{{reasons}}\n{{/if}}\nतत्काल कार्रवाई आवश्यक है। कृपया तुरंत प्रतिक्रिया दें।"
+        },
+        "high": {
+            "subject": "उच्च प्राथमिकता चेतावनी - रॉकशील्ड",
+            "sms": "[उच्च] रॉकशील्ड चेतावनी: {{message}}{{#if location}} स्थान {{location}} पर{{/if}}। तुरंत ध्यान दें।",
+            "voice": "यह रॉकशील्ड से एक उच्च प्राथमिकता चेतावनी है। {{message}}{{#if location}} स्थान: {{location}}।{{/if}} तुरंत ध्यान देने की आवश्यकता है।",
+            "email": "उच्च प्राथमिकता चेतावनी\n\n{{message}}\n\n{{#if location}}स्थान: {{location}}\n{{/if}}{{#if severity}}गंभीरता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारण:\n{{reasons}}\n{{/if}}\nकृपया जल्द से जल्द कार्रवाई करें।"
+        },
+        "medium": {
+            "subject": "चेतावनी - रॉकशील्ड",
+            "sms": "[चेतावनी] रॉकशील्ड: {{message}}{{#if location}} स्थान {{location}} पर{{/if}}। कृपया समीक्षा करें।",
+            "voice": "यह रॉकशील्ड से एक चेतावनी है। {{message}}{{#if location}} स्थान: {{location}}।{{/if}} कृपया संभव होने पर समीक्षा करें।",
+            "email": "चेतावनी\n\n{{message}}\n\n{{#if location}}स्थान: {{location}}\n{{/if}}{{#if severity}}गंभीरता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारण:\n{{reasons}}\n{{/if}}\nकृपया अपनी सुविधानुसार इस चेतावनी की समीक्षा करें।"
+        },
+        "low": {
+            "subject": "सूचना - रॉकशील्ड",
+            "sms": "[सूचना] रॉकशील्ड: {{message}}{{#if location}} स्थान {{location}} पर{{/if}}।",
+            "voice": "यह रॉकशील्ड से एक सूचना है। {{message}}{{#if location}} स्थान: {{location}}।{{/if}}",
+            "email": "सूचना\n\n{{message}}\n\n{{#if location}}स्थान: {{location}}\n{{/if}}{{#if severity}}गंभीरता: {{severity}}\n{{/if}}{{#if confidence}}विश्वास: {{confidence}}%\n{{/if}}\n{{#if reasons}}कारण:\n{{reasons}}\n{{/if}}\nयह आपकी जानकारी के लिए है।"
+        }
+    },
+    "reasons": {
+        "tilt_up": "झुकाव सेंसर ऊपर की ओर गति दिखा रहा है",
+        "vibration_up": "बढ़ी हुई कंपन का पता चला",
+        "rain_24h": "पिछले 24 घंटों में भारी बारिश",
+        "temperature_change": "महत्वपूर्ण तापमान परिवर्तन",
+        "pressure_change": "वायुमंडलीय दबाव परिवर्तन का पता चला"
+    },
+    "actions": {
+        "evacuate": "तुरंत क्षेत्र खाली करें",
+        "inspect": "निरीक्षण दल भेजें",
+        "monitor": "निगरानी जारी रखें",
+        "pause_operations": "खनन कार्य रोकें"
+    }
+}

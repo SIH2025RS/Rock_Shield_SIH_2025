@@ -1,1 +1,41 @@
-{}
+{
+    "templates": {
+        "critical": {
+            "subject": "క్లిష్టమైన హెచ్చరిక - రాక్‌షీల్డ్",
+            "sms": "[క్లిష్టమైన] రాక్‌షీల్డ్ హెచ్చరిక: {{message}}{{#if location}} స్థానం {{location}} వద్ద{{/if}}। తక్షణ చర్య అవసరం!",
+            "voice": "ఇది రాక్‌షీల్డ్ నుండి క్లిష్టమైన హెచ్చరిక. {{message}}{{#if location}} స్థానం: {{location}}.{{/if}} తక్షణ చర్య అవసరం.",
+            "email": "క్లిష్టమైన హెచ్చరిక\n\n{{message}}\n\n{{#if location}}స్థానం: {{location}}\n{{/if}}{{#if severity}}తీవ్రత: {{severity}}\n{{/if}}{{#if confidence}}విశ్వాసం: {{confidence}}%\n{{/if}}\n{{#if reasons}}కారణాలు:\n{{reasons}}\n{{/if}}\nతక్షణ చర్య అవసరం. దయచేసి వెంటనే స్పందించండి."
+        },
+        "high": {
+            "subject": "అధిక ప్రాధాన్యత హెచ్చరిక - రాక్‌షీల్డ్",
+            "sms": "[అధిక] రాక్‌షీల్డ్ హెచ్చరిక: {{message}}{{#if location}} స్థానం {{location}} వద్ద{{/if}}। తక్షణ శ్రద్ధ అవసరం.",
+            "voice": "ఇది రాక్‌షీల్డ్ నుండి అధిక ప్రాధాన్యత హెచ్చరిక. {{message}}{{#if location}} స్థానం: {{location}}.{{/if}} తక్షణ శ్రద్ధ అవసరం.",
+            "email": "అధిక ప్రాధాన్యత హెచ్చరిక\n\n{{message}}\n\n{{#if location}}స్థానం: {{location}}\n{{/if}}{{#if severity}}తీవ్రత: {{severity}}\n{{/if}}{{#if confidence}}విశ్వాసం: {{confidence}}%\n{{/if}}\n{{#if reasons}}కారణాలు:\n{{reasons}}\n{{/if}}\nదయచేసి వీలైనంత త్వరగా చర్య తీసుకోండి."
+        },
+        "medium": {
+            "subject": "హెచ్చరిక - రాక్‌షీల్డ్",
+            "sms": "[హెచ్చరిక] రాక్‌షీల్డ్: {{message}}{{#if location}} స్థానం {{location}} వద్ద{{/if}}। దయచేసి సమీక్షించండి.",
+            "voice": "ఇది రాక్‌షీల్డ్ నుండి హెచ్చరిక. {{message}}{{#if location}} స్థానం: {{location}}.{{/if}} వీలైనప్పుడు దయచేసి సమీక్షించండి.",
+            "email": "హెచ్చరిక\n\n{{message}}\n\n{{#if location}}స్థానం: {{location}}\n{{/if}}{{#if severity}}తీవ్రత: {{severity}}\n{{/if}}{{#if confidence}}విశ్వాసం: {{confidence}}%\n{{/if}}\n{{#if reasons}}కారణాలు:\n{{reasons}}\n{{/if}}\nదయచేసి మీ సౌకర్యానుసారం ఈ హెచ్చరికను సమీక్షించండి."
+        },
+        "low": {
+            "subject": "నోటీసు - రాక్‌షీల్డ్",
+            "sms": "[నోటీసు] రాక్‌షీల్డ్: {{message}}{{#if location}} స్థానం {{location}} వద్ద{{/if}}।",
+            "voice": "ఇది రాక్‌షీల్డ్ నుండి నోటీసు. {{message}}{{#if location}} స్థానం: {{location}}.{{/if}}",
+            "email": "నోటీసు\n\n{{message}}\n\n{{#if location}}స్థానం: {{location}}\n{{/if}}{{#if severity}}తీవ్రత: {{severity}}\n{{/if}}{{#if confidence}}విశ్వాసం: {{confidence}}%\n{{/if}}\n{{#if reasons}}కారణాలు:\n{{reasons}}\n{{/if}}\nఇది మీ సమాచారం కోసం."
+        }
+    },
+    "reasons": {
+        "tilt_up": "టిల్ట్ సెన్సార్ పైకి కదలికను చూపిస్తోంది",
+        "vibration_up": "పెరిగిన కంపనం గుర్తించబడింది",
+        "rain_24h": "గత 24 గంటల్లో భారీ వర్షం",
+        "temperature_change": "గణనీయమైన ఉష్ణోగ్రత మార్పు",
+        "pressure_change": "వాతావరణ పీడన మార్పు గుర్తించబడింది"
+    },
+    "actions": {
+        "evacuate": "వెంటనే ప్రాంతాన్ని ఖాళీ చేయండి",
+        "inspect": "తనిఖీ బృందాన్ని పంపండి",
+        "monitor": "పర్యవేక్షణ కొనసాగించండి",
+        "pause_operations": "మైనింగ్ కార్యకలాపాలను నిలిపివేయండి"
+    }
+}
