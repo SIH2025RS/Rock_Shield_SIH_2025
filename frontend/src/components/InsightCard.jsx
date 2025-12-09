@@ -66,14 +66,13 @@ export default function InsightCard({
   }, [severity]);
 
   const headline =
-    headlineBySeverity?.[severity] ||
-    t(`dashboard:insight.headline.${severity}`);
+    headlineBySeverity?.[severity] || t(`insight.headline.${severity}`);
 
   function speak() {
     try {
       const text = `${locationLabel ? locationLabel + ". " : ""}${headline} ${
         confidence
-          ? t("dashboard:insight.confidence", {
+          ? t("insight.confidence", {
               val: Math.round(confidence * 100),
             })
           : ""
@@ -101,7 +100,7 @@ export default function InsightCard({
               {headline}
               {confidence != null && (
                 <span className="ml-2 text-sm font-normal text-slate-500">
-                  {t("dashboard:insight.confidence", {
+                  {t("insight.confidence", {
                     val: Math.round(confidence * 100),
                   })}
                 </span>
@@ -134,7 +133,7 @@ export default function InsightCard({
               onClick={() => setShowWhy((v) => !v)}
               aria-expanded={showWhy}
             >
-              {t("dashboard:insight.reasons_title")}
+              {t("insight.reasons_title")}
             </button>
             <button
               className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 text-sm hover:bg-slate-50"

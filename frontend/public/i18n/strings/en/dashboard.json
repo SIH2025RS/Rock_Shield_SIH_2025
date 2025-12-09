@@ -1,51 +1,66 @@
 {
-    "insight": {
-        "headline": {
-            "critical": "Critical Risk Detected",
-            "high": "High Risk Warning",
-            "medium": "Moderate Risk Warning",
-            "low": "Stable Conditions"
-        },
-        "confidence": "{{val}}% confidence",
-        "reasons_title": "Why is this happening?"
+  "title": "Hub Dashboard",
+  "subtitle_select_hub": "Select a hub to view data",
+  "insight": {
+    "headline": {
+      "critical": "Critical Risk Detected",
+      "high": "High Risk Warning",
+      "medium": "Moderate Risk Warning",
+      "low": "Stable Conditions"
     },
-    "mine_control": {
-        "title": "Mine Control",
-        "subtitle": "Live operations overview for sensors, alerts and incidents.",
-        "active_sensors": "Active Sensors",
-        "alerts_24h": "Alerts (24h)",
-        "incidents_7d": "Incidents (7d)",
-        "critical_alerts": "Critical Alerts",
-        "recent_alerts": "Recent Alerts",
-        "registered_sensors": "Registered Sensors",
-        "no_alerts_24h": "No alerts in last 24 hours",
-        "no_sensors": "No registered sensors"
-    },
-    "cave_miner": {
-        "title": "Cave Miner",
-        "subtitle": "Your tasks and forwarded alerts",
-        "my_tasks": "My Tasks",
-        "forwarded_alerts": "Forwarded Alerts",
-        "acknowledged": "Acknowledged",
-        "no_tasks": "No tasks assigned",
-        "no_alerts": "No alerts"
-    },
-    "cards": {
-        "current_temperature": "Current Temperature",
-        "wind": "Wind",
-        "humidity": "Humidity",
-        "nearby_alerts": "Nearby Alerts"
-    },
-    "sections": {
-        "temperature_live": "Live Temperature",
-        "wind_humidity_live": "Wind & Humidity",
-        "ml_risk_live": "ML Risk Assessment"
-    },
-    "labels": {
-        "hours": "Hours",
-        "radius": "Radius (km)"
-    },
-    "map": {
-        "no_dem": "No DEM data"
-    }
+    "confidence": "{{val}}% confidence",
+    "reasons_title": "Why is this happening?"
+  },
+  "mine_control": {
+    "title": "Mine Control",
+    "subtitle": "Live operations overview for sensors, alerts and incidents.",
+    "active_sensors": "Active Sensors",
+    "alerts_24h": "Alerts (24h)",
+    "incidents_7d": "Incidents (7d)",
+    "critical_alerts": "Critical Alerts",
+    "recent_alerts": "Recent Alerts",
+    "registered_sensors": "Registered Sensors",
+    "no_alerts_24h": "No alerts in last 24 hours",
+    "no_sensors": "No registered sensors"
+  },
+  "cave_miner": {
+    "title": "Cave Miner",
+    "subtitle": "Your tasks and forwarded alerts",
+    "my_tasks": "My Tasks",
+    "forwarded_alerts": "Forwarded Alerts",
+    "acknowledged": "Acknowledged",
+    "no_tasks": "No tasks assigned",
+    "no_alerts": "No alerts"
+  },
+  "cards": {
+    "current_temperature": "Current Temperature",
+    "wind": "Wind",
+    "humidity": "Humidity",
+    "nearby_alerts": "Nearby Alerts"
+  },
+  "sections": {
+    "temperature_live": "Live Temperature",
+    "wind_humidity_live": "Wind & Humidity",
+    "ml_risk_live": "ML Risk Assessment",
+    "dem": "Elevation Map",
+    "current_conditions": "Current Conditions"
+  },
+  "labels": {
+    "hours": "Hours",
+    "radius": "Radius",
+    "hub": "Hub"
+  },
+  "status": {
+    "real_time": "Real-time",
+    "waiting_for_data": "Waiting for data",
+    "waiting_for_temperature": "Waiting for temperature data...",
+    "waiting_for_weather": "Waiting for weather data...",
+    "waiting_for_ml": "Waiting for ML predictions...",
+    "within_radius": "Within {{km}} km",
+    "no_dem_data": "No DEM data available",
+    "elevation_range": "Elevation range"
+  },
+  "map": {
+    "no_dem": "No DEM data"
+  }
 }

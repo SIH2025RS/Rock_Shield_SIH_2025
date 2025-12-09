@@ -37,7 +37,7 @@ const SOCKET_URL =
 export default function HubDashboard() {
   const { getToken } = useAuth();
   const socketRef = useRef(null);
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("dashboard");
 
   const [hubs, setHubs] = useState([]);
   const [selectedHubId, setSelectedHubId] = useState("");
@@ -173,7 +173,7 @@ export default function HubDashboard() {
         s.off("hub-weather:update", onHubWeather);
         s.off("hub-dem:update", onHubDem);
         s.off("ml:prediction", onMlPrediction);
-      } catch { }
+      } catch {}
     };
   }, [selectedHubId]);
 
@@ -182,7 +182,7 @@ export default function HubDashboard() {
     return () => {
       try {
         socketRef.current?.disconnect();
-      } catch { }
+      } catch {}
     };
   }, []);
 
@@ -304,8 +304,8 @@ export default function HubDashboard() {
     const confidence = Number.isFinite(p?.confidence)
       ? p.confidence
       : Number.isFinite(risk)
-        ? risk
-        : null;
+      ? risk
+      : null;
     const lat = Number(p?.lat ?? latestPred?.location?.lat);
     const lon = Number(p?.lon ?? latestPred?.location?.lon);
 
@@ -316,18 +316,18 @@ export default function HubDashboard() {
       [];
     const parsed = Array.isArray(shap)
       ? shap
-        .map((it) => {
-          if (!it) return null;
-          if (Array.isArray(it))
-            return { name: String(it[0]), value: Number(it[1]) };
-          if (typeof it === "object")
-            return {
-              name: String(it.feature || it.name || it.key || ""),
-              value: Number(it.value),
-            };
-          return null;
-        })
-        .filter((x) => x && x.name)
+          .map((it) => {
+            if (!it) return null;
+            if (Array.isArray(it))
+              return { name: String(it[0]), value: Number(it[1]) };
+            if (typeof it === "object")
+              return {
+                name: String(it.feature || it.name || it.key || ""),
+                value: Number(it.value),
+              };
+            return null;
+          })
+          .filter((x) => x && x.name)
       : [];
     const names = parsed.map((d) => d.name);
     const mapReasonKey = (n) => {
@@ -343,7 +343,7 @@ export default function HubDashboard() {
       keys.length ? keys : ["tilt_up", "vibration_up", "rain_24h"]
     )
       .slice(0, 3)
-      .map((k) => t(`dashboard:insight.reasons.${k}`));
+      .map((k) => t(`insight.reasons.${k}`));
     const contribs = parsed.slice(0, 5).map((d) => ({
       name: d.name,
       value: Number.isFinite(d.value) ? d.value : 0,
@@ -380,55 +380,81 @@ export default function HubDashboard() {
   }
 
   return (
-    <div className="p-6">
-      <div className="flex flex-wrap items-center gap-3 mb-4">
-        <div className="flex items-center gap-2">
-          <MapPin size={18} className="text-blue-600" />
-          <select
-            className="input"
-            value={selectedHubId}
-            onChange={(e) => setSelectedHubId(e.target.value)}
-          >
-            {hubs.map((h) => (
-              <option value={h.id} key={h.id}>
-                {h.name} ({h.lat.toFixed(4)}, {h.lon.toFixed(4)})
-              </option>
-            ))}
-          </select>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 sm:p-6 lg:p-8">
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+              <MapPin size={32} className="text-blue-600" />
+              {t("title")}
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-1">
+              {selectedHub ? selectedHub.name : t("subtitle_select_hub")}
+            </p>
+          </div>
         </div>
-        <div className="ml-auto flex items-center gap-2 text-sm">
-          <span>{t("dashboard:labels.hours")}</span>
-          <input
-            type="number"
-            className="input w-24"
-            min={1}
-            max={720}
-            value={hours}
-            onChange={(e) =>
-              setHours(
-                Math.max(1, Math.min(720, Number(e.target.value) || 168))
-              )
-            }
-          />
-          <span>·</span>
-          <span>{t("dashboard:labels.radius")}</span>
-          <input
-            type="number"
-            className="input w-24"
-            min={1}
-            max={50}
-            value={radiusKm}
-            onChange={(e) =>
-              setRadiusKm(
-                Math.max(1, Math.min(50, Number(e.target.value) || 5))
-              )
-            }
-          />
+
+        {/* Controls Section */}
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-center gap-2 flex-1">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                {t("labels.hub")}
+              </label>
+              <select
+                className="input flex-1"
+                value={selectedHubId}
+                onChange={(e) => setSelectedHubId(e.target.value)}
+              >
+                {hubs.map((h) => (
+                  <option value={h.id} key={h.id}>
+                    {h.name} ({h.lat.toFixed(4)}, {h.lon.toFixed(4)})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                {t("labels.hours")}
+              </label>
+              <input
+                type="number"
+                className="input w-20"
+                min={1}
+                max={720}
+                value={hours}
+                onChange={(e) =>
+                  setHours(
+                    Math.max(1, Math.min(720, Number(e.target.value) || 168))
+                  )
+                }
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                {t("labels.radius")}
+              </label>
+              <input
+                type="number"
+                className="input w-20"
+                min={1}
+                max={50}
+                value={radiusKm}
+                onChange={(e) =>
+                  setRadiusKm(
+                    Math.max(1, Math.min(50, Number(e.target.value) || 5))
+                  )
+                }
+              />
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Insight Card */}
       {insightData && (
-        <div className="mb-6">
+        <div className="mb-8 animate-slideUp">
           <InsightCard
             severity={insightData.severity}
             confidence={insightData.confidence}
@@ -438,7 +464,7 @@ export default function HubDashboard() {
             locationLabel={selectedHub ? `${selectedHub.name}` : undefined}
             whyDetails={
               Array.isArray(insightData.contribs) &&
-                insightData.contribs.length ? (
+              insightData.contribs.length ? (
                 <div className="h-40">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
@@ -465,170 +491,274 @@ export default function HubDashboard() {
         </div>
       )}
 
-      {/* Summary cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">
-            {t("dashboard:cards.current_temperature")}
+      {/* Summary Cards */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <Activity size={20} className="text-blue-600" />
+          {t("sections.current_conditions")}
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Temperature Card */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+                {t("cards.current_temperature")}
+              </span>
+              <ThermometerSun size={20} className="text-orange-500" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 dark:text-white">
+              {weatherNow ? weatherNow.temperature_2m : "—"}
+              <span className="text-lg ml-1">
+                {weatherNow?.units?.temperature_2m || "°C"}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              {weatherNow
+                ? t("status.real_time")
+                : t("status.waiting_for_data")}
+            </p>
           </div>
-          <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
-            <ThermometerSun size={18} className="text-orange-600" />{" "}
-            {weatherNow
-              ? `${weatherNow.temperature_2m} ${weatherNow?.units?.temperature_2m || "°C"
-              }`
-              : "—"}
+
+          {/* Wind Card */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+                {t("cards.wind")}
+              </span>
+              <Wind size={20} className="text-sky-500" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 dark:text-white">
+              {weatherNow ? weatherNow.wind_speed_10m : "—"}
+              <span className="text-lg ml-1">
+                {weatherNow?.units?.wind_speed_10m || "km/h"}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              {weatherNow
+                ? t("status.real_time")
+                : t("status.waiting_for_data")}
+            </p>
           </div>
-        </div>
-        <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">
-            {t("dashboard:cards.wind")}
+
+          {/* Humidity Card */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+                {t("cards.humidity")}
+              </span>
+              <Droplets size={20} className="text-blue-500" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 dark:text-white">
+              {weatherNow ? weatherNow.relative_humidity_2m : "—"}
+              <span className="text-lg ml-1">%</span>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              {weatherNow
+                ? t("status.real_time")
+                : t("status.waiting_for_data")}
+            </p>
           </div>
-          <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
-            <Wind size={18} className="text-sky-600" />{" "}
-            {weatherNow
-              ? `${weatherNow.wind_speed_10m} ${weatherNow?.units?.wind_speed_10m || "km/h"
-              }`
-              : "—"}
-          </div>
-        </div>
-        <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">
-            {t("dashboard:cards.humidity")}
-          </div>
-          <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
-            <Droplets size={18} className="text-blue-600" />{" "}
-            {weatherNow ? `${weatherNow.relative_humidity_2m}%` : "—"}
-          </div>
-        </div>
-        <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm">
-          <div className="text-slate-500 text-sm">
-            {t("dashboard:cards.nearby_alerts")}
-          </div>
-          <div className="mt-1 flex items-center gap-2 text-2xl font-semibold">
-            <Bell size={18} className="text-red-600" /> {nearbyAlerts.length}
+
+          {/* Alerts Card */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+                {t("cards.nearby_alerts")}
+              </span>
+              <Bell size={20} className="text-red-500" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 dark:text-white">
+              {nearbyAlerts.length}
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              {t("status.within_radius", { km: radiusKm })}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
-        <div className="rounded-xl border bg-white p-6 shadow-sm lg:col-span-2">
-          <h3 className="mb-3 flex items-center gap-2">
-            <Activity size={18} className="text-blue-600" />{" "}
-            {t("dashboard:sections.temperature_live")}
+      {/* Charts Section */}
+      <div className="grid gap-6 lg:grid-cols-3 mb-8">
+        {/* Temperature Chart */}
+        <div className="lg:col-span-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+            <Activity size={20} className="text-red-500" />
+            {t("sections.temperature_live")}
           </h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={tempSeries}
-                margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis
-                  dataKey="time"
-                  stroke="#64748b"
-                  hide={tempSeries.length > 40}
-                />
-                <YAxis stroke="#64748b" />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="temperature"
-                  stroke="#ef4444"
-                  dot={false}
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+          <div className="h-72">
+            {tempSeries.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={tempSeries}
+                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis
+                    dataKey="time"
+                    stroke="#64748b"
+                    hide={tempSeries.length > 40}
+                    style={{ fontSize: "12px" }}
+                  />
+                  <YAxis stroke="#64748b" style={{ fontSize: "12px" }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="temperature"
+                    stroke="#ef4444"
+                    dot={false}
+                    strokeWidth={3}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-slate-500">
+                {t("status.waiting_for_temperature")}
+              </div>
+            )}
           </div>
+        </div>
+
+        {/* DEM Heatmap */}
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+            <Satellite size={20} className="text-purple-500" />
+            {t("sections.dem")}
+          </h3>
+          <DemMiniHeatmap points={demPatch.points} />
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h3 className="mb-3">{t("dashboard:sections.wind_humidity_live")}</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={weatherSeries.map((d) => ({
-                  time: new Date(d.t).toLocaleTimeString(),
-                  wind: d.wind,
-                  humidity: d.humidity,
-                }))}
-                margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis
-                  dataKey="time"
-                  stroke="#64748b"
-                  hide={weatherSeries.length > 40}
-                />
-                <YAxis stroke="#64748b" />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="wind"
-                  stroke="#0ea5e9"
-                  dot={false}
-                  strokeWidth={2}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="humidity"
-                  stroke="#22c55e"
-                  dot={false}
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+      {/* Weather & Risk Charts */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Wind & Humidity Chart */}
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+            <Wind size={20} className="text-sky-500" />
+            {t("sections.wind_humidity_live")}
+          </h3>
+          <div className="h-72">
+            {weatherSeries.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={weatherSeries.map((d) => ({
+                    time: new Date(d.t).toLocaleTimeString(),
+                    wind: d.wind,
+                    humidity: d.humidity,
+                  }))}
+                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis
+                    dataKey="time"
+                    stroke="#64748b"
+                    hide={weatherSeries.length > 40}
+                    style={{ fontSize: "12px" }}
+                  />
+                  <YAxis stroke="#64748b" style={{ fontSize: "12px" }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="wind"
+                    stroke="#0ea5e9"
+                    dot={false}
+                    strokeWidth={3}
+                    name="Wind"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="humidity"
+                    stroke="#22c55e"
+                    dot={false}
+                    strokeWidth={3}
+                    name="Humidity"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-slate-500">
+                {t("status.waiting_for_weather")}
+              </div>
+            )}
           </div>
         </div>
-        <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm lg:col-span-2">
-          <h3 className="mb-3 flex items-center gap-2">
-            <Brain size={18} className="text-purple-600" />{" "}
-            {t("dashboard:sections.ml_risk_live")}
+
+        {/* ML Risk Chart */}
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+            <Brain size={20} className="text-purple-500" />
+            {t("sections.ml_risk_live")}
           </h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
-                data={riskSeries}
-                margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient
-                    id="colorRiskLive"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis
-                  dataKey="time"
-                  stroke="#64748b"
-                  hide={riskSeries.length > 40}
-                />
-                <YAxis domain={[0, "auto"]} stroke="#64748b" />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="risk"
-                  stroke="#8b5cf6"
-                  fillOpacity={1}
-                  fill="url(#colorRiskLive)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="risk"
-                  stroke="#7c3aed"
-                  dot={false}
-                  strokeWidth={2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+          <div className="h-72">
+            {riskSeries.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart
+                  data={riskSeries}
+                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                >
+                  <defs>
+                    <linearGradient
+                      id="colorRiskLive"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis
+                    dataKey="time"
+                    stroke="#64748b"
+                    hide={riskSeries.length > 40}
+                    style={{ fontSize: "12px" }}
+                  />
+                  <YAxis
+                    domain={[0, "auto"]}
+                    stroke="#64748b"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="risk"
+                    stroke="#8b5cf6"
+                    fillOpacity={1}
+                    fill="url(#colorRiskLive)"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="risk"
+                    stroke="#7c3aed"
+                    dot={false}
+                    strokeWidth={3}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-slate-500">
+                {t("status.waiting_for_ml")}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -654,11 +784,12 @@ function computeSquareBBox(lat, lon, sizeM) {
 }
 
 function DemMiniHeatmap({ points }) {
+  const { t } = useTranslation("dashboard");
   // Map points to a simple grid by coordinates; fallback tiles when unordered
   if (!points || points.length === 0) {
     return (
-      <div className="h-64 rounded border bg-slate-50 flex items-center justify-center text-slate-500 text-sm">
-        {t('dashboard:map.no_dem') || 'No DEM data'}
+      <div className="h-64 rounded border bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 text-sm">
+        {t("status.no_dem_data")}
       </div>
     );
   }
@@ -682,36 +813,43 @@ function DemMiniHeatmap({ points }) {
     max = 1;
   }
   return (
-    <div className="h-64 w-full overflow-hidden rounded border">
-      <div
-        className="grid h-full"
-        style={{
-          gridTemplateRows: `repeat(${grid.length}, 1fr)`,
-          gridTemplateColumns: `repeat(${grid[0].length}, 1fr)`,
-        }}
-      >
-        {grid.map((row, i) =>
-          row.map((v, j) => {
-            const t =
-              typeof v === "number" ? (v - min) / Math.max(1e-6, max - min) : 0;
-            const color = colorRamp(t);
-            const title = typeof v === "number" ? `${v.toFixed(1)} m` : "—";
-            return (
-              <div
-                key={`${i}-${j}`}
-                title={title}
-                style={{
-                  background: color,
-                  border: "1px solid rgba(255,255,255,0.2)",
-                }}
-              />
-            );
-          })
-        )}
+    <div className="w-full">
+      <div className="h-64 w-full overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+        <div
+          className="grid h-full"
+          style={{
+            gridTemplateRows: `repeat(${grid.length}, 1fr)`,
+            gridTemplateColumns: `repeat(${grid[0].length}, 1fr)`,
+          }}
+        >
+          {grid.map((row, i) =>
+            row.map((v, j) => {
+              const t =
+                typeof v === "number"
+                  ? (v - min) / Math.max(1e-6, max - min)
+                  : 0;
+              const color = colorRamp(t);
+              const title = typeof v === "number" ? `${v.toFixed(1)} m` : "—";
+              return (
+                <div
+                  key={`${i}-${j}`}
+                  title={title}
+                  style={{
+                    background: color,
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
+                />
+              );
+            })
+          )}
+        </div>
       </div>
-      <div className="mt-2 text-xs text-slate-500">
-        Elevation range: {isFinite(min) ? min.toFixed(1) : "—"} m –{" "}
-        {isFinite(max) ? max.toFixed(1) : "—"} m
+      <div className="mt-3 text-xs text-slate-600 dark:text-slate-400 flex justify-between">
+        <span>{t("status.elevation_range")}</span>
+        <span className="font-medium">
+          {isFinite(min) ? min.toFixed(0) : "—"} –{" "}
+          {isFinite(max) ? max.toFixed(0) : "—"} m
+        </span>
       </div>
     </div>
   );
@@ -733,9 +871,9 @@ function isWithinRadius(lat1, lon1, lat2, lon2, radiusKm) {
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
-    Math.cos(toRad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c <= radiusKm;
 }
