@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Loading from "./components/Loading";
 import { ClerkProvider } from "@clerk/clerk-react";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OperatorDroneImagery from "./pages/operator/DroneImagery";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -105,6 +106,7 @@ function App() {
                   <Route path="alerts" element={<OperatorAlerts />} />
                   <Route path="tasks" element={<OperatorTasks />} />
                   <Route path="sensors" element={<OperatorSensors />} />
+                  <Route path="drone-imagery" element={<OperatorDroneImagery />} />
                   <Route path="reports" element={<OperatorReports />} />
                   <Route path="incidents" element={<OperatorIncidents />} />
                 </Route>

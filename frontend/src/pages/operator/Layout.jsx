@@ -17,6 +17,7 @@ export default function OperatorLayout() {
           <NavLink to="/operator/tasks" className={linkClass}>Tasks</NavLink>
           <NavLink to="/operator/sensors" className={linkClass}>Sensors</NavLink>
           <NavLink to="/operator/reports" className={linkClass}>Reports</NavLink>
+          <NavLink to="/operator/drone-imagery" className={linkClass}>Drone imagery</NavLink>
           <NavLink to="/operator/incidents" className={linkClass}>Incident</NavLink>
         </nav>
         <div className="card animate-fadeIn">

@@ -27,6 +27,8 @@ export default function HubDashboard() {
   const [nearbySensors, setNearbySensors] = useState([])
   const [nearbyIncidents, setNearbyIncidents] = useState([])
   const [hours, setHours] = useState(168)
+  const [demTileSizeM, setDemTileSizeM] = useState(200)
+  const [demDataset, setDemDataset] = useState('SRTMGL1')
 
   // Load hubs and meta
   useEffect(() => {
@@ -133,6 +135,24 @@ export default function HubDashboard() {
 
   const tempSeries = useMemo(() => weatherSeries.map(d => ({ time: new Date(d.t).toLocaleTimeString(), temperature: d.temperature })), [weatherSeries])
   const windSeries = useMemo(() => weatherSeries.map(d => ({ time: new Date(d.t).toLocaleTimeString(), wind: d.wind })), [weatherSeries])
+
+  const demBBox = useMemo(() => {
+    if (!selectedHub) return null
+    const size = Math.max(10, Number(demTileSizeM) || 200)
+    return computeSquareBBox(selectedHub.lat, selectedHub.lon, size)
+  }, [selectedHub, demTileSizeM])
+
+  const demDownloadUrl = useMemo(() => {
+    if (!demBBox) return ''
+    const params = new URLSearchParams({
+      demtype: demDataset,
+      south: demBBox.south.toFixed(6),
+      north: demBBox.north.toFixed(6),
+      west: demBBox.west.toFixed(6),
+      east: demBBox.east.toFixed(6)
+    })
+    return `${API_BASE_URL}/api/dem/geotiff?${params.toString()}`
+  }, [demBBox, demDataset])
 
   return (
     <div className="section">
@@ -263,8 +283,78 @@ export default function HubDashboard() {
           </ul>
         </div>
       </div>
+
+      <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <h3 className="mb-3 flex items-center gap-2"><Satellite size={18} className="text-indigo-600" /> DEM GeoTIFF (OpenTopography)</h3>
+        {selectedHub ? (
+          <div className="space-y-3 text-sm">
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <div className="text-xs text-slate-500 mb-1">Dataset</div>
+                <select className="input w-full" value={demDataset} onChange={(e) => setDemDataset(e.target.value)}>
+                  <option value="SRTMGL1">SRTM GL1 (30m)</option>
+                  <option value="AW3D30">AW3D30 / ALOS (30m)</option>
+                  <option value="COP30">Copernicus DEM 30m</option>
+                </select>
+              </div>
+              <div>
+                <div className="text-xs text-slate-500 mb-1">Tile size (m, square)</div>
+                <input
+                  type="number"
+                  className="input w-full"
+                  min={50}
+                  max={2000}
+                  value={demTileSizeM}
+                  onChange={(e) => setDemTileSizeM(e.target.value)}
+                />
+              </div>
+            </div>
+            {demBBox && (
+              <div className="text-[11px] text-slate-600">
+                Bounding box (approx):
+                <br />
+                south {demBBox.south.toFixed(5)}, north {demBBox.north.toFixed(5)}
+                <br />
+                west {demBBox.west.toFixed(5)}, east {demBBox.east.toFixed(5)}
+              </div>
+            )}
+            <div>
+              <a
+                className="btn-secondary"
+                href={demDownloadUrl || undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download DEM GeoTIFF
+              </a>
+            </div>
+            <div className="text-[11px] text-slate-500">
+              Uses the backend /api/dem/geotiff endpoint (OpenTopography Global DEM API).
+            </div>
+          </div>
+        ) : (
+          <div className="text-sm text-slate-500">Select a plant hub to enable DEM download.</div>
+        )}
+      </div>
     </div>
   )
+}
+
+function computeSquareBBox(lat, lon, sizeM) {
+  const half = sizeM / 2
+  const mPerDegLat = 110574
+  const latRad = lat * Math.PI / 180
+  const mPerDegLon = 111320 * Math.cos(latRad)
+  if (!isFinite(mPerDegLon) || mPerDegLon <= 0) {
+    return { south: lat, north: lat, west: lon, east: lon }
+  }
+  const dLat = half / mPerDegLat
+  const dLon = half / mPerDegLon
+  const south = Math.max(-90, lat - dLat)
+  const north = Math.min(90, lat + dLat)
+  const west = Math.max(-180, lon - dLon)
+  const east = Math.min(180, lon + dLon)
+  return { south, north, west, east }
 }
 
 function DemMiniHeatmap({ points }) {
