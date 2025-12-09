@@ -1,0 +1,30 @@
+{
+    "title": "परिचालन विश्लेषण",
+    "subtitle": "वास्तविक समय डेटा व्याख्या और अंतर्दृष्टि",
+    "risk_trend": "जोखिम प्रवृत्ति (24 घंटे)",
+    "dem_status": "DEM स्थिति",
+    "dem_preview_alt": "DEM पूर्वावलोकन",
+    "generating_preview": "DEM पूर्वावलोकन उत्पन्न हो रहा है...",
+    "preview_pending": "DEM पूर्वावलोकन लंबित",
+    "weather_pattern": "मौसम पैटर्न (24 घंटे)",
+    "temperature": "तापमान (°C)",
+    "humidity": "आर्द्रता (%)",
+    "zone_risk_comparison": "क्षेत्र जोखिम तुलना",
+    "recent_alerts": "हाल की चेतावनियां",
+    "no_recent_alerts": "कोई हाल की चेतावनी नहीं",
+    "dem_viewer_title": "DEM व्यूअर - व्यूपोर्ट और पैरामीटर समायोजित करें",
+    "dem_full_screen_alt": "DEM पूर्ण स्क्रीन",
+    "dem_controls": {
+        "latitude": "अक्षांश",
+        "longitude": "देशांतर",
+        "zoom": "ज़ूम (पैड डिग्री)",
+        "color_ramp": "रंग रैंप",
+        "azimuth": "अज़ीमुथ (प्रकाश कोण)",
+        "altitude": "ऊंचाई (प्रकाश ऊंचाई)",
+        "vertical_exaggeration": "ऊर्ध्वाधर अतिशयोक्ति"
+    },
+    "dem_options": {
+        "terrain": "भूभाग (नीला-लाल)",
+        "viridis": "विरिडिस (गहरा-पीला)"
+    }
+}

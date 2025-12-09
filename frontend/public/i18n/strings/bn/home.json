@@ -1,0 +1,30 @@
+{
+    "title": "অপারেশনাল বিশ্লেষণ",
+    "subtitle": "রিয়েল-টাইম ডেটা ব্যাখ্যা এবং অন্তর্দৃষ্টি",
+    "risk_trend": "ঝুঁকি প্রবণতা (24 ঘন্টা)",
+    "dem_status": "DEM অবস্থা",
+    "dem_preview_alt": "DEM প্রিভিউ",
+    "generating_preview": "DEM প্রিভিউ তৈরি হচ্ছে...",
+    "preview_pending": "DEM প্রিভিউ মুলতুবি",
+    "weather_pattern": "আবহাওয়া প্যাটার্ন (24 ঘন্টা)",
+    "temperature": "তাপমাত্রা (°C)",
+    "humidity": "আর্দ্রতা (%)",
+    "zone_risk_comparison": "অঞ্চল ঝুঁকি তুলনা",
+    "recent_alerts": "সাম্প্রতিক সতর্কতা",
+    "no_recent_alerts": "কোনো সাম্প্রতিক সতর্কতা নেই",
+    "dem_viewer_title": "DEM ভিউয়ার - ভিউপোর্ট এবং প্যারামিটার সামঞ্জস্য করুন",
+    "dem_full_screen_alt": "DEM পূর্ণ স্ক্রীন",
+    "dem_controls": {
+        "latitude": "অক্ষাংশ",
+        "longitude": "দ্রাঘিমাংশ",
+        "zoom": "জুম (প্যাড ডিগ্রি)",
+        "color_ramp": "রঙ র‍্যাম্প",
+        "azimuth": "আজিমুথ (আলোর কোণ)",
+        "altitude": "উচ্চতা (আলোর উচ্চতা)",
+        "vertical_exaggeration": "উল্লম্ব অতিরঞ্জন"
+    },
+    "dem_options": {
+        "terrain": "ভূখণ্ড (নীল-লাল)",
+        "viridis": "ভিরিডিস (গাঢ়-হলুদ)"
+    }
+}

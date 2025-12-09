@@ -1,0 +1,255 @@
+{
+    "title": "ऑपरेटर",
+    "nav": {
+        "map": "मानचित्र",
+        "alerts": "चेतावनियां",
+        "tasks": "कार्य",
+        "sensors": "सेंसर",
+        "reports": "रिपोर्ट",
+        "incident": "घटना"
+    },
+    "sections": {
+        "sensors": "पिछले 24 घंटे के सेंसर",
+        "submit_report": "रिपोर्ट जमा करें",
+        "alerts": "चेतावनियां",
+        "task_management": "कार्य प्रबंधन",
+        "map": "मानचित्र",
+        "sensor_insights": "सेंसर अंतर्दृष्टि: झुकाव बनाम समय",
+        "rainfall_pp": "वर्षा बनाम छिद्र दबाव",
+        "correlation": "बहु-सेंसर सहसंबंध",
+        "vibration": "कंपन घटना लॉग",
+        "incident_reporting": "घटना रिपोर्टिंग"
+    },
+    "placeholders": {
+        "enter_report": "रिपोर्ट विवरण दर्ज करें",
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "sensor_id": "सेंसर आईडी",
+        "metric": "मेट्रिक",
+        "rain_metric": "वर्षा मेट्रिक",
+        "pp_metric": "छिद्र दबाव मेट्रिक",
+        "sensor_ids_comma": "सेंसर आईडी (अल्पविराम से अलग)",
+        "threshold": "सीमा",
+        "severity": "गंभीरता",
+        "location_name": "स्थान का नाम",
+        "latitude": "अक्षांश",
+        "longitude": "देशांतर",
+        "hub_name": "हब का नाम"
+    },
+    "actions": {
+        "submit": "जमा करें",
+        "acknowledge": "स्वीकार करें",
+        "forward_miners": "खनिकों को अग्रेषित करें",
+        "create": "बनाएं",
+        "start": "शुरू करें",
+        "complete": "पूर्ण करें",
+        "load": "लोड करें",
+        "submit_incident": "घटना जमा करें",
+        "save_hub": "हब सहेजें",
+        "stop_weather": "मौसम बंद करें",
+        "start_weather": "मौसम शुरू करें",
+        "stop_dem": "DEM बंद करें",
+        "start_dem": "DEM शुरू करें",
+        "refresh": "ताज़ा करें"
+    },
+    "messages": {
+        "loading": "लोड हो रहा है...",
+        "error_load": "लोड करने में विफल",
+        "report_submitted": "रिपोर्ट जमा की गई",
+        "submit_failed": "जमा करने में विफल",
+        "alert_forwarded": "चेतावनी खनिकों को अग्रेषित की गई",
+        "incident_submitted": "घटना जमा की गई",
+        "acknowledge_failed": "स्वीकार करने में विफल",
+        "forward_failed": "चेतावनी अग्रेषित करने में विफल",
+        "task_create_failed": "कार्य बनाने में विफल",
+        "task_update_failed": "कार्य अपडेट करने में विफल",
+        "incident_failed": "घटना जमा करने में विफल"
+    },
+    "alerts_page": {
+        "title": "जोखिम चेतावनियां",
+        "subtitle": "अपने सेंसर नेटवर्क से सक्रिय चेतावनियों की निगरानी और प्रबंधन करें",
+        "create_new": "नई चेतावनी बनाएं",
+        "creating": "बनाया जा रहा है...",
+        "create_btn": "चेतावनी बनाएं",
+        "sensor_label": "सेंसर:",
+        "forward_btn": "अग्रेषित करें",
+        "pk_title": "शीर्षक",
+        "pk_sensor_optional": "सेंसर आईडी (वैकल्पिक)",
+        "pk_action_optional": "अनुशंसित कार्रवाई (वैकल्पिक)",
+        "pk_lat_optional": "अक्षांश (वैकल्पिक)",
+        "pk_lon_optional": "देशांतर (वैकल्पिक)",
+        "pk_desc_optional": "विवरण (वैकल्पिक)"
+    },
+    "tasks_page": {
+        "title": "कार्य प्रबंधन",
+        "subtitle": "ऑपरेटरों और खनिकों के लिए कार्य बनाएं और ट्रैक करें",
+        "create_btn": "बनाएं",
+        "types": {
+            "inspection": "निरीक्षण",
+            "alert_response": "चेतावनी प्रतिक्रिया",
+            "incident_review": "घटना समीक्षा"
+        },
+        "priorities": {
+            "critical": "गंभीर",
+            "high": "उच्च",
+            "medium": "मध्यम",
+            "low": "कम"
+        }
+    },
+    "reports_page": {
+        "title": "रिपोर्ट",
+        "subtitle": "फील्ड रिपोर्ट देखें और जमा करें",
+        "add_btn": "रिपोर्ट जोड़ें",
+        "close_btn": "बंद करें",
+        "recent_title": "हाल की रिपोर्ट",
+        "no_reports": "अभी तक कोई रिपोर्ट नहीं",
+        "guidance_title": "मार्गदर्शन",
+        "tips": {
+            "one": "एक संक्षिप्त, स्पष्ट शीर्षक जोड़ें।",
+            "two": "ट्राइएज में सहायता के लिए एक श्रेणी चुनें।",
+            "three": "विशिष्ट विवरण और संदर्भ प्रदान करें।"
+        },
+        "form": {
+            "title": "शीर्षक",
+            "category": "श्रेणी",
+            "details": "विवरण",
+            "placeholder_title": "संक्षिप्त शीर्षक",
+            "placeholder_details": "रिपोर्ट विवरण दर्ज करें",
+            "submit": "जमा करें",
+            "submitting": "जमा किया जा रहा है...",
+            "submitted": "जमा किया गया"
+        },
+        "templates": {
+            "weather": "मौसम",
+            "rockface": "चट्टान का चेहरा",
+            "equipment": "उपकरण"
+        },
+        "templates_text": {
+            "weather": "मौसम नोट: हल्की बारिश, बेंच 3 के पास तेज हवाएं।",
+            "rockface": "चट्टान का चेहरा अवलोकन: ताजा दरारें देखी गईं, पैर की उंगली पर मामूली मलबा।",
+            "equipment": "उपकरण समस्या: लोडर भार के तहत कंपन कर रहा है; निरीक्षण शेड्यूल करें।"
+        },
+        "categories": {
+            "general": "सामान्य",
+            "observation": "अवलोकन",
+            "hazard": "खतरा",
+            "maintenance": "रखरखाव"
+        }
+    },
+    "incidents_page": {
+        "title": "घटनाएं",
+        "subtitle": "अनुलग्नकों के साथ घटनाओं को देखें और रिपोर्ट करें",
+        "add_btn": "घटना जोड़ें",
+        "types": {
+            "rockfall": "शिलापतन",
+            "hazard": "खतरा",
+            "near_miss": "निकट चूक",
+            "equipment": "उपकरण विफलता"
+        },
+        "recent_title": "हाल की घटनाएं",
+        "no_incidents": "अभी तक कोई घटना नहीं",
+        "tips_title": "स्पष्ट रिपोर्ट के लिए सुझाव",
+        "tips": {
+            "one": "विशिष्ट स्थान और समय प्रदान करें।",
+            "two": "स्थितियों का वर्णन करें (मौसम, भूभाग, उपकरण)।",
+            "three": "सुरक्षित होने पर स्पष्ट फोटो या वीडियो संलग्न करें।",
+            "four": "तात्कालिकता को इंगित करने के लिए गंभीरता का उपयोग करें।"
+        },
+        "admin_note": "सिस्टम व्यवस्थापक आपकी रिपोर्ट की समीक्षा करेंगे और स्वीकार करेंगे।",
+        "form": {
+            "title": "शीर्षक",
+            "type": "प्रकार",
+            "severity": "गंभीरता",
+            "location_name": "स्थान का नाम",
+            "lat": "अक्षांश",
+            "lon": "देशांतर",
+            "desc": "विवरण",
+            "attachments": "अनुलग्नक",
+            "upload_prompt": "छवियां, वीडियो या PDF अपलोड करें",
+            "submit": "घटना जमा करें"
+        }
+    },
+    "sensors_page": {
+        "title": "सेंसर",
+        "subtitle": "{{total}} में से {{filtered}} सेंसर",
+        "search_placeholder": "खोजें",
+        "all_types": "सभी प्रकार",
+        "any_status": "कोई भी स्थिति",
+        "refresh": "ताज़ा करें",
+        "added": "जोड़ा गया",
+        "id": "आईडी",
+        "unknown": "अज्ञात",
+        "types": {
+            "tilt": "झुकाव",
+            "vibration": "कंपन",
+            "weather": "मौसम",
+            "camera": "कैमरा",
+            "other": "अन्य"
+        },
+        "status": {
+            "green": "हरा",
+            "yellow": "पीला",
+            "red": "लाल"
+        }
+    },
+    "drone_imagery": {
+        "title": "ड्रोन इमेजरी: बाउंडिंग बॉक्स और हीटमैप",
+        "subtitle": "ड्रोन फ्रेम पर रुचि के क्षेत्र बनाएं और हॉटस्पॉट पैच देखने के लिए हीटमैप मोड पर स्विच करें।",
+        "previous": "पिछला",
+        "next": "अगला",
+        "frame_info": "{{total}} में से फ्रेम {{current}} ({{name}})",
+        "total_boxes": "फ्रेम में कुल बॉक्स: {{count}}",
+        "instruction": "एक बॉक्स बनाने के लिए छवि पर क्लिक करें और खींचें। छवि के ऊपर टूलबार में बॉक्स व्यू और हीटमैप व्यू के बीच स्विच करें।"
+    },
+    "cards": {
+        "total_sensors": "कुल सेंसर",
+        "active_alerts": "सक्रिय चेतावनियां",
+        "plant_hubs": "प्लांट हब",
+        "monitoring": "निगरानी",
+        "critical_suffix": "गंभीर",
+        "current_weather": "वर्तमान मौसम",
+        "real_time_alerts": "वास्तविक समय चेतावनियां"
+    },
+    "controls": {
+        "mode_3d": "3D",
+        "mode_sat": "उपग्रह",
+        "mode_street": "सड़क",
+        "add_sensor": "सेंसर जोड़ें",
+        "cancel": "रद्द करें",
+        "hours": "घंटे",
+        "terrain_settings": "3D भूभाग सेटिंग्स",
+        "exaggeration": "भूभाग अतिशयोक्ति",
+        "show_hillshade": "हिलशेड दिखाएं",
+        "show_contours": "समोच्च दिखाएं",
+        "contour_interval": "समोच्च अंतराल (मी)"
+    },
+    "weather_widget": {
+        "current_temperature": "वर्तमान तापमान",
+        "humidity": "आर्द्रता",
+        "wind_speed": "हवा की गति"
+    },
+    "map": {
+        "select_location": "मौसम डेटा देखने के लिए मानचित्र पर एक स्थान चुनें",
+        "save_hub": "प्लांट हब के रूप में सहेजें",
+        "your_hubs": "आपके प्लांट हब",
+        "overlay_controls": "ओवरले नियंत्रण",
+        "search_prompt": "इसे सहेजने के लिए एक स्थान खोजें और चुनें।",
+        "no_weather": "अभी तक कोई मौसम नहीं",
+        "no_dem": "अभी तक कोई DEM नहीं",
+        "dem_loading": "DEM पैच लोड हो रहे हैं",
+        "patches_suffix": "पैच",
+        "value": "मान",
+        "show_sensors": "सेंसर दिखाएं",
+        "show_alerts": "चेतावनियां दिखाएं",
+        "hours": "घंटे",
+        "weather": {
+            "temp": "तापमान",
+            "humidity": "आर्द्रता",
+            "wind": "हवा"
+        },
+        "dem": {
+            "patch": "DEM पैच",
+            "points": "बिंदु"
+        }
+    }
+}

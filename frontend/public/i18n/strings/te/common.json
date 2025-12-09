@@ -1,0 +1,103 @@
+{
+    "welcome": "స్వాగతం",
+    "loading": "లోడ్ అవుతోంది...",
+    "submit": "సమర్పించండి",
+    "cancel": "రద్దు చేయండి",
+    "save": "సేవ్ చేయండి",
+    "delete": "తొలగించండి",
+    "edit": "సవరించండి",
+    "search": "శోధించండి",
+    "actions": {
+        "label": "చర్యలు",
+        "escalate": "పెంచండి",
+        "acknowledge": "అంగీకరించండి",
+        "listen": "వినండి"
+    },
+    "team": {
+        "title": "RockShield",
+        "subtitle": "ఉత్సాహంతో రూపొందించిన అధునాతన భద్రతా పరిష్కారాలు.",
+        "developer": "డెవలపర్",
+        "made_with": "తో తయారు చేయబడింది",
+        "by_team": "RockShield టీం ద్వారా"
+    },
+    "status": "స్థితి",
+    "active": "సక్రియం",
+    "inactive": "నిష్క్రియం",
+    "logout": "లాగ్ అవుట్",
+    "profile": "ప్రొఫైల్",
+    "close": "మూసివేయండి",
+    "risk": "ప్రమాదం",
+    "probability": "సంభావ్యత",
+    "rendering": "రెండర్ అవుతోంది...",
+    "overall_risk": "మొత్తం ప్రమాదం",
+    "current_rainfall": "ప్రస్తుత వర్షపాతం",
+    "north_wall": "ఉత్తర గోడ",
+    "east_slope": "తూర్పు వాలు",
+    "south_pit": "దక్షిణ గొయ్యి",
+    "map": {
+        "sensor": "సెన్సార్",
+        "alert": "హెచ్చరిక",
+        "severity": "తీవ్రత",
+        "elevation": "ఎత్తు",
+        "type": "రకం",
+        "status": "స్థితి",
+        "ml": "ML",
+        "error_token_missing": "Mapbox టోకెన్ లేదు. VITE_MAPBOX_TOKEN సెట్ చేయండి.",
+        "error_init": "మ్యాప్ ప్రారంభ లోపం",
+        "data_provider": "Open-Meteo ద్వారా అందించబడిన డేటా",
+        "search_prompt": "వాతావరణ వివరాలను చూడటానికి మ్యాప్‌లో స్థానాన్ని శోధించండి మరియు ఎంచుకోండి.",
+        "map_error_title": "మ్యాప్ కాన్ఫిగరేషన్ లోపం",
+        "map_error_desc": "Mapbox టోకెన్ కాన్ఫిగర్ చేయబడలేదు. దయచేసి మీ .env ఫైల్‌కు VITE_MAPBOX_TOKEN జోడించండి.",
+        "get_token": "ఇక్కడ ఉచిత టోకెన్ పొందండి",
+        "search_placeholder": "స్థానాన్ని శోధించండి...",
+        "clear_search": "శోధనను క్లియర్ చేయండి",
+        "searching": "శోధిస్తోంది…",
+        "no_suggestions": "సూచనలు లేవు",
+        "geotiff_view": "GeoTIFF (వీక్షణ)",
+        "geotiff_view_title": "ప్రస్తుత మ్యాప్ వీక్షణ కోసం GeoTIFF డౌన్‌లోడ్ చేయండి",
+        "geotiff_center": "GeoTIFF (కేంద్రం)",
+        "geotiff_center_title": "ఎంచుకున్న కోఆర్డినేట్ల చుట్టూ డౌన్‌లోడ్ చేయండి",
+        "weather_location": "వాతావరణం మరియు స్థానం",
+        "coordinates": "కోఆర్డినేట్లు",
+        "latitude": "అక్షాంశం",
+        "longitude": "రేఖాంశం",
+        "wind": "గాలి",
+        "humidity": "తేమ"
+    },
+    "app": {
+        "name": "RockShield"
+    },
+    "nav": {
+        "home": "హోమ్",
+        "dashboard": "డాష్‌బోర్డ్",
+        "admin": "నిర్వాహకుడు",
+        "map": "మ్యాప్",
+        "alerts": "హెచ్చరికలు",
+        "tasks": "పనులు",
+        "sensors": "సెన్సార్లు",
+        "droneImagery": "డ్రోన్ ఇమేజరీ",
+        "reports": "నివేదికలు",
+        "incidents": "సంఘటనలు",
+        "miner": "మైనర్ ఇంటర్‌ఫేస్",
+        "login": "లాగిన్",
+        "getStarted": "ప్రారంభించండి"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "మీరు వెతుకుతున్న పేజీ కనుగొనబడలేదు లేదా తరలించబడి ఉండవచ్చు.",
+        "go_home": "హోమ్‌కు వెళ్లండి"
+    },
+    "severity": {
+        "critical": "క్లిష్టమైనది",
+        "high": "అధిక",
+        "medium": "మధ్యస్థ",
+        "low": "తక్కువ",
+        "safe": "సురక్షితం"
+    },
+    "i18n": {
+        "language": "భాష",
+        "english": "ఆంగ్లం",
+        "hindi": "హిందీ"
+    },
+    "guest": "అతిథి"
+}

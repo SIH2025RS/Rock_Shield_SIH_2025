@@ -1,0 +1,34 @@
+{
+    "loading": "DEM ডেটা লোড হচ্ছে...",
+    "title": "DEM ভূখণ্ড বিশ্লেষণ",
+    "parameter": "প্যারামিটার",
+    "zone": "অঞ্চল",
+    "zone_analysis": "অঞ্চল বিশ্লেষণ",
+    "zone_not_found": "অঞ্চল পাওয়া যায়নি",
+    "current_value": "বর্তমান মান",
+    "std_dev": "মানক বিচ্যুতি",
+    "description": "বর্ণনা",
+    "all_zones": "সমস্ত অঞ্চলের ওভারভিউ",
+    "risk_level": "ঝুঁকি স্তর",
+    "risk_factors": "ঝুঁকি কারণ",
+    "status": "অবস্থা",
+    "risk": "ঝুঁকি",
+    "sensors": "সেন্সর",
+    "parameters": {
+        "elevation": "উচ্চতা",
+        "slope": "ঢাল",
+        "aspect": "দিক",
+        "porePressure": "ছিদ্র চাপ",
+        "methanePpm": "মিথেন (ppm)",
+        "roughness": "রুক্ষতা",
+        "relief": "ত্রাণ",
+        "flowAccumulation": "প্রবাহ সঞ্চয়",
+        "topographicWetnessIndex": "TWI"
+    },
+    "risk_levels": {
+        "safe": "নিরাপদ",
+        "low": "কম",
+        "warning": "সতর্কতা",
+        "high": "উচ্চ"
+    }
+}

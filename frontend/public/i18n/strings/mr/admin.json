@@ -1,0 +1,38 @@
+{
+    "title": "प्रशासक",
+    "subtitle": "वापरकर्ते, भूमिका आणि घटनांचे पुनरावलोकन करा",
+    "total_users": "एकूण वापरकर्ते",
+    "open_incidents": "खुल्या घटना",
+    "recent_alerts": "अलीकडील सूचना",
+    "registered_sensors": "नोंदणीकृत सेन्सर",
+    "table": {
+        "user": "वापरकर्ता",
+        "email": "ईमेल",
+        "role": "भूमिका",
+        "actions": "क्रिया"
+    },
+    "incidents": {
+        "title": "घटना",
+        "subtitle": "ऑपरेटरद्वारे नोंदवलेल्या घटनांचे पुनरावलोकन करा आणि स्वीकारा",
+        "headers": {
+            "title": "शीर्षक",
+            "type": "प्रकार",
+            "severity": "तीव्रता",
+            "status": "स्थिती",
+            "reported_by": "नोंदवले",
+            "created": "तयार केले",
+            "actions": "क्रिया"
+        }
+    },
+    "actions": {
+        "acknowledge": "स्वीकारा",
+        "acknowledging": "स्वीकारत आहे…",
+        "acknowledged": "स्वीकारले"
+    },
+    "errors": {
+        "role_update": "भूमिका अद्यतनित करण्यात अयशस्वी",
+        "acknowledge": "स्वीकारण्यात अयशस्वी",
+        "load": "लोड करण्यात अयशस्वी",
+        "unknown": "अज्ञात त्रुटी"
+    }
+}

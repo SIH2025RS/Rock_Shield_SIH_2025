@@ -1,0 +1,30 @@
+{
+    "title": "కార్యాచరణ విశ్లేషణ",
+    "subtitle": "రియల్-టైమ్ డేటా వివరణ మరియు అంతర్దృష్టులు",
+    "risk_trend": "ప్రమాదం ధోరణి (24 గంటలు)",
+    "dem_status": "DEM స్థితి",
+    "dem_preview_alt": "DEM ప్రివ్యూ",
+    "generating_preview": "DEM ప్రివ్యూ రూపొందిస్తోంది...",
+    "preview_pending": "DEM ప్రివ్యూ పెండింగ్‌లో ఉంది",
+    "weather_pattern": "వాతావరణ నమూనా (24 గంటలు)",
+    "temperature": "ఉష్ణోగ్రత (°C)",
+    "humidity": "తేమ (%)",
+    "zone_risk_comparison": "ప్రాంత ప్రమాదం పోలిక",
+    "recent_alerts": "ఇటీవలి హెచ్చరికలు",
+    "no_recent_alerts": "ఇటీవలి హెచ్చరికలు లేవు",
+    "dem_viewer_title": "DEM వ్యూయర్ - వ్యూపోర్ట్ మరియు పారామీటర్లను సర్దుబాటు చేయండి",
+    "dem_full_screen_alt": "DEM పూర్తి స్క్రీన్",
+    "dem_controls": {
+        "latitude": "అక్షాంశం",
+        "longitude": "రేఖాంశం",
+        "zoom": "జూమ్ (ప్యాడ్ డిగ్రీ)",
+        "color_ramp": "రంగు ర్యాంప్",
+        "azimuth": "అజిముత్ (కాంతి కోణం)",
+        "altitude": "ఎత్తు (కాంతి ఎత్తు)",
+        "vertical_exaggeration": "నిలువు అతిశయోక్తి"
+    },
+    "dem_options": {
+        "terrain": "భూభాగం (నీలం-ఎరుపు)",
+        "viridis": "విరిడిస్ (ముదురు-పసుపు)"
+    }
+}

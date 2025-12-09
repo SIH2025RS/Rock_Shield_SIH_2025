@@ -1,0 +1,30 @@
+{
+    "title": "ಕಾರ್ಯಾಚರಣೆ ವಿಶ್ಲೇಷಣೆ",
+    "subtitle": "ನೈಜ-ಸಮಯದ ಡೇಟಾ ವ್ಯಾಖ್ಯಾನ ಮತ್ತು ಒಳನೋಟಗಳು",
+    "risk_trend": "ಅಪಾಯ ಪ್ರವೃತ್ತಿ (24 ಗಂಟೆಗಳು)",
+    "dem_status": "DEM ಸ್ಥಿತಿ",
+    "dem_preview_alt": "DEM ಪೂರ್ವವೀಕ್ಷಣೆ",
+    "generating_preview": "DEM ಪೂರ್ವವೀಕ್ಷಣೆ ರಚಿಸುತ್ತಿದೆ...",
+    "preview_pending": "DEM ಪೂರ್ವವೀಕ್ಷಣೆ ಬಾಕಿ ಇದೆ",
+    "weather_pattern": "ಹವಾಮಾನ ಮಾದರಿ (24 ಗಂಟೆಗಳು)",
+    "temperature": "ತಾಪಮಾನ (°C)",
+    "humidity": "ತೇವಾಂಶ (%)",
+    "zone_risk_comparison": "ವಲಯ ಅಪಾಯ ಹೋಲಿಕೆ",
+    "recent_alerts": "ಇತ್ತೀಚಿನ ಎಚ್ಚರಿಕೆಗಳು",
+    "no_recent_alerts": "ಇತ್ತೀಚಿನ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ",
+    "dem_viewer_title": "DEM ವೀಕ್ಷಕ - ವ್ಯೂಪೋರ್ಟ್ ಮತ್ತು ನಿಯತಾಂಕಗಳನ್ನು ಹೊಂದಿಸಿ",
+    "dem_full_screen_alt": "DEM ಪೂರ್ಣ ಪರದೆ",
+    "dem_controls": {
+        "latitude": "ಅಕ್ಷಾಂಶ",
+        "longitude": "ರೇಖಾಂಶ",
+        "zoom": "ಝೂಮ್ (ಪ್ಯಾಡ್ ಡಿಗ್ರಿ)",
+        "color_ramp": "ಬಣ್ಣ ರಾಂಪ್",
+        "azimuth": "ಅಜಿಮುತ್ (ಬೆಳಕಿನ ಕೋನ)",
+        "altitude": "ಎತ್ತರ (ಬೆಳಕಿನ ಎತ್ತರ)",
+        "vertical_exaggeration": "ಲಂಬ ಅತಿಶಯೋಕ್ತಿ"
+    },
+    "dem_options": {
+        "terrain": "ಭೂಪ್ರದೇಶ (ನೀಲಿ-ಕೆಂಪು)",
+        "viridis": "ವಿರಿಡಿಸ್ (ಗಾಢ-ಹಳದಿ)"
+    }
+}
