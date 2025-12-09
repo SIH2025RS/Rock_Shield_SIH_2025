@@ -62,11 +62,11 @@ export default function OperatorReports() {
   }
 
   return (
-    <div className="section">
+    <div className="p-6">
       <div className="flex flex-wrap items-center justify-between mb-4">
         <div>
-          <h2>Reports</h2>
-          <div className="muted text-xs">View and submit field reports</div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Reports</h2>
+          <div className="text-sm text-slate-600 dark:text-slate-400">View and submit field reports</div>
         </div>
         <div className="flex items-center gap-2">
           <button className="btn-secondary" onClick={() => loadReports()} disabled={loading}><RefreshCcw size={14} /> Refresh</button>
@@ -76,7 +76,7 @@ export default function OperatorReports() {
 
       {showForm && (
         <div className="grid gap-6 md:grid-cols-3 mb-6">
-          <div className="card-subtle md:col-span-2">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm md:col-span-2">
             <form onSubmit={submitReport}>
               <div className="grid gap-3 md:grid-cols-2">
                 <div>
@@ -114,7 +114,7 @@ export default function OperatorReports() {
               </div>
             </form>
           </div>
-          <div className="card-subtle">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h3 className="font-medium mb-2">Guidance</h3>
             <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
               <li>Add a short, clear title.</li>
@@ -125,13 +125,13 @@ export default function OperatorReports() {
         </div>
       )}
 
-      <div className="card-subtle">
+      <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
         <h3 className="font-medium mb-3">Recent Reports</h3>
         {loading && <div className="text-sm text-slate-500">Loading…</div>}
         {!loading && reports.length === 0 && <div className="text-sm text-slate-500">No reports yet</div>}
         <ul className="space-y-2 max-h-[520px] overflow-auto">
           {reports.map((r) => (
-            <li key={r.id} className="rounded border p-3">
+            <li key={r.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
               <div className="flex items-center justify-between">
                 <div className="font-medium">{r.title || 'Untitled'}</div>
                 <div className="text-xs text-slate-500">{new Date(r.measured_at).toLocaleString()}</div>

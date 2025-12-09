@@ -82,6 +82,33 @@ export default function MapWeather({
         return
       }
 
+  // GeoTIFF helpers
+  const downloadGeoTiffViewport = () => {
+    const m = map.current
+    if (!m) return
+    try {
+      const b = m.getBounds()
+      const south = b.getSouth().toFixed(6)
+      const north = b.getNorth().toFixed(6)
+      const west = b.getWest().toFixed(6)
+      const east = b.getEast().toFixed(6)
+      const url = `${API_BASE_URL}/api/dem/geotiff?south=${south}&north=${north}&west=${west}&east=${east}`
+      window.open(url, '_blank')
+    } catch {}
+  }
+  const downloadGeoTiffAtCenter = (padDeg = 0.02) => {
+    if (!coordinates) return
+    const lat = Number(coordinates.lat)
+    const lon = Number(coordinates.lon)
+    if (!isFinite(lat) || !isFinite(lon)) return
+    const south = (lat - padDeg).toFixed(6)
+    const north = (lat + padDeg).toFixed(6)
+    const west = (lon - padDeg).toFixed(6)
+    const east = (lon + padDeg).toFixed(6)
+    const url = `${API_BASE_URL}/api/dem/geotiff?south=${south}&north=${north}&west=${west}&east=${east}`
+    window.open(url, '_blank')
+  }
+
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: mapStyle,
@@ -365,6 +392,9 @@ export default function MapWeather({
     if (!centerOn || typeof centerOn.lat !== 'number' || typeof centerOn.lon !== 'number') return
     try {
       m.flyTo({ center: [centerOn.lon, centerOn.lat], zoom: Math.max(m.getZoom() || 4, 13), duration: 800 })
+      // Also set coordinates to trigger live weather subscription
+      setCoordinates({ lat: centerOn.lat, lon: centerOn.lon })
+      try { if (typeof onLocationSelect === 'function') onLocationSelect({ lat: centerOn.lat, lon: centerOn.lon, label: 'Selected' }) } catch {}
     } catch {}
   }, [centerOn, mapLoaded])
 
@@ -429,6 +459,12 @@ export default function MapWeather({
         el.style.borderRadius = '50%'
         el.style.background = '#2563eb'
         el.style.boxShadow = '0 0 0 2px rgba(37,99,235,0.25)'
+        try {
+          el.addEventListener('click', () => {
+            try { setCoordinates({ lat, lon }) } catch {}
+            try { if (typeof onLocationSelect === 'function') onLocationSelect({ lat, lon, label: s.sensor_id || 'Sensor' }) } catch {}
+          })
+        } catch {}
         const mk = new mapboxgl.Marker({ element: el })
           .setLngLat([lon, lat])
           .setPopup(new mapboxgl.Popup({ offset: 12 }).setHTML(
@@ -501,6 +537,12 @@ export default function MapWeather({
       el.style.borderRadius = '50%'
       el.style.background = color
       el.style.boxShadow = '0 0 0 2px rgba(0,0,0,0.15)'
+      try {
+        el.addEventListener('click', () => {
+          try { setCoordinates({ lat, lon }) } catch {}
+          try { if (typeof onLocationSelect === 'function') onLocationSelect({ lat, lon, label: s.name || s.sensor_id || 'Sensor' }) } catch {}
+        })
+      } catch {}
       const mk = new mapboxgl.Marker({ element: el })
         .setLngLat([lon, lat])
         .setPopup(new mapboxgl.Popup({ offset: 12 }).setHTML(
@@ -718,6 +760,33 @@ export default function MapWeather({
     return 'Unknown'
   }
 
+  // GeoTIFF helpers (component scope)
+  const downloadGeoTiffViewport = () => {
+    const m = map.current
+    if (!m) return
+    try {
+      const b = m.getBounds()
+      const south = b.getSouth().toFixed(6)
+      const north = b.getNorth().toFixed(6)
+      const west = b.getWest().toFixed(6)
+      const east = b.getEast().toFixed(6)
+      const url = `${API_BASE_URL}/api/dem/geotiff?south=${south}&north=${north}&west=${west}&east=${east}`
+      window.open(url, '_blank')
+    } catch {}
+  }
+  const downloadGeoTiffAtCenter = (padDeg = 0.02) => {
+    if (!coordinates) return
+    const lat = Number(coordinates.lat)
+    const lon = Number(coordinates.lon)
+    if (!isFinite(lat) || !isFinite(lon)) return
+    const south = (lat - padDeg).toFixed(6)
+    const north = (lat + padDeg).toFixed(6)
+    const west = (lon - padDeg).toFixed(6)
+    const east = (lon + padDeg).toFixed(6)
+    const url = `${API_BASE_URL}/api/dem/geotiff?south=${south}&north=${north}&west=${west}&east=${east}`
+    window.open(url, '_blank')
+  }
+
   if (mapError) {
     return (
       <div className="rounded-xl border border-red-200 bg-red-50 p-6 shadow-sm">
@@ -790,6 +859,10 @@ export default function MapWeather({
             ))}
           </div>
         )}
+      </div>
+      <div className="mt-2 flex gap-2">
+        <button type="button" className="btn-secondary" onClick={downloadGeoTiffViewport} title="Download GeoTIFF for current map view">GeoTIFF (view)</button>
+        <button type="button" className="btn-secondary" onClick={() => downloadGeoTiffAtCenter(0.02)} disabled={!coordinates} title="Download around selected coordinates">GeoTIFF (center)</button>
       </div>
     </div>
   )

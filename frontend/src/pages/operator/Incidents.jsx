@@ -56,11 +56,11 @@ export default function OperatorIncidents() {
   }
 
   return (
-    <div className="section">
+    <div className="p-6">
       <div className="flex flex-wrap items-center justify-between mb-4">
         <div>
-          <h2>Incidents</h2>
-          <div className="muted text-xs">View and report incidents with attachments</div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Incidents</h2>
+          <div className="text-sm text-slate-600 dark:text-slate-400">View and report incidents with attachments</div>
         </div>
         <div className="flex items-center gap-2">
           <button className="btn-secondary" onClick={() => loadIncidents()} disabled={loading}><RefreshCcw size={14} /> Refresh</button>
@@ -70,7 +70,7 @@ export default function OperatorIncidents() {
 
       {showForm && (
         <div className="grid gap-6 md:grid-cols-3 mb-6">
-          <div className="card-subtle md:col-span-2">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm md:col-span-2">
             <form onSubmit={submitIncident}>
               <div className="grid gap-3 md:grid-cols-2">
                 <div>
@@ -144,7 +144,7 @@ export default function OperatorIncidents() {
               </div>
             </form>
           </div>
-          <div className="card-subtle">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h3 className="font-medium mb-2">Tips for clear reports</h3>
             <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
               <li>Provide specific location and time.</li>
@@ -157,13 +157,13 @@ export default function OperatorIncidents() {
         </div>
       )}
 
-      <div className="card-subtle">
+      <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
         <h3 className="font-medium mb-3">Recent Incidents</h3>
         {loading && <div className="text-sm text-slate-500">Loading…</div>}
         {!loading && incidents.length === 0 && <div className="text-sm text-slate-500">No incidents yet</div>}
         <ul className="space-y-3 max-h-[640px] overflow-auto">
           {incidents.map((inc) => (
-            <li key={inc.id} className="rounded border p-3">
+            <li key={inc.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
               <div className="flex items-center justify-between">
                 <div className="font-medium">{inc.title}</div>
                 <div className="text-xs text-slate-600">{new Date(inc.created_at).toLocaleString()}</div>

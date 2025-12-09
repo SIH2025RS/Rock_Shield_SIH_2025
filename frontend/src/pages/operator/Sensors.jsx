@@ -45,11 +45,11 @@ export default function OperatorSensors() {
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   return (
-    <div className="section">
+    <div className="p-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div>
-          <h2>Sensors</h2>
-          <div className="muted text-xs">{filtered.length} of {sensors.length} sensors</div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Sensors</h2>
+          <div className="text-sm text-slate-600 dark:text-slate-400">{filtered.length} of {sensors.length} sensors</div>
         </div>
         <div className="flex items-center gap-2">
           <div className="relative">
@@ -89,7 +89,7 @@ export default function OperatorSensors() {
           const color = status === 'green' ? 'bg-green-100 text-green-700 border-green-200' : status === 'yellow' ? 'bg-amber-100 text-amber-700 border-amber-200' : status === 'red' ? 'bg-red-100 text-red-700 border-red-200' : 'bg-slate-100 text-slate-700 border-slate-200'
           const lat = Number(s.lat); const lon = Number(s.lon)
           return (
-            <div key={s.id} className="rounded-xl border bg-white p-4 shadow-sm">
+            <div key={s.id} className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-4 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="font-semibold text-slate-900">{s.name || s.sensor_id || 'Sensor'}</div>
@@ -100,7 +100,7 @@ export default function OperatorSensors() {
                 </span>
               </div>
               <div className="mt-2 flex items-center gap-2 text-xs">
-                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-slate-700 border border-slate-200">{String(s.sensor_type || 'other')}</span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">{String(s.sensor_type || 'other')}</span>
               </div>
               <div className="mt-3 flex items-center gap-2 text-sm text-slate-700">
                 <MapPin size={16} className="text-blue-600" /> {isFinite(lat) && isFinite(lon) ? `${lat.toFixed(5)}, ${lon.toFixed(5)}` : '—'}

@@ -49,27 +49,27 @@ export default function CaveMinerDashboard() {
   const acked = alerts.filter(a => a.status === 'acknowledged').length
 
   return (
-    <main className="mx-auto max-w-6xl px-4">
-      <section className="py-10">
-        <h1 className="mb-2">Cave Miner</h1>
-        <p className="subtext mt-1">Your tasks and forwarded alerts</p>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+        <h1 className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">Cave Miner</h1>
+        <p className="text-sm text-slate-600 dark:text-slate-400">Your tasks and forwarded alerts</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="text-slate-500 text-sm">My Tasks</div>
             <div className="mt-1 flex items-center justify-between">
               <div className="text-3xl font-bold text-blue-600">{tasks.length}</div>
               <div className="rounded-full p-3 bg-blue-50"><Activity className="w-6 h-6 text-blue-600" /></div>
             </div>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="text-slate-500 text-sm">Forwarded Alerts</div>
             <div className="mt-1 flex items-center justify-between">
               <div className="text-3xl font-bold text-amber-600">{alerts.length}</div>
               <div className="rounded-full p-3 bg-amber-50"><Bell className="w-6 h-6 text-amber-600" /></div>
             </div>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <div className="text-slate-500 text-sm">Acknowledged</div>
             <div className="mt-1 flex items-center justify-between">
               <div className="text-3xl font-bold text-emerald-600">{acked}</div>
@@ -79,11 +79,11 @@ export default function CaveMinerDashboard() {
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-3">My Tasks</h2>
             <ul className="space-y-2 max-h-80 overflow-auto">
               {tasks.map(t => (
-                <li key={t.id} className="rounded border p-3 flex items-center justify-between">
+                <li key={t.id} className="rounded-xl border p-3 flex items-center justify-between bg-white dark:bg-slate-900">
                   <div>
                     <div className="font-medium">{t.title}</div>
                     <div className="text-xs text-slate-600">Status: {t.status}</div>
@@ -93,11 +93,11 @@ export default function CaveMinerDashboard() {
               {tasks.length === 0 && <div className="text-sm text-slate-500">No tasks assigned</div>}
             </ul>
           </div>
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
             <h2 className="text-lg font-semibold mb-3">Forwarded Alerts</h2>
             <ul className="space-y-2 max-h-80 overflow-auto">
               {alerts.map(a => (
-                <li key={a.id} className="rounded border p-3">
+                <li key={a.id} className="rounded-xl border p-3 bg-white dark:bg-slate-900">
                   <div className="flex items-center justify-between">
                     <div className="font-medium">{a.title}</div>
                     <div className="text-xs text-slate-600">{new Date(a.created_at).toLocaleString()}</div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { apiGetAuth, apiPutAuth, API_BASE_URL } from '../services/api'
 import { io } from 'socket.io-client'
+import { Shield } from 'lucide-react'
 
 export default function Miner() {
   const { getToken } = useAuth()
@@ -76,15 +77,20 @@ export default function Miner() {
   if (error) return <div className="p-6 text-red-600">{error}</div>
 
   return (
-    <main className="mx-auto max-w-6xl px-4">
-      <section className="py-10">
-        <h1 className="mb-2">Miner</h1>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      <section className="mx-auto max-w-6xl px-4 py-10">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow">
+            <Shield size={18} />
+          </div>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Miner</h1>
+        </div>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-4">My Tasks</h2>
-            <ul className="space-y-2">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
+            <h2 className="mb-4 text-lg font-semibold">My Tasks</h2>
+            <ul className="space-y-2 max-h-64 overflow-auto">
               {tasks.map((t) => (
-                <li key={t.id} className="flex items-center justify-between rounded border p-3">
+                <li key={t.id} className="flex items-center justify-between rounded border p-3 bg-white dark:bg-slate-900">
                   <div>
                     <div className="font-medium">{t.title}</div>
                     <div className="text-xs text-slate-600">Status: {t.status}</div>
@@ -98,11 +104,11 @@ export default function Miner() {
             </ul>
           </div>
 
-          <div className="rounded-xl border bg-white p-6 shadow-sm">
-            <h2 className="mb-4">Forwarded Alerts</h2>
-            <ul className="space-y-2">
+          <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm">
+            <h2 className="mb-4 text-lg font-semibold">Forwarded Alerts</h2>
+            <ul className="space-y-2 max-h-64 overflow-auto">
               {alerts.map((a) => (
-                <li key={a.id} className="rounded border p-3">
+                <li key={a.id} className="rounded border p-3 bg-white dark:bg-slate-900">
                   <div className="flex items-center justify-between">
                     <div className="font-medium">{a.title}</div>
                     <div className="text-xs text-slate-600">{new Date(a.created_at).toLocaleString()}</div>
