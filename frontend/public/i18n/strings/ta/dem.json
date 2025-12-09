@@ -1,0 +1,34 @@
+{
+    "loading": "DEM தரவு ஏற்றுகிறது...",
+    "title": "DEM நிலப்பரப்பு பகுப்பாய்வு",
+    "parameter": "அளவுரு",
+    "zone": "மண்டலம்",
+    "zone_analysis": "மண்டல பகுப்பாய்வு",
+    "zone_not_found": "மண்டலம் கிடைக்கவில்லை",
+    "current_value": "தற்போதைய மதிப்பு",
+    "std_dev": "நிலையான விலகல்",
+    "description": "விளக்கம்",
+    "all_zones": "அனைத்து மண்டலங்களின் கண்ணோட்டம்",
+    "risk_level": "ஆபத்து நிலை",
+    "risk_factors": "ஆபத்து காரணிகள்",
+    "status": "நிலை",
+    "risk": "ஆபத்து",
+    "sensors": "உணரிகள்",
+    "parameters": {
+        "elevation": "உயரம்",
+        "slope": "சாய்வு",
+        "aspect": "அம்சம்",
+        "porePressure": "துளை அழுத்தம்",
+        "methanePpm": "மீத்தேன் (ppm)",
+        "roughness": "கரடுமுரடு",
+        "relief": "நிவாரணம்",
+        "flowAccumulation": "ஓட்டம் திரட்சி",
+        "topographicWetnessIndex": "TWI"
+    },
+    "risk_levels": {
+        "safe": "பாதுகாப்பானது",
+        "low": "குறைவு",
+        "warning": "எச்சரிக்கை",
+        "high": "அதிகம்"
+    }
+}

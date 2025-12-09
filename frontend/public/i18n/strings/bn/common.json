@@ -20,7 +20,6 @@
         "made_with": "দিয়ে তৈরি",
         "by_team": "RockShield টিম দ্বারা"
     },
-    "status": "অবস্থা",
     "active": "সক্রিয়",
     "inactive": "নিষ্ক্রিয়",
     "logout": "লগ আউট",
@@ -97,7 +96,18 @@
     "i18n": {
         "language": "ভাষা",
         "english": "ইংরেজি",
-        "hindi": "হিন্দি"
+        "hindi": "হিন্দি",
+        "marathi": "মারাঠি",
+        "bengali": "বাংলা",
+        "telugu": "তেলুগু",
+        "kannada": "কন্নড়",
+        "tamil": "তামিল"
+    },
+    "status": {
+        "pending": "মুলতুবি",
+        "in_progress": "চলমান",
+        "completed": "সম্পন্ন",
+        "cancelled": "বাতিল"
     },
     "guest": "অতিথি"
 }

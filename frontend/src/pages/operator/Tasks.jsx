@@ -79,16 +79,16 @@ export default function OperatorTasks() {
         </form>
       </div>
       <ul className="space-y-3 max-h-[600px] overflow-auto">
-        {tasks.map((t) => (
-          <li key={t.id} className="rounded-xl border p-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all">
+        {tasks.map((task) => (
+          <li key={task.id} className="rounded-xl border p-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="font-medium">{t.title}</div>
-                <div className="text-xs text-slate-600">{t(`tasks_page.types.${t.task_type}`)} · <span className="badge badge-amber">{t(`tasks_page.priorities.${t.priority}`)}</span> · <span className={`badge ${t.status === 'completed' ? 'badge-green' : 'badge-primary'}`}>{t(`common:status.${t.status}`) || t.status}</span></div>
+                <div className="font-medium">{task.title}</div>
+                <div className="text-xs text-slate-600">{t(`tasks_page.types.${task.task_type}`)} · <span className="badge badge-amber">{t(`tasks_page.priorities.${task.priority}`)}</span> · <span className={`badge ${task.status === 'completed' ? 'badge-green' : 'badge-primary'}`}>{t(`common:status.${task.status}`) || task.status}</span></div>
               </div>
               <div className="flex gap-2">
-                <button className="btn-secondary" onClick={() => updateTaskStatus(t.id, 'in_progress')}>{t('actions.start')}</button>
-                <button className="btn-primary" onClick={() => updateTaskStatus(t.id, 'completed')}>{t('actions.complete')}</button>
+                <button className="btn-secondary" onClick={() => updateTaskStatus(task.id, 'in_progress')}>{t('actions.start')}</button>
+                <button className="btn-primary" onClick={() => updateTaskStatus(task.id, 'completed')}>{t('actions.complete')}</button>
               </div>
             </div>
           </li>
