@@ -95,6 +95,13 @@ graph TD
 
 The project is optimized for time-series data using TimescaleDB.
 
+`backend/.env` connects as the `postgres` user to a database named `rock_shield`. Homebrew installs don't create a `postgres` role, so on macOS run this once:
+
+```bash
+createuser -s postgres
+createdb -U postgres rock_shield
+```
+
 ```sql
 -- Enable TimescaleDB extension
 CREATE EXTENSION IF NOT EXISTS timescaledb;
@@ -108,20 +115,19 @@ SELECT create_hypertable('iot_sensor_data', 'measured_at');
 ```bash
 cd backend
 npm install
-cp .env.example .env   # then fill in DB, Clerk and test account values
 npm run init-db  # Initialize database tables
 npm start
 ```
 
 #### Test accounts
 
-When the backend starts outside production, it creates one login per role in Clerk (if missing) and assigns its role in the `users` table ([backend/src/db/seedTestAccounts.js](backend/src/db/seedTestAccounts.js)). The usernames, emails and passwords come from the `TEST_ADMIN_*`, `TEST_OPERATOR_*` and `TEST_MINER_*` variables in `backend/.env`; ask the team for the shared values. You can also run `npm run seed`, or set `SEED_TEST_ACCOUNTS=false` to skip it.
+When the backend starts outside production, it creates one login per role in Clerk (if missing) and assigns its role in the `users` table ([backend/src/db/seedTestAccounts.js](backend/src/db/seedTestAccounts.js)). The usernames, emails and passwords come from the `TEST_ADMIN_*`, `TEST_OPERATOR_*` and `TEST_MINER_*` variables in `backend/.env`. You can also run `npm run seed`, or set `SEED_TEST_ACCOUNTS=false` to skip it.
 
-| Role | Username | Email |
-| --- | --- | --- |
-| System admin | `test_admin` | `admin+clerk_test@example.com` |
-| Operator | `test_operator` | `operator+clerk_test@example.com` |
-| Miner | `test_miner` | `miner+clerk_test@example.com` |
+| Role | Username | Email | Password |
+| --- | --- | --- | --- |
+| System admin | `test_admin` | `admin+clerk_test@example.com` | `RockShield#Admin2025` |
+| Operator | `test_operator` | `operator+clerk_test@example.com` | `RockShield#Operator2025` |
+| Miner | `test_miner` | `miner+clerk_test@example.com` | `RockShield#Miner2025` |
 
 Sign in with the username or email. If Clerk asks for a verification code (first sign-in on a new device), enter `424242`.
 
@@ -130,7 +136,6 @@ Sign in with the username or email. If Clerk asks for a verification code (first
 ```bash
 cd ai-ml/ml-service
 pip install -r requirements.txt
-cp .env.example .env   # optional: Twilio SMS alert settings
 python main.py
 ```
 
@@ -154,16 +159,9 @@ npx expo start
 
 ### Environment variables
 
-Each service has a `.env.example` listing every variable it reads. Copy it to `.env` in the same folder and fill in the values:
+Each service's `.env` is committed with the team's shared development keys (Clerk, Mapbox, OpenTopography, Twilio), so a fresh clone works without extra setup. The `.env.example` files list the same variables with blank values.
 
-```bash
-cp backend/.env.example backend/.env
-cp ai-ml/ml-service/.env.example ai-ml/ml-service/.env
-cp frontend/.env.example frontend/.env
-cp rockshield-mobile/.env.example rockshield-mobile/.env
-```
-
-`.env` files are gitignored; never commit real keys or passwords.
+The one value you must change is `EXPO_PUBLIC_API_BASE_URL` in `rockshield-mobile/.env`: set it to your own computer's LAN IP (`ipconfig getifaddr en0` on macOS) so a phone on the same Wi-Fi can reach the backend. To override other values without changing the shared file, use a `.env.local` file (ignored by git). Vite and Expo read it automatically; the backend and ML service do not.
 
 ---
 
