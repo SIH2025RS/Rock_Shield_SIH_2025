@@ -10,6 +10,32 @@ export default function SignInScreen() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  // Set when Clerk asks for an emailed code (e.g. first sign-in on a new device)
+  const [needsCode, setNeedsCode] = useState(false);
+  const [code, setCode] = useState('');
+
+  const getErrorMessage = (err, fallback) =>
+    err?.errors?.[0]?.message ||
+    (typeof err?.message === 'string' ? err.message : fallback);
+
+  const onVerifyPress = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const result = await signIn.attemptSecondFactor({ strategy: 'email_code', code });
+      if (result.status === 'complete') {
+        await setActive({ session: result.createdSessionId });
+        router.replace('/(tabs)');
+      } else {
+        setError('Verification incomplete. Please try again.');
+      }
+    } catch (err) {
+      console.error('Verification error', err);
+      setError(getErrorMessage(err, 'Verification failed'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onSignInPress = async () => {
     if (!isLoaded) {
@@ -25,9 +51,17 @@ export default function SignInScreen() {
         password,
       });
 
+      const emailFactor = result.supportedSecondFactors?.find((f) => f.strategy === 'email_code');
+
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId });
         router.replace('/(tabs)');
+      } else if (result.status === 'needs_second_factor' && emailFactor) {
+        await signIn.prepareSecondFactor({
+          strategy: 'email_code',
+          emailAddressId: emailFactor.emailAddressId,
+        });
+        setNeedsCode(true);
       } else {
         console.log('Sign in next step:', JSON.stringify(result, null, 2));
         setError(
@@ -36,10 +70,7 @@ export default function SignInScreen() {
       }
     } catch (err) {
       console.error('Sign in error', err);
-      const message =
-        err?.errors?.[0]?.message ||
-        (typeof err?.message === 'string' ? err.message : 'Sign in failed');
-      setError(message);
+      setError(getErrorMessage(err, 'Sign in failed'));
     } finally {
       setLoading(false);
     }
@@ -52,29 +83,51 @@ export default function SignInScreen() {
       <Text style={styles.subtitle}>
         Use the credentials provided by your admin to access live alerts and tasks.
       </Text>
-      <TextInput
-        value={emailAddress}
-        onChangeText={setEmailAddress}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        placeholder="Email address"
-        placeholderTextColor="#6b7280"
-        style={styles.input}
-      />
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        placeholder="Password"
-        placeholderTextColor="#6b7280"
-        style={styles.input}
-      />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button
-        title={loading ? 'Signing in...' : 'Sign in'}
-        onPress={onSignInPress}
-        disabled={loading}
-      />
+      {needsCode ? (
+        <>
+          <Text style={styles.subtitle}>Enter the verification code sent to your email.</Text>
+          <TextInput
+            value={code}
+            onChangeText={setCode}
+            keyboardType="number-pad"
+            placeholder="Verification code"
+            placeholderTextColor="#6b7280"
+            style={styles.input}
+          />
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+          <Button
+            title={loading ? 'Verifying...' : 'Verify'}
+            onPress={onVerifyPress}
+            disabled={loading}
+          />
+        </>
+      ) : (
+        <>
+          <TextInput
+            value={emailAddress}
+            onChangeText={setEmailAddress}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="Email address"
+            placeholderTextColor="#6b7280"
+            style={styles.input}
+          />
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="Password"
+            placeholderTextColor="#6b7280"
+            style={styles.input}
+          />
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+          <Button
+            title={loading ? 'Signing in...' : 'Sign in'}
+            onPress={onSignInPress}
+            disabled={loading}
+          />
+        </>
+      )}
       <Text style={styles.footer}>
         Operators see the full control panel. Miners see only the alerts and tasks forwarded to
         them.

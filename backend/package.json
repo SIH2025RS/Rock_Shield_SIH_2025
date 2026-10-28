@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node src/index.js",
     "init-db": "node src/db/initDb.js",
+    "seed": "node src/db/seedTestAccounts.js",
     "dev": "nodemon src/index.js"
   },
   "dependencies": {

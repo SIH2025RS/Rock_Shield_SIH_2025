@@ -60,8 +60,9 @@ function App() {
               <Suspense fallback={<Loading />}>
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
+                  {/* Clerk's path routing uses sub-routes like /login/factor-one and /register/verify-email-address */}
+                  <Route path="/login/*" element={<Login />} />
+                  <Route path="/register/*" element={<Register />} />
                   <Route
                     path="/dashboard"
                     element={

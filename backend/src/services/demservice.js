@@ -315,14 +315,21 @@ async function fetchAndStoreDemEnhanced(lat, lon) {
     const i = nearest.i;
     const j = nearest.j;
 
+    // OpenTopography cellsize is in degrees but elevations are in meters, so gradient-based
+    // derivatives need a metric cell spacing (geometric mean of N-S and E-W spacing at this latitude)
+    const metricGrid = {
+      ...grid,
+      cellsize: grid.cellsize * 111320 * Math.sqrt(Math.cos(lat * Math.PI / 180)),
+    };
+
     // Calculate all terrain derivatives
     const dem_elevation = nearest.elevation;
-    const dem_slope_angle = calculateSlope(grid, i, j);
-    const dem_curvature = calculateCurvature(grid, i, j);
-    const dem_aspect = calculateAspect(grid, i, j);
+    const dem_slope_angle = calculateSlope(metricGrid, i, j);
+    const dem_curvature = calculateCurvature(metricGrid, i, j);
+    const dem_aspect = calculateAspect(metricGrid, i, j);
     const dem_terrain_ruggedness = calculateTRI(grid, i, j);
     const dem_drainage_distance = calculateDrainageDistance(grid, i, j);
-    const TWI_dynamic = calculateTWI(grid, i, j);
+    const TWI_dynamic = calculateTWI(metricGrid, i, j);
 
     // Best-effort persistence (schema may not have derivative columns). Ignore errors.
     try {

@@ -7,6 +7,7 @@ const { Server } = require("socket.io");
 const config = require("./config/config");
 const axios = require("axios");
 const pool = require("./db/pool");
+const { seedTestAccounts } = require("./db/seedTestAccounts");
 
 const demRoutes = require("./routes/demroutes");
 const weatherRoutes = require("./routes/weatherroutes");
@@ -487,4 +488,14 @@ app.set("io", io);
 
 server.listen(config.port, () => {
   console.log(`server listening on ${config.port}`);
+
+  // Make sure the shared test logins exist locally (disable with SEED_TEST_ACCOUNTS=false)
+  if (config.env !== "production" && process.env.SEED_TEST_ACCOUNTS !== "false") {
+    seedTestAccounts().catch((err) => {
+      console.warn(
+        "Test account seed failed (run `npm run init-db` first if tables are missing):",
+        err.errors?.[0]?.longMessage || err.message
+      );
+    });
+  }
 });

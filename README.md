@@ -108,17 +108,29 @@ SELECT create_hypertable('iot_sensor_data', 'measured_at');
 ```bash
 cd backend
 npm install
-# Create .env file with your DB credentials and Clerk keys
+cp .env.example .env   # then fill in DB, Clerk and test account values
 npm run init-db  # Initialize database tables
 npm start
 ```
+
+#### Test accounts
+
+When the backend starts outside production, it creates one login per role in Clerk (if missing) and assigns its role in the `users` table ([backend/src/db/seedTestAccounts.js](backend/src/db/seedTestAccounts.js)). The usernames, emails and passwords come from the `TEST_ADMIN_*`, `TEST_OPERATOR_*` and `TEST_MINER_*` variables in `backend/.env`; ask the team for the shared values. You can also run `npm run seed`, or set `SEED_TEST_ACCOUNTS=false` to skip it.
+
+| Role | Username | Email |
+| --- | --- | --- |
+| System admin | `test_admin` | `admin+clerk_test@example.com` |
+| Operator | `test_operator` | `operator+clerk_test@example.com` |
+| Miner | `test_miner` | `miner+clerk_test@example.com` |
+
+Sign in with the username or email. If Clerk asks for a verification code (first sign-in on a new device), enter `424242`.
 
 ### 3. ML Service Setup
 
 ```bash
 cd ai-ml/ml-service
 pip install -r requirements.txt
-# Create .env with TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, etc.
+cp .env.example .env   # optional: Twilio SMS alert settings
 python main.py
 ```
 
@@ -140,72 +152,18 @@ npx expo start
 
 ---
 
-### Environment variable templates
+### Environment variables
 
-Copy the templates below into `.env` (or `.env.example`) files for each service and fill in the real values. Do NOT commit secrets to git — add `.env*` to `.gitignore`.
-
-```bash
-# Backend - file: `backend/.env.example`
-NODE_ENV=development
-PORT=3000
-
-# Postgres (preferred: use DATABASE_URL or the individual settings)
-DATABASE_URL=postgres://<user>:<password>@<host>:<port>/<database>
-PGHOST=<db_host>
-PGPORT=5432
-PGUSER=<db_user>
-PGPASSWORD=<db_password>
-PGDATABASE=<db_name>
-
-# Clerk (Auth)
-CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
-CLERK_SECRET_KEY=<your_clerk_secret_key>
-
-# JWT / Sessions
-SESSION_SECRET=<secure_random_string>
-JWT_SECRET=<jwt_secret>
-
-# Twilio (for notifications)
-TWILIO_ACCOUNT_SID=<your_twilio_account_sid>
-TWILIO_AUTH_TOKEN=<your_twilio_auth_token>
-TWILIO_PHONE_NUMBER=<twilio_phone_number>
-
-# ML Service (where backend calls for predictions)
-ML_SERVICE_URL=http://localhost:8000
-ML_SERVICE_API_KEY=<optional_api_key_if_used>
-```
+Each service has a `.env.example` listing every variable it reads. Copy it to `.env` in the same folder and fill in the values:
 
 ```bash
-# ML service - file: `ai-ml/ml-service/.env.example`
-PORT=8000
-ML_API_KEY=<optional_api_key_for_ml_service>
-
-# Model paths (relative to `ai-ml/ml-service`)
-XGBOOST_MODEL_PATH=./Models/xgboost_model.joblib
-LSTM_MODEL_PATH=./Models/lstm_model.h5
-FEATURE_ORDER_PATH=./Models/feature_order.json
-WINDOW_SIZE=64
-
-# Twilio (used by ML service to send alerts)
-TWILIO_ACCOUNT_SID=<your_twilio_account_sid>
-TWILIO_AUTH_TOKEN=<your_twilio_auth_token>
-TWILIO_PHONE_NUMBER=<twilio_phone_number>
+cp backend/.env.example backend/.env
+cp ai-ml/ml-service/.env.example ai-ml/ml-service/.env
+cp frontend/.env.example frontend/.env
+cp rockshield-mobile/.env.example rockshield-mobile/.env
 ```
 
-```bash
-# Frontend - file: `frontend/.env` (Vite expects `VITE_` prefix for exposed vars)
-VITE_API_URL=http://localhost:3000/api
-VITE_CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
-VITE_MAPBOX_TOKEN=<your_mapbox_token>
-```
-
-```bash
-# Mobile (Expo) - file: `rockshield-mobile/.env`
-EXPO_PUBLIC_API_URL=https://your-backend.example.com
-EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
-```
-
-Remember: never commit files containing secrets. Add `.env*` to your repository's `.gitignore`.
+`.env` files are gitignored; never commit real keys or passwords.
 
 ---
 
