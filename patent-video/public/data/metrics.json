@@ -1,0 +1,29 @@
+{
+ "dataset": "simulated (synthetic) sensor dataset modelled on Jharia JH-UG-01..05",
+ "pipelineSplit": {
+  "description": "held-out 20% exactly as the training pipeline selects it",
+  "xgbAuc": 0.9346,
+  "lstmAuc": 0.9283,
+  "ensembleAuc": 0.934,
+  "testRows": 8570,
+  "testFrom": "2025-09-24",
+  "testTo": "2025-12-09"
+ },
+ "timeOrderedSplit": {
+  "description": "last 20% of each patch after correct timestamp parsing",
+  "xgbAuc": 0.9471,
+  "lstmAuc": 0.9508,
+  "ensembleAuc": 0.9484,
+  "testRows": 8570,
+  "testFrom": "2025-09-24",
+  "testTo": "2025-09-30"
+ },
+ "weights": {
+  "xgb": 0.7,
+  "lstm": 0.3
+ },
+ "thresholds": {
+  "safe": 0.3,
+  "warning": 0.6
+ }
+}

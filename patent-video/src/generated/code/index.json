@@ -1,0 +1,102 @@
+{
+ "preprocess": {
+  "file": "ai-ml/rockfall-prediction-system/preprocessing script for raw data/preprocessing_of_raw_sensor_data.py",
+  "startLine": 23,
+  "lines": 50
+ },
+ "timestamp": {
+  "file": "ai-ml/rockfall-prediction-system/preprocessing script for raw data/preprocessing_of_raw_sensor_data.py",
+  "startLine": 7,
+  "lines": 14
+ },
+ "merge": {
+  "file": "ai-ml/rockfall-prediction-system/ModelPipeline/lstm_xgb_ensemble2.py",
+  "startLine": 205,
+  "lines": 25
+ },
+ "lstm-model": {
+  "file": "ai-ml/rockfall-prediction-system/ModelPipeline/lstm_xgb_ensemble2.py",
+  "startLine": 358,
+  "lines": 20
+ },
+ "xgb-model": {
+  "file": "ai-ml/rockfall-prediction-system/ModelPipeline/lstm_xgb_ensemble2.py",
+  "startLine": 517,
+  "lines": 15
+ },
+ "health": {
+  "file": "ai-ml/ml-service/main.py",
+  "startLine": 128,
+  "lines": 9
+ },
+ "lstm-predict": {
+  "file": "ai-ml/ml-service/main.py",
+  "startLine": 299,
+  "lines": 29
+ },
+ "ensemble": {
+  "file": "ai-ml/ml-service/main.py",
+  "startLine": 330,
+  "lines": 35
+ },
+ "predict-endpoint": {
+  "file": "ai-ml/ml-service/main.py",
+  "startLine": 451,
+  "lines": 9
+ },
+ "hub-ml": {
+  "file": "backend/src/index.js",
+  "startLine": 404,
+  "lines": 52
+ },
+ "alert-insert": {
+  "file": "backend/src/controllers/mlcontroller.js",
+  "startLine": 211,
+  "lines": 30
+ },
+ "severity-ui": {
+  "file": "frontend/src/pages/operator/HubDashboard.jsx",
+  "startLine": 281,
+  "lines": 20
+ },
+ "notifications": {
+  "file": "backend/src/services/notifications.js",
+  "startLine": 89,
+  "lines": 43
+ },
+ "push": {
+  "file": "rockshield-mobile/src/notifications/alertsNotifications.js",
+  "startLine": 52,
+  "lines": 23
+ },
+ "alert-sound": {
+  "file": "rockshield-mobile/src/screens/Operator/OperatorAlertsScreen.js",
+  "startLine": 101,
+  "lines": 46
+ },
+ "alert-forward": {
+  "file": "backend/src/routes/operatorroutes.js",
+  "startLine": 361,
+  "lines": 24
+ },
+ "storage-schema": {
+  "file": "backend/src/db/initDb.js",
+  "startLine": 115,
+  "lines": 16
+ },
+ "alerts-schema": {
+  "file": "backend/src/db/initDb.js",
+  "startLine": 48,
+  "lines": 20
+ },
+ "update-role": {
+  "file": "backend/src/routes/adminroutes.js",
+  "startLine": 51,
+  "lines": 17
+ },
+ "register-sensor": {
+  "file": "backend/src/routes/operatorroutes.js",
+  "startLine": 69,
+  "lines": 44
+ }
+}

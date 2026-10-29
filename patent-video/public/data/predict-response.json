@@ -1,0 +1,28 @@
+{
+ "health": {
+  "status": "ok",
+  "xgb_loaded": true,
+  "lstm_loaded": true,
+  "ensemble_enabled": true,
+  "model_name": "ensemble"
+ },
+ "request": {
+  "location": "JH-UG-03",
+  "timestamp": "2025-09-03 01:00",
+  "readings": 8,
+  "features": 38
+ },
+ "response": {
+  "risk_score": 0.6181908220052719,
+  "klass": "HIGH",
+  "recommended_action": "Immediate inspection required",
+  "model_name": "ensemble"
+ },
+ "ensemble": {
+  "xgb_score": 0.6774371266365051,
+  "lstm_score": 0.4799494445323944,
+  "xgb_weight": 0.7,
+  "lstm_weight": 0.3
+ },
+ "calculation": "0.7 * 0.677 + 0.3 * 0.480 = 0.618"
+}

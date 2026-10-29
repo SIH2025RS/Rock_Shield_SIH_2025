@@ -1,0 +1,21 @@
+{
+ "patch": "JH-UG-03",
+ "timestamp": "2025-09-03 01:00",
+ "raw": {
+  "pore_pressure_kpa": 61.87,
+  "strain_microstrain": 128.365,
+  "displacement_mm": 0.4,
+  "vibration_hz": 20.037,
+  "methane_ppm": 417.895,
+  "temperature_c": 28.669,
+  "humidity_pct": 79.051,
+  "rain_A24": 59.388
+ },
+ "xgbFeatures": 38,
+ "lstmFeatures": 21,
+ "window": 8,
+ "xgb": 0.6774,
+ "lstm": 0.4799,
+ "ensemble": 0.6182,
+ "level": "HIGH"
+}

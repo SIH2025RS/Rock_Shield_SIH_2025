@@ -1,0 +1,893 @@
+{
+ "patch": "JH-UG-03",
+ "intervalMinutes": 5,
+ "source": "example sequence from the simulated dataset, scored by the prototype's XGBoost + LSTM ensemble",
+ "firstMedium": 9,
+ "firstHigh": 40,
+ "steps": [
+  {
+   "t": "2025-09-02 21:40",
+   "xgb": 0.0972,
+   "lstm": 0.1774,
+   "ensemble": 0.1213,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.627,
+    "pore_pressure_kpa": 80.011,
+    "strain_microstrain": 134.214,
+    "displacement_mm": 0.445,
+    "vibration_hz": 16.917,
+    "rain_A24": 17.608
+   }
+  },
+  {
+   "t": "2025-09-02 21:45",
+   "xgb": 0.1254,
+   "lstm": 0.1863,
+   "ensemble": 0.1437,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.636,
+    "pore_pressure_kpa": 67.038,
+    "strain_microstrain": 97.066,
+    "displacement_mm": 0.319,
+    "vibration_hz": 19.95,
+    "rain_A24": 19.94
+   }
+  },
+  {
+   "t": "2025-09-02 21:50",
+   "xgb": 0.1013,
+   "lstm": 0.2272,
+   "ensemble": 0.139,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.651,
+    "pore_pressure_kpa": 74.747,
+    "strain_microstrain": 155.343,
+    "displacement_mm": 0.517,
+    "vibration_hz": 22.078,
+    "rain_A24": 22.158
+   }
+  },
+  {
+   "t": "2025-09-02 21:55",
+   "xgb": 0.1251,
+   "lstm": 0.2173,
+   "ensemble": 0.1528,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.592,
+    "pore_pressure_kpa": 67.155,
+    "strain_microstrain": 99.576,
+    "displacement_mm": 0.32,
+    "vibration_hz": 20.032,
+    "rain_A24": 24.548
+   }
+  },
+  {
+   "t": "2025-09-02 22:00",
+   "xgb": 0.1423,
+   "lstm": 0.2443,
+   "ensemble": 0.1729,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.44,
+    "pore_pressure_kpa": 97.672,
+    "strain_microstrain": 120.243,
+    "displacement_mm": 0.404,
+    "vibration_hz": 17.794,
+    "rain_A24": 25.067
+   }
+  },
+  {
+   "t": "2025-09-02 22:05",
+   "xgb": 0.1782,
+   "lstm": 0.2131,
+   "ensemble": 0.1887,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.591,
+    "pore_pressure_kpa": 47.384,
+    "strain_microstrain": 91.682,
+    "displacement_mm": 0.297,
+    "vibration_hz": 20.122,
+    "rain_A24": 26.499
+   }
+  },
+  {
+   "t": "2025-09-02 22:10",
+   "xgb": 0.1839,
+   "lstm": 0.2677,
+   "ensemble": 0.2091,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.616,
+    "pore_pressure_kpa": 65.5,
+    "strain_microstrain": 99.899,
+    "displacement_mm": 0.328,
+    "vibration_hz": 19.962,
+    "rain_A24": 28.531
+   }
+  },
+  {
+   "t": "2025-09-02 22:15",
+   "xgb": 0.2908,
+   "lstm": 0.2717,
+   "ensemble": 0.285,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.646,
+    "pore_pressure_kpa": 85.567,
+    "strain_microstrain": 117.693,
+    "displacement_mm": 0.354,
+    "vibration_hz": 21.664,
+    "rain_A24": 31.488
+   }
+  },
+  {
+   "t": "2025-09-02 22:20",
+   "xgb": 0.2471,
+   "lstm": 0.2818,
+   "ensemble": 0.2575,
+   "level": "LOW",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.546,
+    "pore_pressure_kpa": 81.463,
+    "strain_microstrain": 100.413,
+    "displacement_mm": 0.332,
+    "vibration_hz": 17.315,
+    "rain_A24": 33.742
+   }
+  },
+  {
+   "t": "2025-09-02 22:25",
+   "xgb": 0.3448,
+   "lstm": 0.2798,
+   "ensemble": 0.3253,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.605,
+    "pore_pressure_kpa": 65.136,
+    "strain_microstrain": 116.89,
+    "displacement_mm": 0.372,
+    "vibration_hz": 18.257,
+    "rain_A24": 34.912
+   }
+  },
+  {
+   "t": "2025-09-02 22:30",
+   "xgb": 0.3405,
+   "lstm": 0.3204,
+   "ensemble": 0.3345,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.643,
+    "pore_pressure_kpa": 96.271,
+    "strain_microstrain": 130.111,
+    "displacement_mm": 0.407,
+    "vibration_hz": 17.415,
+    "rain_A24": 35.227
+   }
+  },
+  {
+   "t": "2025-09-02 22:35",
+   "xgb": 0.4187,
+   "lstm": 0.2962,
+   "ensemble": 0.382,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.587,
+    "pore_pressure_kpa": 64.562,
+    "strain_microstrain": 132.055,
+    "displacement_mm": 0.425,
+    "vibration_hz": 20.114,
+    "rain_A24": 36.798
+   }
+  },
+  {
+   "t": "2025-09-02 22:40",
+   "xgb": 0.4073,
+   "lstm": 0.3137,
+   "ensemble": 0.3792,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.625,
+    "pore_pressure_kpa": 78.05,
+    "strain_microstrain": 120.133,
+    "displacement_mm": 0.377,
+    "vibration_hz": 16.17,
+    "rain_A24": 38.3
+   }
+  },
+  {
+   "t": "2025-09-02 22:45",
+   "xgb": 0.4679,
+   "lstm": 0.3546,
+   "ensemble": 0.4339,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.507,
+    "pore_pressure_kpa": 77.588,
+    "strain_microstrain": 134.257,
+    "displacement_mm": 0.474,
+    "vibration_hz": 18.344,
+    "rain_A24": 39.653
+   }
+  },
+  {
+   "t": "2025-09-02 22:50",
+   "xgb": 0.3443,
+   "lstm": 0.3712,
+   "ensemble": 0.3524,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.503,
+    "pore_pressure_kpa": 90.536,
+    "strain_microstrain": 123.779,
+    "displacement_mm": 0.443,
+    "vibration_hz": 16.224,
+    "rain_A24": 40.09
+   }
+  },
+  {
+   "t": "2025-09-02 22:55",
+   "xgb": 0.4561,
+   "lstm": 0.371,
+   "ensemble": 0.4305,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.521,
+    "pore_pressure_kpa": 90.918,
+    "strain_microstrain": 138.8,
+    "displacement_mm": 0.461,
+    "vibration_hz": 20.691,
+    "rain_A24": 42.536
+   }
+  },
+  {
+   "t": "2025-09-02 23:00",
+   "xgb": 0.5783,
+   "lstm": 0.4014,
+   "ensemble": 0.5252,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.596,
+    "pore_pressure_kpa": 86.559,
+    "strain_microstrain": 119.012,
+    "displacement_mm": 0.341,
+    "vibration_hz": 18.612,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:05",
+   "xgb": 0.3863,
+   "lstm": 0.4616,
+   "ensemble": 0.4089,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.56,
+    "pore_pressure_kpa": 98.45,
+    "strain_microstrain": 144.821,
+    "displacement_mm": 0.453,
+    "vibration_hz": 20.005,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:10",
+   "xgb": 0.4085,
+   "lstm": 0.489,
+   "ensemble": 0.4327,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.46,
+    "pore_pressure_kpa": 98.314,
+    "strain_microstrain": 242.425,
+    "displacement_mm": 0.849,
+    "vibration_hz": 29.052,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:15",
+   "xgb": 0.564,
+   "lstm": 0.4727,
+   "ensemble": 0.5366,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.466,
+    "pore_pressure_kpa": 76.933,
+    "strain_microstrain": 245.188,
+    "displacement_mm": 0.835,
+    "vibration_hz": 25.697,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:20",
+   "xgb": 0.5278,
+   "lstm": 0.5369,
+   "ensemble": 0.5306,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.519,
+    "pore_pressure_kpa": 115.103,
+    "strain_microstrain": 262.382,
+    "displacement_mm": 0.897,
+    "vibration_hz": 27.576,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:25",
+   "xgb": 0.5741,
+   "lstm": 0.4326,
+   "ensemble": 0.5316,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.572,
+    "pore_pressure_kpa": 80.949,
+    "strain_microstrain": 108.963,
+    "displacement_mm": 0.352,
+    "vibration_hz": 19.057,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:30",
+   "xgb": 0.6044,
+   "lstm": 0.4502,
+   "ensemble": 0.5582,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.455,
+    "pore_pressure_kpa": 83.645,
+    "strain_microstrain": 264.202,
+    "displacement_mm": 0.917,
+    "vibration_hz": 29.38,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:35",
+   "xgb": 0.4469,
+   "lstm": 0.4252,
+   "ensemble": 0.4403,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.549,
+    "pore_pressure_kpa": 96.728,
+    "strain_microstrain": 139.44,
+    "displacement_mm": 0.471,
+    "vibration_hz": 15.838,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:40",
+   "xgb": 0.3375,
+   "lstm": 0.4661,
+   "ensemble": 0.376,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.555,
+    "pore_pressure_kpa": 77.547,
+    "strain_microstrain": 253.743,
+    "displacement_mm": 0.858,
+    "vibration_hz": 28.62,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:45",
+   "xgb": 0.3469,
+   "lstm": 0.4364,
+   "ensemble": 0.3738,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.573,
+    "pore_pressure_kpa": 85.864,
+    "strain_microstrain": 122.013,
+    "displacement_mm": 0.394,
+    "vibration_hz": 17.162,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:50",
+   "xgb": 0.3922,
+   "lstm": 0.4603,
+   "ensemble": 0.4126,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.564,
+    "pore_pressure_kpa": 86.95,
+    "strain_microstrain": 98.92,
+    "displacement_mm": 0.302,
+    "vibration_hz": 21.645,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-02 23:55",
+   "xgb": 0.3726,
+   "lstm": 0.4616,
+   "ensemble": 0.3993,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.573,
+    "pore_pressure_kpa": 83.385,
+    "strain_microstrain": 125.059,
+    "displacement_mm": 0.411,
+    "vibration_hz": 14.225,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-03 00:00",
+   "xgb": 0.4409,
+   "lstm": 0.4389,
+   "ensemble": 0.4403,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.587,
+    "pore_pressure_kpa": 68.13,
+    "strain_microstrain": 105.581,
+    "displacement_mm": 0.352,
+    "vibration_hz": 20.352,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-03 00:05",
+   "xgb": 0.3951,
+   "lstm": 0.4406,
+   "ensemble": 0.4087,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.564,
+    "pore_pressure_kpa": 73.41,
+    "strain_microstrain": 128.012,
+    "displacement_mm": 0.372,
+    "vibration_hz": 17.224,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-03 00:10",
+   "xgb": 0.4567,
+   "lstm": 0.4433,
+   "ensemble": 0.4527,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.495,
+    "pore_pressure_kpa": 60.076,
+    "strain_microstrain": 121.736,
+    "displacement_mm": 0.407,
+    "vibration_hz": 17.89,
+    "rain_A24": 45.039
+   }
+  },
+  {
+   "t": "2025-09-03 00:15",
+   "xgb": 0.4757,
+   "lstm": 0.4395,
+   "ensemble": 0.4648,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.523,
+    "pore_pressure_kpa": 76.601,
+    "strain_microstrain": 126.261,
+    "displacement_mm": 0.428,
+    "vibration_hz": 20.945,
+    "rain_A24": 46.68
+   }
+  },
+  {
+   "t": "2025-09-03 00:20",
+   "xgb": 0.5239,
+   "lstm": 0.4244,
+   "ensemble": 0.4941,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.621,
+    "pore_pressure_kpa": 59.867,
+    "strain_microstrain": 112.333,
+    "displacement_mm": 0.34,
+    "vibration_hz": 16.309,
+    "rain_A24": 46.963
+   }
+  },
+  {
+   "t": "2025-09-03 00:25",
+   "xgb": 0.4182,
+   "lstm": 0.4363,
+   "ensemble": 0.4236,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.577,
+    "pore_pressure_kpa": 85.701,
+    "strain_microstrain": 115.26,
+    "displacement_mm": 0.374,
+    "vibration_hz": 18.497,
+    "rain_A24": 49.671
+   }
+  },
+  {
+   "t": "2025-09-03 00:30",
+   "xgb": 0.4922,
+   "lstm": 0.433,
+   "ensemble": 0.4744,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.514,
+    "pore_pressure_kpa": 89.793,
+    "strain_microstrain": 140.184,
+    "displacement_mm": 0.466,
+    "vibration_hz": 20.855,
+    "rain_A24": 50.536
+   }
+  },
+  {
+   "t": "2025-09-03 00:35",
+   "xgb": 0.51,
+   "lstm": 0.4344,
+   "ensemble": 0.4874,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.542,
+    "pore_pressure_kpa": 85.188,
+    "strain_microstrain": 117.336,
+    "displacement_mm": 0.409,
+    "vibration_hz": 17.903,
+    "rain_A24": 51.711
+   }
+  },
+  {
+   "t": "2025-09-03 00:40",
+   "xgb": 0.3767,
+   "lstm": 0.4441,
+   "ensemble": 0.3969,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.45,
+    "pore_pressure_kpa": 68.978,
+    "strain_microstrain": 124.882,
+    "displacement_mm": 0.434,
+    "vibration_hz": 19.539,
+    "rain_A24": 52.748
+   }
+  },
+  {
+   "t": "2025-09-03 00:45",
+   "xgb": 0.5222,
+   "lstm": 0.4509,
+   "ensemble": 0.5008,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.515,
+    "pore_pressure_kpa": 71.791,
+    "strain_microstrain": 134.511,
+    "displacement_mm": 0.423,
+    "vibration_hz": 20.29,
+    "rain_A24": 54.059
+   }
+  },
+  {
+   "t": "2025-09-03 00:50",
+   "xgb": 0.4791,
+   "lstm": 0.4642,
+   "ensemble": 0.4746,
+   "level": "MEDIUM",
+   "label": 0,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.544,
+    "pore_pressure_kpa": 96.217,
+    "strain_microstrain": 140.119,
+    "displacement_mm": 0.48,
+    "vibration_hz": 19.102,
+    "rain_A24": 56.741
+   }
+  },
+  {
+   "t": "2025-09-03 00:55",
+   "xgb": 0.6376,
+   "lstm": 0.4721,
+   "ensemble": 0.588,
+   "level": "MEDIUM",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.508,
+    "pore_pressure_kpa": 100.389,
+    "strain_microstrain": 106.435,
+    "displacement_mm": 0.382,
+    "vibration_hz": 19.779,
+    "rain_A24": 57.179
+   }
+  },
+  {
+   "t": "2025-09-03 01:00",
+   "xgb": 0.6774,
+   "lstm": 0.4799,
+   "ensemble": 0.6182,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.615,
+    "pore_pressure_kpa": 61.87,
+    "strain_microstrain": 128.365,
+    "displacement_mm": 0.4,
+    "vibration_hz": 20.037,
+    "rain_A24": 59.388
+   }
+  },
+  {
+   "t": "2025-09-03 01:05",
+   "xgb": 0.7385,
+   "lstm": 0.5154,
+   "ensemble": 0.6716,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.439,
+    "pore_pressure_kpa": 87.913,
+    "strain_microstrain": 127.716,
+    "displacement_mm": 0.406,
+    "vibration_hz": 19.688,
+    "rain_A24": 62.385
+   }
+  },
+  {
+   "t": "2025-09-03 01:10",
+   "xgb": 0.7172,
+   "lstm": 0.4962,
+   "ensemble": 0.6509,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.615,
+    "pore_pressure_kpa": 65.697,
+    "strain_microstrain": 115.133,
+    "displacement_mm": 0.378,
+    "vibration_hz": 16.326,
+    "rain_A24": 63.727
+   }
+  },
+  {
+   "t": "2025-09-03 01:15",
+   "xgb": 0.7643,
+   "lstm": 0.5292,
+   "ensemble": 0.6938,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.449,
+    "pore_pressure_kpa": 89.345,
+    "strain_microstrain": 143.679,
+    "displacement_mm": 0.477,
+    "vibration_hz": 19.715,
+    "rain_A24": 65.537
+   }
+  },
+  {
+   "t": "2025-09-03 01:20",
+   "xgb": 0.6754,
+   "lstm": 0.5085,
+   "ensemble": 0.6253,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.549,
+    "pore_pressure_kpa": 78.529,
+    "strain_microstrain": 141.029,
+    "displacement_mm": 0.459,
+    "vibration_hz": 14.985,
+    "rain_A24": 67.699
+   }
+  },
+  {
+   "t": "2025-09-03 01:25",
+   "xgb": 0.8374,
+   "lstm": 0.5199,
+   "ensemble": 0.7422,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.563,
+    "pore_pressure_kpa": 74.452,
+    "strain_microstrain": 131.455,
+    "displacement_mm": 0.418,
+    "vibration_hz": 19.64,
+    "rain_A24": 68.998
+   }
+  },
+  {
+   "t": "2025-09-03 01:30",
+   "xgb": 0.8596,
+   "lstm": 0.5467,
+   "ensemble": 0.7657,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.468,
+    "pore_pressure_kpa": 109.898,
+    "strain_microstrain": 136.185,
+    "displacement_mm": 0.443,
+    "vibration_hz": 19.78,
+    "rain_A24": 70.589
+   }
+  },
+  {
+   "t": "2025-09-03 01:35",
+   "xgb": 0.8837,
+   "lstm": 0.5209,
+   "ensemble": 0.7749,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.505,
+    "pore_pressure_kpa": 90.985,
+    "strain_microstrain": 242.357,
+    "displacement_mm": 0.836,
+    "vibration_hz": 31.109,
+    "rain_A24": 71.812
+   }
+  },
+  {
+   "t": "2025-09-03 01:40",
+   "xgb": 0.873,
+   "lstm": 0.5457,
+   "ensemble": 0.7748,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.509,
+    "pore_pressure_kpa": 104.139,
+    "strain_microstrain": 140.007,
+    "displacement_mm": 0.485,
+    "vibration_hz": 22.639,
+    "rain_A24": 72.578
+   }
+  },
+  {
+   "t": "2025-09-03 01:45",
+   "xgb": 0.8795,
+   "lstm": 0.5268,
+   "ensemble": 0.7737,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.508,
+    "pore_pressure_kpa": 90.019,
+    "strain_microstrain": 111.911,
+    "displacement_mm": 0.387,
+    "vibration_hz": 17.643,
+    "rain_A24": 72.578
+   }
+  },
+  {
+   "t": "2025-09-03 01:50",
+   "xgb": 0.8201,
+   "lstm": 0.5222,
+   "ensemble": 0.7307,
+   "level": "HIGH",
+   "label": 1,
+   "failure": 0,
+   "sensors": {
+    "fs": 0.499,
+    "pore_pressure_kpa": 108.748,
+    "strain_microstrain": 127.92,
+    "displacement_mm": 0.439,
+    "vibration_hz": 18.832,
+    "rain_A24": 72.578
+   }
+  },
+  {
+   "t": "2025-09-03 01:55",
+   "xgb": 0.6418,
+   "lstm": 0.5455,
+   "ensemble": 0.6129,
+   "level": "HIGH",
+   "label": 0,
+   "failure": 1,
+   "sensors": {
+    "fs": 0.538,
+    "pore_pressure_kpa": 86.864,
+    "strain_microstrain": 248.962,
+    "displacement_mm": 0.816,
+    "vibration_hz": 27.944,
+    "rain_A24": 72.578
+   }
+  }
+ ]
+}

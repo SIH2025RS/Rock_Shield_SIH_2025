@@ -1,0 +1,49 @@
+{
+  "name": "rockshield-patent-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Motion-graphics explainer of the 18 patent claims for the RockShield edge-based geotechnical hazard system",
+  "scripts": {
+    "studio": "remotion studio",
+    "claims": "python3 -I scripts/extract-claims.py",
+    "claims:check": "python3 -I scripts/extract-claims.py --check",
+    "data": "../ai-ml/ml-service/.venv/bin/python -I scripts/build-data.py",
+    "code": "tsx scripts/build-code-snippets.ts",
+    "site": "tsx scripts/fetch-site-assets.ts",
+    "screens": "bash scripts/prepare-screenshots.sh",
+    "assets": "tsx scripts/manifest.ts",
+    "scratch-vo": "tsx scripts/scratch-vo.ts",
+    "voice-samples": "tsx scripts/voice-samples.ts",
+    "tts": "tsx scripts/tts-google.ts",
+    "align": "tsx scripts/align-captions.ts",
+    "check": "tsx scripts/check-frames.ts",
+    "render": "npm run assets && remotion render PatentVideo out/RockShield_Patent_Claims_1080p_raw.mp4 --codec=h264 --crf=16 --audio-codec=aac --audio-bitrate=320k",
+    "srt": "tsx scripts/export-srt.ts",
+    "finalize": "bash scripts/finalize.sh",
+    "styleframes": "bash scripts/styleframes.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.1",
+    "@remotion/captions": "4.0.535",
+    "@remotion/cli": "4.0.535",
+    "@remotion/google-fonts": "4.0.535",
+    "@remotion/install-whisper-cpp": "4.0.535",
+    "@remotion/media": "4.0.535",
+    "@remotion/media-utils": "4.0.535",
+    "@remotion/motion-blur": "4.0.535",
+    "@remotion/three": "4.0.535",
+    "@remotion/transitions": "4.0.535",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.535",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/three": "0.186.0",
+    "shiki": "4.5.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

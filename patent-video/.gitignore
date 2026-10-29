@@ -1,0 +1,7 @@
+node_modules/
+out/
+.env.local
+# Large/generated media; regenerate with the npm scripts
+public/ui/raw/
+.remotion/
+whisper.cpp/
